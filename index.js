@@ -9,6 +9,12 @@ const cookieParser = require('cookie-parser')
 const path = require('path')
 const mongoose = require('mongoose')
 
+const routerUser = require('./routes/routerUser')
+const routerUserPlus = require('./routes/routerUserPlus')
+const routerAdministrator = require('./routes/routerAdministrator')
+const validatorUsers = require('./middlewares/validatorUsers')
+const validatorAdministrators = require('./middlewares/validatorAdministrators')
+
 let config = require('./config/config.js') // variables de config (dbs, puertos, keytokens)
 
 // Recibe la url como si fuera un objeto JSON
@@ -19,13 +25,16 @@ app.use(cookieParser())
 // Elementos estaticos
 app.use(express.static(path.join(__dirname, 'public')))
 
+// app.use('/', validatorUsers);
+
+// Rutas de la aplicacion
+app.use('/', routerUser);
+app.use('/app', routerUserPlus);
+app.use('/app/administrator', routerAdministrator);
+
+
 // Motor de vistas
 app.set('view engine', 'pug')
-
-// Rutas
-app.get('/', (req, res) => {
-    res.render('index')
-})
 
 // Conexion a la base de datos
 mongoose.connect(config.db, (err, res) => {
