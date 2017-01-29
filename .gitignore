@@ -1,3 +1,5 @@
+# Archivos que no se subiran al repositorio
+
 # Para equipos de apple
 .DS_Store
 # Modulos de utilizados en el proyecto
@@ -5,3 +7,5 @@ node_modules
 public/bower_components
 # Configuracion del editor de texto
 .idea/*.*
+.idea/
+.idea
