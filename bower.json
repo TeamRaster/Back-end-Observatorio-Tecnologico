@@ -3,7 +3,9 @@
   "description": "Proyecto colaborativo",
   "main": "index.js",
   "authors": [
-    "EderMarcos <skrap.marcos@gmail.com>"
+    "EderMarcos <skrap.marcos@gmail.com>",
+     "pio777 <lpab7777@gmail.com>"
+
   ],
   "license": "MIT",
   "homepage": "https://github.com/TeamRaster/ProyectoOb",
