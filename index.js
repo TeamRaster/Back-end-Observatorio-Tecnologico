@@ -9,7 +9,7 @@ const cookieParser = require('cookie-parser')
 const path = require('path')
 const mongoose = require('mongoose')
 
-const port = process.env.PORT || 3000
+let config = require('./config/config.js') // variables de config (dbs, puertos, keytokens)
 
 // Recibe la url como si fuera un objeto JSON
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -28,13 +28,18 @@ app.get('/', (req, res) => {
 })
 
 // Conexion a la base de datos
-mongoose.connect('mongodb://localhost:27017/Observatorio', (err, res) => {
-  if (err) return console.log(`Error conexion base de datos [./index.js|30]: ${err}`)
-  console.log('Conexion establecida')
+mongoose.connect(config.db, (err, res) => {
+  if (err) return console.log(`Error conexion base de datos [./index.js]: ${err}`)
+  console.log('Conexion establecida con la base de datos [./index.js]')
 })
 
 
+
+
+
+
+
 // Puerto en el que se ejecuta el server
-app.listen(port, () => {
+app.listen(config.port, () => {
     //
 })

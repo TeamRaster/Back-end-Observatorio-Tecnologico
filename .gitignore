@@ -1,11 +1,50 @@
 # Archivos que no se subiran al repositorio
+############################################
 
-# Para equipos de apple
+#Compiled source #
+##################
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+*.sh
+
+# Packages #
+############
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# Logs and databases #
+######################
+*.log
+*.sql
+*.sqlite
+
+# Os generated files #
+######################
 .DS_Store
-# Modulos de utilizados en el proyecto
+.DS_Store?
+._*
+-Trashes
+ehthumbs.db
+.Spotlight-v100
+Thumbs.db
+
+# Modules #
+###########
 node_modules
 public/bower_components
-# Configuracion del editor de texto
+
+# Editor config #
+#################
 .idea/*.*
 .idea/
 .idea
