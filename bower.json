@@ -1,0 +1,19 @@
+{
+  "name": "proyectoob",
+  "description": "Proyecto colaborativo",
+  "main": "index.js",
+  "authors": [
+    "EderMarcos <skrap.marcos@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/TeamRaster/ProyectoOb",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/bower_components",
+    "test",
+    "tests"
+  ]
+}
