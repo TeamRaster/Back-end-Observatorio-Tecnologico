@@ -56,8 +56,6 @@ mongoose.connect(config.db, (err, res) => {
 // Configuracion Passport
 require('./config/passport')(app)
 
-console.log(config.db);
-
 
 // Puerto en el que se ejecuta el server
 app.listen(config.port, () => {

@@ -24,6 +24,7 @@ function facebookConfig(app) {
           })
           user.save(function (err) {
             if (!err) return done(null, user)
+            console.log(user + ' Usuario guardado exitosamente');
           })
         }
       })
