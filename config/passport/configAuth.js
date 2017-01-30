@@ -1,6 +1,21 @@
+// Configuraciones para la autenticacion con redes sociales
 'use strict'
 
-// Configuraciones para la autenticacion con redes sociales
 module.exports = {
-
+  facebookAuth: {
+    clientID		  : '196096000859413',
+    clientSecret 	: '60f39e62bfca0fe5662cd39abc5afa89',
+    callbackURL 	: '/auth/facebook/callback'
+  },
+  twitterAuth: {
+    clientID		  : '579183015617251',
+    clientSecret 	: '0ca6487c876e4ecb2cda3c7f2e1a0b4d',
+    callbackURL 	: '/auth/twitter/callback'
+  }
+  // Aun no esta implementado
+  // linkedinAuth: {
+  //   clientID		  : '579183015617251',
+  //   clientSecret 	: '0ca6487c876e4ecb2cda3c7f2e1a0b4d',
+  //   callbackURL 	: 'http://localhost:8080/auth/facebook/callback'
+  // }
 }

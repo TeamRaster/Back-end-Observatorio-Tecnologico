@@ -1,3 +1,4 @@
+// Autenticacion con Facebook
 'use strict'
 
 const passport = require('passport')
