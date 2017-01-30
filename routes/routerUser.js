@@ -10,7 +10,9 @@ router.get('/', (req, res) => {
 })
 
 router.get('/sign_in', (req, res) => {
-  res.render('sign_in')
+  let error_message = req.flash('error')[0]
+  res.locals.error_message = error_message
+  res.render('sign_in', {error: res.locals.error_message})
 })
 
 router.get('/sign_up', (req, res) => {

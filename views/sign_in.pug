@@ -4,5 +4,12 @@ block title
   title Inicio de Sesion
 
 block main
-  h1 Iniciar Sesion
+  h1 Inicio de Sesion
+  p= error
+  form(method="POST", name="form_sign_in", id="form_sign_in" action="/login")
+      label(for="username") Nombre de Usuario:
+      input(type="text", class="username", name="username", id="username")
+      label(for="password") Contraseña:
+      input(type="password", class="password", name="password", id="password")
+      input(type="submit", class="btn", name="btn", id="btn", value="Enviar")
 
