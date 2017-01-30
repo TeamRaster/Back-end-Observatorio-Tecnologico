@@ -3,7 +3,6 @@
 const passport = require('passport')
 
 function passportConfig(app) {
-  console.log('configuracion de passport');
   app.use(passport.initialize())
   app.use(passport.session())
 
@@ -15,7 +14,10 @@ function passportConfig(app) {
     done(null, user)
   })
 
+  // Configuracion autenticacion de usuario local
   require('./local')(app)
+  // Configuracion facebook autenticacion
+  require('./facebook')(app)
 }
 
 module.exports = passportConfig

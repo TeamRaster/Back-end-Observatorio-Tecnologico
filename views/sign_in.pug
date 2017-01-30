@@ -5,11 +5,16 @@ block title
 
 block main
   h1 Inicio de Sesion
+  a(href="/auth/facebook") Facebook
+  a(href="#") Twitter
   p= error
   form(method="POST", name="form_sign_in", id="form_sign_in" action="/login")
+    div
       label(for="username") Nombre de Usuario:
       input(type="text", class="username", name="username", id="username")
+    div
       label(for="password") Contraseña:
       input(type="password", class="password", name="password", id="password")
+    div
       input(type="submit", class="btn", name="btn", id="btn", value="Enviar")
 

@@ -50,11 +50,13 @@ app.use('/app/administrator', routerAdministrator);
 // Conexion a la base de datos
 mongoose.connect(config.db, (err, res) => {
   if (err) return console.log(`Error conexion base de datos [./index.js]: ${err}`)
-  console.log('Conexion establecida con la base de datos [./index.js]')
+  // console.log('Conexion establecida con la base de datos [./index.js]')
 })
 
 // Configuracion Passport
 require('./config/passport')(app)
+
+console.log(config.db);
 
 
 // Puerto en el que se ejecuta el server

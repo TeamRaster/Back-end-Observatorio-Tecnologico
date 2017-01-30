@@ -13,6 +13,9 @@ const UsersSchema = new Schema({
   sex: {
     type: String,
     enum: ['Masculino', 'Femenino']
+  },
+  facebook: {
+    id: String
   }
 })
 

@@ -12,9 +12,8 @@ function localConfig(app) {
   function (username, password, done) {
     User.findOne({name: username})
     .then(function (user) {
-      if (!user) {return done(null, false, { message: `Usuario: ${username} no existe`} )}
-      if (user.password === password) return done(null, user)
-      else done(null, false)
+      if (!user || user.password !== password) return done(null, false, { message: `[error]: El usuario o contraseña son incorrectos`} )
+      else if(user.password === password) return done(null, user)
     })
   }))
 
