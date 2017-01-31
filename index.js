@@ -16,30 +16,26 @@ const routerUserPlus = require('./routes/routerUserPlus')
 const routerAdministrator = require('./routes/routerAdministrator')
 const validatorUsers = require('./middlewares/validatorUsers')
 const validatorAdministrators = require('./middlewares/validatorAdministrators')
-
-let config = require('./config/config.js') // variables de config (dbs, puertos, keytokens)
-
+const config = require('./config/config.js') // variables de config (dbs, puertos, keytokens)
 
 // Recibe la url como si fuera un objeto JSON
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(cookieParser())
 
+// Motor de vistas
+app.set('view engine', 'pug')
+
 // Elementos estaticos
 app.use(express.static(path.join(__dirname, 'public')))
-
-
-// Mensajes de errores, sessiones
-app.use(flash())
-
+1
 app.use(session({
   secret: config.SECRET_TOKEN,
   resave: false,
   saveUninitialized: true
 }))
-
-// Motor de vistas
-app.set('view engine', 'pug')
+// Mensajes de errores, sessiones
+app.use(flash())
 
 // Rutas de la aplicacion
 app.use('/', routerUser);
@@ -56,7 +52,6 @@ mongoose.connect(config.db, (err, res) => {
 
 // Configuracion Passport
 require('./config/passport')(app)
-
 
 // Puerto en el que se ejecuta el server
 app.listen(config.port, () => {

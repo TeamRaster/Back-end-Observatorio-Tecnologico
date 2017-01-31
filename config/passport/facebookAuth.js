@@ -5,28 +5,34 @@ const passport = require('passport')
 const facebookStrategy = require('passport-facebook')
 const User = require('../../models/modelUsers')
 
+// Configuraciones de keys
+const configAuth = require('./configAuth')
+
 function facebookConfig(app) {
   // todo separar en varios archivos para tener un mejor orden
   passport.use(new facebookStrategy({
-    clientID: '196096000859413',
-    clientSecret: '60f39e62bfca0fe5662cd39abc5afa89',
-    callbackURL: '/auth/facebook/callback'
+    clientID     : configAuth.facebookAuth.clientID,
+    clientSecret : configAuth.facebookAuth.clientSecret,
+    callbackURL  : configAuth.facebookAuth.callbackURL
   },
   function (accessToken, refreshToken, profile, done) {
+    // retorna el nombre del usuario
     let username = profile._json.name.split(' ').join('.')
     console.log(username);
-    User.findOne({'facebook.id': profile._json.id})
-      .then(function (user) {
+    // realiza una busqueda para ver si ya esta registrado
+    User.findOne({
+      'facebook.id': profile._json.id
+    })
+    .then(function (user) {
         if(user) {
           return done(null, user)
         } else {
-          let user = new User({
-            name: username,
-            'facebook.id': profile._json.id
+          let newUser = new User({
+            'facebook.id'   : profile._json.id,
+            'facebook.name' : username
           })
-          user.save(function (err) {
+          newUser.save(function (err) {
             if (!err) return done(null, user)
-            console.log(user + ' Usuario guardado exitosamente');
           })
         }
       })

@@ -20,7 +20,9 @@ router.get('/sign_up', (req, res) => {
   res.render('sign_up')
 })
 
-
+router.get('/logout', (req, res) => {
+  res.send('Saliendo de la sesion')
+})
 
 // Exportacion de las rutas
 module.exports = router;
