@@ -4,7 +4,7 @@
 const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
-const logger = require('morgan');
+// const logger = require('morgan');
 const cookieParser = require('cookie-parser')
 const path = require('path')
 const mongoose = require('mongoose')
@@ -28,7 +28,6 @@ app.use(cookieParser())
 // Elementos estaticos
 app.use(express.static(path.join(__dirname, 'public')))
 
-// app.use('/', validatorUsers);
 
 // Mensajes de errores, sessiones
 app.use(flash())
@@ -44,7 +43,9 @@ app.set('view engine', 'pug')
 
 // Rutas de la aplicacion
 app.use('/', routerUser);
+// todo agregar middleware para validar a usuarios con sesion iniciada
 app.use('/app', routerUserPlus);
+// todo agregar middleware para validar a Administradores
 app.use('/app/administrator', routerAdministrator);
 
 // Conexion a la base de datos

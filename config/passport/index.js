@@ -15,9 +15,9 @@ function passportConfig(app) {
   })
 
   // Configuracion autenticacion de usuario local
-  require('./authLocal')(app)
+  require('./localAuth')(app)
   // Configuracion facebook autenticacion
-  require('./authFacebook')(app)
+  require('./facebookAuth')(app)
 }
 
 module.exports = passportConfig

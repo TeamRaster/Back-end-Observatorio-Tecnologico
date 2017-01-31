@@ -6,6 +6,7 @@ const facebookStrategy = require('passport-facebook')
 const User = require('../../models/modelUsers')
 
 function facebookConfig(app) {
+  // todo separar en varios archivos para tener un mejor orden
   passport.use(new facebookStrategy({
     clientID: '196096000859413',
     clientSecret: '60f39e62bfca0fe5662cd39abc5afa89',
