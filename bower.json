@@ -12,6 +12,8 @@
   "homepage": "https://github.com/TeamRaster/ProyectoOb",
   "private": true,
   "dependencies": {
-    "material-design-lite": "^1.3.0"
+    "material-design-lite": "^1.3.0",
+    "flexboxgrid": "^6.3.2",
+    "ed-grid": "^2.0.1"
   }
 }
