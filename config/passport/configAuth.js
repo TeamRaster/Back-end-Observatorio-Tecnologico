@@ -2,15 +2,15 @@
 'use strict'
 
 module.exports = {
-  'facebookAuth': {
-    'clientID'		  : '196096000859413',
-    'clientSecret' 	: '60f39e62bfca0fe5662cd39abc5afa89',
-    'callbackURL' 	: '/auth/facebook/callback'
+  facebookAuth: {
+    clientID		  : '196096000859413',
+    clientSecret 	: '60f39e62bfca0fe5662cd39abc5afa89',
+    callbackURL 	: '/auth/facebook/callback'
   },
-  'twitterAuth': {
-    'clientID'		  : '9QJBOcRk7EOSd905pxYQJhveF',
-    'clientSecret' 	: 'pMmodNpxLyjzfJEFc4DqTCg2tM0RSvl5sLgztHqpejVJQsdj4A',
-    'callbackURL' 	: '/auth/twitter/callback'
+  twitterAuth: {
+    clientID		  : '9QJBOcRk7EOSd905pxYQJhveF',
+    clientSecret 	: 'pMmodNpxLyjzfJEFc4DqTCg2tM0RSvl5sLgztHqpejVJQsdj4A',
+    callbackURL 	: '/auth/twitter/callback'
   }
   // Aun no esta implementado
   // linkedinAuth: {
