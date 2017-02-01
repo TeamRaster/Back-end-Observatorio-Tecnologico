@@ -8,7 +8,7 @@ const User = require('../../models/modelUsers')
 // Configuraciones de keys
 const configAuth = require('./configAuth')
 function facebookConfig(app) {
-  // todo separar en varios archivos para tener un mejor orden .l.
+  // todo separar en varios archivos para tener un mejor orden
   passport.use(new facebookStrategy({
     clientID     : configAuth.facebookAuth.clientID,
     clientSecret : configAuth.facebookAuth.clientSecret,
@@ -38,10 +38,10 @@ function facebookConfig(app) {
       })
   }))
 
-  app.get('/auth/facebook/', passport.authenticate('facebook'))
-  app.get('/auth/facebook/callback/', passport.authenticate('facebook', {
-    successRedirect: '/',
-    failureRedirect: '/sign_in',
+  app.get('/auth/facebook', passport.authenticate('facebook'))
+  app.get('/auth/facebook/callback', passport.authenticate('facebook', {
+    successRedirect: '/success',
+    failureRedirect: '/',
   }))
 }
 

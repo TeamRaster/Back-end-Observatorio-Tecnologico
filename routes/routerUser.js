@@ -3,6 +3,7 @@
 // todo importar controlador
 const express = require('express')
 const router = express.Router()
+const User = require('../models/modelUsers')
 
 // Rutas de acceso
 router.get('/', (req, res) => {
@@ -22,6 +23,14 @@ router.get('/sign_up', (req, res) => {
 
 router.get('/logout', (req, res) => {
   res.send('Saliendo de la sesion')
+})
+
+router.get('/admin/users', (req, res) => {
+  User.find()
+    .then(function (users) {
+      res.locals.users = users
+      return res.render('getUsers', {users: res.locals.users});
+    })
 })
 
 // Exportacion de las rutas
