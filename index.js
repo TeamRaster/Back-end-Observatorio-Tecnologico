@@ -10,6 +10,7 @@ const path = require('path')
 const mongoose = require('mongoose')
 const session = require('express-session')
 const flash = require('connect-flash')
+const RedisStore = require('connect-redis')(session)
 
 const routerUser = require('./routes/routerUser')
 const routerUserPlus = require('./routes/routerUserPlus')
@@ -17,6 +18,7 @@ const routerAdministrator = require('./routes/routerAdministrator')
 const validatorUsers = require('./middlewares/validatorUsers')
 const validatorAdministrators = require('./middlewares/validatorAdministrators')
 const config = require('./config/config.js') // variables de config (dbs, puertos, keytokens)
+const User = require('./models/modelUsers')
 
 // Recibe la url como si fuera un objeto JSON
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -28,8 +30,9 @@ app.set('view engine', 'pug')
 
 // Elementos estaticos
 app.use(express.static(path.join(__dirname, 'public')))
-1
+
 app.use(session({
+  store: new RedisStore({}),
   secret: config.SECRET_TOKEN,
   resave: false,
   saveUninitialized: true
@@ -38,11 +41,11 @@ app.use(session({
 app.use(flash())
 
 // Rutas de la aplicacion
-app.use('/', routerUser);
+app.use('/', routerUser)
 // todo agregar middleware para validar a usuarios con sesion iniciada
-app.use('/app', routerUserPlus);
+app.use('/app', routerUserPlus)
 // todo agregar middleware para validar a Administradores
-app.use('/app/administrator', routerAdministrator);
+app.use('/app/administrator', routerAdministrator)
 
 // Conexion a la base de datos
 mongoose.connect(config.db, (err, res) => {

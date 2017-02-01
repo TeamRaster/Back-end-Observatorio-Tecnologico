@@ -3,17 +3,18 @@ extends ./layout/layoutIndex
 block main
   .top-space
   .row.center-xs
-    .col-xs-5
+    .col-xs-10
       table
         thead
           tr: th(colspan="3") Usuarios registrados actualmente
         tbody
           tr
             td ID Usuario
-            td Nombre
             td FacebookID
-          each user in users
+            td Nombre
+          for user in users
             tr.table
               td: p= user._id
-              td: p= user.facebook.id
               td: p= user.facebook.name
+              td: p= user.local.email
+              td: p= user.local.password

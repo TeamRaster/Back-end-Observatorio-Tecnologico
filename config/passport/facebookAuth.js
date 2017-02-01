@@ -15,10 +15,8 @@ function facebookConfig(app) {
     callbackURL  : configAuth.facebookAuth.callbackURL
   },
   function (accessToken, refreshToken, profile, done) {
-    console.log(profile)
     // retorna el nombre del usuario
     let username = profile._json.name.split(' ').join('.')
-    console.log(username)
     // realiza una busqueda para ver si ya esta registrado
     User.findOne({
       'facebook.id': profile._json.id
@@ -40,8 +38,8 @@ function facebookConfig(app) {
 
   app.get('/auth/facebook', passport.authenticate('facebook'))
   app.get('/auth/facebook/callback', passport.authenticate('facebook', {
-    successRedirect: '/success',
-    failureRedirect: '/',
+    successRedirect: '/index',
+    failureRedirect: '/sign_in'
   }))
 }
 

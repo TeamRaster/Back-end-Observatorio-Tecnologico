@@ -4,6 +4,10 @@ block title
   title Index
 
 block main
+  if user != ""
+    p= user
+  if face != ""
+    p= face
   .row.center-xs
     .col-xs-5
       h3 Pagina principal del proyecto
@@ -12,6 +16,8 @@ block main
       a.mdl-button.mdl-js-button.mdl-button--raised.mdl-js-ripple-effect(href="/sign_in") Iniciar sesion
     .col-xs-2
       a.mdl-button.mdl-js-button.mdl-button--raised.mdl-js-ripple-effect(href="/sign_up") Registrarse
+    .col-xs-2
+      a.mdl-button.mdl-js-button.mdl-button--raised.mdl-js-ripple-effect(href="/logout") Cerrar Sesion
     .col-xs-2
       a.mdl-button.mdl-js-button.mdl-button--raised.mdl-js-ripple-effect(href="/admin/users") Usuarios Registrados
 
