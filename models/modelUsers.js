@@ -8,20 +8,37 @@ const bcrypt = require('bcrypt-nodejs')
 // Esquema de la tabla usuarios
 const UsersSchema = new Schema({
   local: {
-    email:      String,
-    password:   String
+    email     : String,
+    password  : String,
+    createdAt : {
+      type    : Date,
+      default : Date.now
+    }
   },
   facebook: {
-    id:         String,
-    token:      String,
-    email:      String,
-    name:       String
+    name      : String,
+    provider  : String,
+    id        : {
+      type    : String,
+      unique  : true
+    },
+    photo     : String,
+    createdAt : {
+      type    : Date,
+      default : Date.now
+    }
+    // token     : String,
+    // email     : String,
   },
   twitter: {
-    id:         String,
-    token:      String,
-    email:      String,
-    username:   String
+    id        : String,
+    token     : String,
+    email     : String,
+    username  : String,
+    createdAt : {
+      type    : Date,
+      default : Date.now
+    }
   }
 })
 
