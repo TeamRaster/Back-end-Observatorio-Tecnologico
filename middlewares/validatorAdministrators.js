@@ -2,10 +2,11 @@
 'use strict'
 
 // Validacion para que solo administradores entren
-// module.exports = (request, response, next) => {
-//   if(!request.session.administrator) {
-//     response.redirect('/')
-//   } else {
-//     next()
-//   }
-// }
+function isAdmin(req, res, next) {
+    if (req.isAuthenticated() && req.user.local.mode === 'Adminsitrador') return next()
+    res.redirect('/')
+}
+
+module.exports = {
+    isAdmin
+}

@@ -1,6 +1,6 @@
 'use strict'
 
-const TwitterStrategy = require('passport-twitter')
+const TwitterStrategy = require('passport-twitter').Strategy
 const User = require('../../models/modelUsers')
 
 function twitterConfig(app, passport, config) {
@@ -11,16 +11,16 @@ function twitterConfig(app, passport, config) {
 
     }, (token, tokenSecret, profile, done) => {
         process.nextTick(() => {
-            User.findOne({ 'twitter.id' : profile.id }, (err, user) => {
+            User.findOne({ 'twitter.idTw' : profile.id }, (err, user) => {
                 if (err) return done(err)
                 if (user) return done(null, user)
                 else {
                     let newUser = new User()
-                    newUser.twitter.id       = profile.id
+                    newUser.twitter.idTw     = profile.id
+                    newUser.twitter.username = profile.displayName
+                    newUser.twitter.photo    = profile.photos[0].value
                     newUser.twitter.provider = 'Twitter'
                     newUser.twitter.token    = token
-                    newUser.twitter.email    = profile.username
-                    newUser.twitter.username = profile.displayName
 
                     newUser.save((err) => {
                         if (err) throw err
@@ -32,8 +32,8 @@ function twitterConfig(app, passport, config) {
     }))
     app.get('/auth/twitter', passport.authenticate('twitter'))
     app.get('/auth/twitter/callback', passport.authenticate('twitter', {
-        successRedirect : '/user',
-        failureRedirect: '/sign_in'
+        successRedirect  : config.successRedirect,
+        failureRedirect  : config.failureRedirect
     }))
 }
 

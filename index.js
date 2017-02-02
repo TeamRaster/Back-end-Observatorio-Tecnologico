@@ -11,13 +11,13 @@ const flash = require('connect-flash')
 const RedisStore = require('connect-redis')(session)
 // const logger = require('morgan');
 
+const routerAccounts = require('./routes/routerAccounts')
 const routerUser = require('./routes/routerUser')
 const routerUserPlus = require('./routes/routerUserPlus')
 const routerAdministrator = require('./routes/routerAdministrator')
 const validatorUsers = require('./middlewares/validatorUsers')
 const validatorAdministrators = require('./middlewares/validatorAdministrators')
 const config = require('./config/config.js') // variables de config (dbs, puertos, keytokens)
-const User = require('./models/modelUsers')
 
 // Recibe la url como si fuera un objeto JSON
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -43,11 +43,16 @@ app.use(flash())
 require('./config/passport')(app)
 
 // Rutas de la aplicacion
+app.use(routerAccounts)
+// Rutas del usuario normal
 app.use('/', routerUser)
 // todo agregar middleware para validar a usuarios con sesion iniciada
 app.use('/app', routerUserPlus)
 // todo agregar middleware para validar a Administradores
 app.use('/app/administrator', routerAdministrator)
+
+// Cuando se usan promesas en mongoose
+mongoose.Promise = global.Promise;
 
 // Conexion a la base de datos
 mongoose.connect(config.db, (err, res) => {

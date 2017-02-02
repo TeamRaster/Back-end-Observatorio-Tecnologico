@@ -6,14 +6,19 @@ block title
 block main
   .row.center-xs
     .col-xs-8
-      if(user)
+      if(user.facebook)
         img(src="" + user.facebook.photo)
         p Nombre: #{user.facebook.name}
         p Proveedor: #{user.facebook.provider}
-        p facebookID: #{user.facebook.id}
-        p Fecha de Registro: #{user.facebook.cratedAt}
-        a(href='logout') Salir
-      else
-        a(href='auth/twitter') Login con Twitter
-        a(href='auth/facebook') Login con Facebook
+        p facebookID: #{user.facebook.idFw}
+        p Fecha de Registro: #{user.local.cratedAt}
+        a.mdl-button.mdl-js-button.mdl-button--raised.mdl-js-ripple-effect(href="/accounts/logout") Cerrar Sesion
+      else if(user.twitter)
+        img(src="" + user.twitter.photo)
+        p Nombre: #{user.twitter.username}
+        p Proveedor: #{user.twitter.provider}
+        p twitterID: #{user.twitter.idTw}
+        p Fecha de Registro: #{user.local.cratedAt}
+        a.mdl-button.mdl-js-button.mdl-button--raised.mdl-js-ripple-effect(href="/accounts/logout") Cerrar Sesion
+
 

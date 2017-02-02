@@ -12,15 +12,16 @@ function facebookConfig(app, passport, config) {
 
     }, (accessToken, refreshToken, profile, done) => {
         process.nextTick(() => {
-            User.findOne({'facebook.id': profile.id}, (err, user) => {
+            User.findOne({'local.id': profile.id}, (err, user) => {
                 if (err) return done(err)
                 if (user) return done(null, user)
                 else {
                     let newUser = new User()
-                    newUser.facebook.id = profile.id
-                    newUser.facebook.name = profile.displayName
-                    newUser.facebook.photo = profile.photos[0].value
+                    newUser.facebook.idFb     = profile.id
+                    newUser.facebook.name     = profile.displayName
+                    newUser.facebook.photo    = profile.photos[0].value
                     newUser.facebook.provider = 'Facebook'
+                    newUser.facebook.token = accessToken
 
                     newUser.save((err) => {
                         if (err) throw err
@@ -32,8 +33,8 @@ function facebookConfig(app, passport, config) {
     }))
     app.get('/auth/facebook', passport.authenticate('facebook'))
     app.get('/auth/facebook/callback', passport.authenticate('facebook', {
-        successRedirect: '/user',
-        failureRedirect: '/sign_in'
+        successRedirect  : config.successRedirect,
+        failureRedirect  : config.failureRedirect
     }))
 }
 
