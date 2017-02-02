@@ -9,7 +9,13 @@ const bcrypt = require('bcrypt-nodejs')
 const UsersSchema = new Schema({
     local: {
         email       : String,
-        password    : String
+        password    : String,
+        username    : String,
+        photo       : String,
+        mode        : {
+            type    : String,
+            default : 'Usuario'
+        }
     },
     facebook: {
         name        : String,
@@ -27,10 +33,18 @@ const UsersSchema = new Schema({
         email       : String,
     },
     twitter: {
-        id          : String,
+        id          : {
+            type    : String,
+            unique  : true
+        },
+        provider    : String,
         token       : String,
         email       : String,
-        username    : String
+        username    : String,
+        cratedAt    : {
+            type    : Date,
+            default : Date.now
+        }
     }
 })
 
@@ -47,5 +61,4 @@ UsersSchema.methods.hashPassword = function(password) {
     })
 }
 
-// Exportacion del modelo
 module.exports = mongoose.model('User', UsersSchema)

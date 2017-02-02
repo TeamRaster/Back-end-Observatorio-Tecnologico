@@ -1,10 +1,9 @@
 'use strict'
 
 const passport = require('passport')
-const User = require('../../models/modelUsers')
+const config = require('./configAuth')
 
 function passportConfig(app) {
-    // Passport middlewares
     passport.serializeUser((user, done) => {
         done(null, user)
     })
@@ -16,8 +15,12 @@ function passportConfig(app) {
     app.use(passport.initialize())
     app.use(passport.session())
 
-    // Configuracion facebook autenticacion
-    require('./facebookAuth')(app)
+    // Configuracion Facebook autenticacion
+    require('./facebookAuth')(app, passport, config)
+    // Configuracion Twitter autenticacion
+    require('./twitterAuth')(app, passport, config)
+    // Configuracion Local autenticacion
+    // require('./twitterAuth')(app, passport, config)
 }
 
 module.exports = passportConfig

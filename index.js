@@ -1,16 +1,15 @@
-// Archivo principal del sitio web
 'use strict'
 
 const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
-// const logger = require('morgan');
 const cookieParser = require('cookie-parser')
 const path = require('path')
 const mongoose = require('mongoose')
 const session = require('express-session')
 const flash = require('connect-flash')
 const RedisStore = require('connect-redis')(session)
+// const logger = require('morgan');
 
 const routerUser = require('./routes/routerUser')
 const routerUserPlus = require('./routes/routerUserPlus')
