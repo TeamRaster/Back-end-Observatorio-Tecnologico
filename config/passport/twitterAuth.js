@@ -11,16 +11,15 @@ function twitterConfig(app, passport, config) {
 
     }, (token, tokenSecret, profile, done) => {
         process.nextTick(() => {
-            User.findOne({ 'twitter.idTw' : profile.id }, (err, user) => {
+            User.findOne({ providerId : profile.id }, (err, user) => {
                 if (err) return done(err)
                 if (user) return done(null, user)
                 else {
                     let newUser = new User()
-                    newUser.twitter.idTw     = profile.id
-                    newUser.twitter.username = profile.displayName
-                    newUser.twitter.photo    = profile.photos[0].value
-                    newUser.twitter.provider = 'Twitter'
-                    newUser.twitter.token    = token
+                    newUser.providerId  = profile.id
+                    newUser.username    = profile.displayName
+                    newUser.photo       = profile.photos[0].value
+                    newUser.provider    = 'Twitter'
 
                     newUser.save((err) => {
                         if (err) throw err

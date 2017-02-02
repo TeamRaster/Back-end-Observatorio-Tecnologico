@@ -1,6 +1,6 @@
 'use strict'
 
-const FacebookStrategy = require('passport-facebook')
+const FacebookStrategy = require('passport-facebook').Strategy
 const User = require('../../models/modelUsers')
 
 function facebookConfig(app, passport, config) {
@@ -12,16 +12,15 @@ function facebookConfig(app, passport, config) {
 
     }, (accessToken, refreshToken, profile, done) => {
         process.nextTick(() => {
-            User.findOne({'local.id': profile.id}, (err, user) => {
+            User.findOne({ providerId : profile.id}, (err, user) => {
                 if (err) return done(err)
                 if (user) return done(null, user)
                 else {
                     let newUser = new User()
-                    newUser.facebook.idFb     = profile.id
-                    newUser.facebook.name     = profile.displayName
-                    newUser.facebook.photo    = profile.photos[0].value
-                    newUser.facebook.provider = 'Facebook'
-                    newUser.facebook.token = accessToken
+                    newUser.providerId  = profile.id
+                    newUser.username    = profile.displayName
+                    newUser.photo       = profile.photos[0].value
+                    newUser.provider    = 'Facebook'
 
                     newUser.save((err) => {
                         if (err) throw err

@@ -15,6 +15,5 @@ block main
           for user in users
             tr.table
               td: p= user._id
-              td: p= user.facebook.name
-              td: p= user.local.email
-              td: p= user.local.password
+              td: p= user.username
+              td: p= user.email

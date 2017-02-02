@@ -1,14 +1,19 @@
 'use strict'
 
 const passport = require('passport')
+
 const config = require('./configAuth')
+const User = require('../../models/modelUsers')
 
 function passportConfig(app) {
     passport.serializeUser((user, done) => {
         done(null, user)
     })
 
-    passport.deserializeUser(function(obj, done) {
+    passport.deserializeUser((obj, done) => {
+        // User.findById(user.id, function(err, user) {
+        //     done(err, user)
+        // })
         done(null, obj)
     })
 
@@ -20,7 +25,7 @@ function passportConfig(app) {
     // Configuracion Twitter autenticacion
     require('./twitterAuth')(app, passport, config)
     // Configuracion Local autenticacion
-    // require('./twitterAuth')(app, passport, config)
+    require('./linkedinAuth')(app, passport, config)
 }
 
 module.exports = passportConfig
