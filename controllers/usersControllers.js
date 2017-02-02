@@ -1,5 +1,7 @@
 'use strict'
 
+const User = require('../models/modelUsers')
+
 function getIndex(req, res) {
     return res.render('index')
 }
@@ -23,10 +25,29 @@ function getLogout(req, res) {
     res.redirect('/')
 }
 
+function setUser(req, res) {
+    let user = new User({
+        username   : req.body.username,
+        email      : req.body.email,
+        password   : req.body.password,
+        photo      : req.body.photo,
+        provider   : 'Local',
+        // password_confirmation : res.body.password_confirmation
+    })
+    user.save().then((us) => {
+        console.log('[Successful]: Usuario guardado')
+        res.render('/')
+    }, (error) => {
+        console.log(`[Error Save]: Usuario no almacenado ${error}`)
+        res.render('signup')
+    })
+}
+
 module.exports = {
     getIndex,
     getSingin,
     getSingup,
     getLogin,
-    getLogout
+    getLogout,
+    setUser
 }

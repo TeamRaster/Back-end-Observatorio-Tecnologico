@@ -7,23 +7,41 @@ const bcrypt = require('bcrypt-nodejs')
 
 // Esquema de la tabla usuarios
 const UsersSchema = new Schema({
-    providerId  : {
-        type    : String,
-        unique  : true
+    providerId    : {
+        type      : String,
+        unique    : true
     },
-    provider    : String,
-    email       : String,
-    password    : String,
-    username    : String,
-    photo       : String,
-    mode        : {
-        type    : String,
-        default : 'Usuario'
+    username      : {
+        type      : String,
+        maxlength : [50, "[Nombre]: Maximo 50 caracteres"],
     },
-    cratedAt    : {
-        type    : Date,
-        default : Date.now
+    email         : String,
+    password      : {
+        type      : String,
+        minlength : [8, "[Password]: Minimo 8 caracteres"],
+        validate : {
+            validator: function (p) {
+                return this.password_confirmation == p
+            },
+            message: "[Error]: Las contraseñas no coinciden"
+        }
+    },
+    photo         : String,
+    provider      : String,
+    mode          : {
+        type      : String,
+        default   : 'Usuario'
+    },
+    cratedAt      : {
+        type      : Date,
+        default   : Date.now
     }
+})
+
+UsersSchema.virtual("password_confirmation").get(function() {
+    return this.password_con;
+}).set(function(password) {
+    this.password_con = password;
 })
 
 // Validacion de contraseñas para inicio de sesion

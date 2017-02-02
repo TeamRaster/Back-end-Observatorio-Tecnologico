@@ -24,8 +24,10 @@ function passportConfig(app) {
     require('./facebookAuth')(app, passport, config)
     // Configuracion Twitter autenticacion
     require('./twitterAuth')(app, passport, config)
-    // Configuracion Local autenticacion
+    // Configuracion Linkedin autenticacion
     require('./linkedinAuth')(app, passport, config)
+    // Configuracion Local autenticacion
+    require('./localAuth')(app, passport, config)
 }
 
 module.exports = passportConfig

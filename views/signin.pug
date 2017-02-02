@@ -19,7 +19,7 @@ block main
       p= error
   .row.center-xs
     .col-xs-5
-      form(method="POST", name="form_sign_in", id="form_sign_in" action="/newSession")
+      form(method="POST", name="form_sign_in", id="form_sign_in" action="/auth/local")
         .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
           label(for="username" class="mdl-textfield__label") Nombre de Usuario:
           input(type="text", class="mdl-textfield__input", name="username", id="username")

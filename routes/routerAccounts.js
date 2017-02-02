@@ -15,9 +15,11 @@ router.get('/accounts/signup', (req, res) => {
     usersControllers.getSingup(req, res)
 })
 
-// / Inicio y cierre de sesion
 router.get('/accounts/login', (req, res) => {
     usersControllers.getLogin(req, res)
+})
+router.post('/accounts/local', (req, res) => {
+    usersControllers.setUser(req, res)
 })
 router.get('/accounts/logout', (req, res) => {
     usersControllers.getLogout(req, res)
