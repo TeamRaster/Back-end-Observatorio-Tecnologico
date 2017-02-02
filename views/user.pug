@@ -1,0 +1,19 @@
+extends ./layout/layoutIndex
+
+block title
+  title Registro de Usuarios
+
+block main
+  .row.center-xs
+    .col-xs-8
+      if(user)
+        img(src="" + user.facebook.photo)
+        p Nombre: #{user.facebook.name}
+        p Proveedor: #{user.facebook.provider}
+        p facebookID: #{user.facebook.id}
+        p Fecha de Registro: #{user.facebook.cratedAt}
+        a(href='logout') Salir
+      else
+        a(href='auth/twitter') Login con Twitter
+        a(href='auth/facebook') Login con Facebook
+

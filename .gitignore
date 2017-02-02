@@ -50,4 +50,5 @@ public/bower_components
 .idea
 
 # Personal #
+############
 configAuth.js
