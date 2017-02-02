@@ -40,6 +40,9 @@ app.use(session({
 // Mensajes de errores, sessiones
 app.use(flash())
 
+// Configuracion Passport
+require('./config/passport')(app)
+
 // Rutas de la aplicacion
 app.use('/', routerUser)
 // todo agregar middleware para validar a usuarios con sesion iniciada
@@ -53,8 +56,6 @@ mongoose.connect(config.db, (err, res) => {
   // console.log('Conexion establecida con la base de datos [./index.js]')
 })
 
-// Configuracion Passport
-require('./config/passport')(app)
 
 // Puerto en el que se ejecuta el server
 app.listen(config.port, () => {

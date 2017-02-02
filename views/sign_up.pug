@@ -1,24 +1,24 @@
 extends ./layout/layoutIndex
 
 block title
-  title Registro de Usuarios
+    title Registro de Usuarios
 
 block main
-  .row.center-xs
-    .col-xs-8
-      h3 Registrate
-  .row.center-xs
-    .col-xs-8
-      a(href="/auth/facebook" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect") Facebook
-  .row.center-xs
-    .col-xs-5
-      form(method="POST", name="form_sign_in", id="form_sign_in" action="/newUser")
-        .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
-          label(for="username" class="mdl-textfield__label") Nombre de Usuario:
-          input(type="text", class="mdl-textfield__input", name="username", id="username")
-        .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
-          label(for="password" class="mdl-textfield__label") Contraseña:
-          input(type="password", class="mdl-textfield__input", name="password", id="password")
-        div
-          input(type="submit", class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent", name="btn", id="btn", value="Enviar")
+    .row.center-xs
+        .col-xs-8
+            h3 Registrate
+    .row.center-xs
+        .col-xs-8
+            a(href="/auth/facebook" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect") Facebook
+    .row.center-xs
+        .col-xs-5
+            form(method="POST", name="form_sign_in", id="form_sign_in" action="/newUser")
+                .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                    label(for="username" class="mdl-textfield__label") Nombre de Usuario:
+                    input(type="text", class="mdl-textfield__input", name="username", id="username")
+                .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                    label(for="password" class="mdl-textfield__label") Contraseña:
+                    input(type="password", class="mdl-textfield__input", name="password", id="password")
+                div
+                    input(type="submit", class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent", name="btn", id="btn", value="Enviar")
 

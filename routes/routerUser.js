@@ -9,11 +9,12 @@ const session = require('express-session')
 const User = require('../models/modelUsers')
 
 // Rutas de acceso
-router.get('/index', (req, res) => {
-  console.log('================')
-  // todo identifica sesion iniciada con Facebook
-  console.log(req.user)
-  res.render('index', {user: req.session.user_id, face: req.user})
+router.get('/', (req, res) => {
+  res.render('index')
+})
+
+router.get('/user', function(req, res) {
+    res.render('user', {user: req.user})
 })
 
 // todo separar el contenido de las rutas al controlador apropiado
@@ -23,9 +24,9 @@ router.get('/sign_in', (req, res) => {
   res.render('sign_in', {error: res.locals.error_message})
 })
 
-router.get('/sign_up', (req, res) => {
-  res.render('sign_up')
-})
+// router.get('/sign_up', (req, res) => {
+//   res.render('sign_up')
+// })
 
 router.get('/logout', (req, res) => {
   req.logout()
@@ -33,37 +34,37 @@ router.get('/logout', (req, res) => {
   res.redirect('/')
 })
 
-// Registro de usuarios localmente
-router.post('/newUser', (req, res) => {
-  let user = new User({
-    'local.email': req.body.username,
-    'local.password': req.body.password
-  })
-  // todo mostrar el error
-  user.save().then((us) => {
-    console.log('[Successful]: Usuario guardado')
-    res.redirect('/')
-  }, (error) => {
-    console.log('[Error Save]: Usuario no almacenado')
-    res.redirect('/sign_up')
-  })
-})
-
-router.post('/newSession', (req, res) => {
-  User.findOne({
-      'local.email'    : req.body.username,
-      'local.password' : req.body.password
-    },
-    function (err, user) {
-      // TODO Refactorizar esta parte! Agregar validaciones
-      if (err) {
-        console.log(String(err))
-        return
-      }
-      req.session.user_id = user._id
-      res.redirect('/')
-    })
-})
+// // Registro de usuarios localmente
+// router.post('/newUser', (req, res) => {
+//   let user = new User({
+//     'local.email': req.body.username,
+//     'local.password': req.body.password
+//   })
+//   // todo mostrar el error
+//   user.save().then((us) => {
+//     console.log('[Successful]: Usuario guardado')
+//     res.redirect('/')
+//   }, (error) => {
+//     console.log('[Error Save]: Usuario no almacenado')
+//     res.redirect('/sign_up')
+//   })
+// })
+//
+// router.post('/newSession', (req, res) => {
+//   User.findOne({
+//       'local.email'    : req.body.username,
+//       'local.password' : req.body.password
+//     },
+//     function (err, user) {
+//       // TODO Refactorizar esta parte! Agregar validaciones
+//       if (err) {
+//         console.log(String(err))
+//         return
+//       }
+//       req.session.user_id = user._id
+//       res.redirect('/')
+//     })
+// })
 
 router.get('/admin/users', (req, res) => {
   User.find()
