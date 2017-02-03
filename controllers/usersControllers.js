@@ -32,11 +32,11 @@ function setUser(req, res) {
         password   : req.body.password,
         photo      : req.body.photo,
         provider   : 'Local',
-        // password_confirmation : res.body.password_confirmation
+        password_confirmation : req.body.password_confirmation
     })
     user.save().then((us) => {
         console.log('[Successful]: Usuario guardado')
-        res.render('/')
+        res.redirect('/')
     }, (error) => {
         console.log(`[Error Save]: Usuario no almacenado ${error}`)
         res.render('signup')

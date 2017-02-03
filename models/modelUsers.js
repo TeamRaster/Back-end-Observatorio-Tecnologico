@@ -8,8 +8,7 @@ const bcrypt = require('bcrypt-nodejs')
 // Esquema de la tabla usuarios
 const UsersSchema = new Schema({
     providerId    : {
-        type      : String,
-        unique    : true
+        type      : String
     },
     username      : {
         type      : String,
@@ -39,10 +38,11 @@ const UsersSchema = new Schema({
 })
 
 UsersSchema.virtual("password_confirmation").get(function() {
-    return this.password_con;
+    return this.password_con
 }).set(function(password) {
-    this.password_con = password;
+    this.password_con = password
 })
+
 
 // Validacion de contraseñas para inicio de sesion
 UsersSchema.methods.validPassword = function(password) {

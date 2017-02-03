@@ -9,13 +9,13 @@ block main
       h3 Registrate
   .row.center-xs
     .col-xs-5
-      form(method="POST", name="form_sign_in", id="form_sign_in" action="/accounts/local")
+      form(method="POST" action="/accounts/local")
         .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
           label(for="username" class="mdl-textfield__label") Nombre de Usuario:
           input(type="text", class="mdl-textfield__input", name="username", id="username")
         .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
           label(for="email" class="mdl-textfield__label") Correo:
-          input(type="email", class="mdl-textfield__input", name="email", id="email")
+          input(type="text", class="mdl-textfield__input", name="email", id="email")
         .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
           label(for="password" class="mdl-textfield__label") Contraseña:
           input(type="password", class="mdl-textfield__input", name="password", id="password")
