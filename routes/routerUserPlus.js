@@ -3,10 +3,9 @@
 const express = require('express')
 const router = express.Router()
 
-// Rutas de acceso usuarios con sesion iniciada
-router.get('/', (req, res) => {
-  res.send('Pagina de usuario con sesion iniciada')
-})
+const usersControllers = require('../controllers/usersControllers')
+
+router.get('/', usersControllers.getIndexPlus)
 
 
 

@@ -1,9 +1,7 @@
 'use strict'
 
 const passport = require('passport')
-
 const config = require('./configAuth')
-const User = require('../../models/modelUsers')
 
 function passportConfig(app) {
     passport.serializeUser((user, done) => {
@@ -11,9 +9,6 @@ function passportConfig(app) {
     })
 
     passport.deserializeUser((obj, done) => {
-        // User.findById(user.id, function(err, user) {
-        //     done(err, user)
-        // })
         done(null, obj)
     })
 

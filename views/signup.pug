@@ -9,7 +9,7 @@ block main
       h3 Registrate
   .row.center-xs
     .col-xs-5
-      form(method="POST" action="/accounts/local")
+      form(method="POST" action="/accounts/local/user")
         .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
           label(for="username" class="mdl-textfield__label") Nombre de Usuario:
           input(type="text", class="mdl-textfield__input", name="username", id="username")
@@ -22,6 +22,16 @@ block main
         .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
           label(for="password_confirmation" class="mdl-textfield__label") Repetir Contraseña:
           input(type="password", class="mdl-textfield__input", name="password_confirmation", id="password_confirmation")
+        .row.center-xs
+          .col-xs-6
+            label(class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-1")
+              input(type="radio" id="option-1" class="mdl-radio__button" name="options" value="Usuario" checked)
+              span(class="mdl-radio__label") Usuario
+          .col-xs-6
+            label(class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-2")
+              input(type="radio" id="option-2" class="mdl-radio__button" name="options" value="Administrador")
+              span(class="mdl-radio__label") Administrador
+
         div
           input(type="submit", class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent", name="btn", id="btn", value="Registrarse")
 

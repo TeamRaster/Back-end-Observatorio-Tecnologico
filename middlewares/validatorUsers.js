@@ -6,6 +6,12 @@ function isLoggedIn(req, res, next) {
     res.redirect('/')
 }
 
+function isAdministrator(req, res, next) {
+    if (req.isAuthenticated() && req.user.mode === 'Administrador') return next()
+    res.redirect('/')
+}
+
 module.exports = {
-    isLoggedIn
+    isLoggedIn,
+    isAdministrator
 }

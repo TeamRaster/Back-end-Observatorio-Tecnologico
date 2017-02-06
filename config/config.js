@@ -1,4 +1,3 @@
-// Configuraciones generales
 'use strict'
 
 // En produccion definir las variables de entorno process.env

@@ -7,23 +7,16 @@ const User = require('../models/modelUsers')
 const usersControllers = require('../controllers/usersControllers')
 
 // Formularios
-router.get('/accounts/signin', (req, res) => {
-    usersControllers.getSingin(req, res)
-})
+router.get('/accounts/signin', usersControllers.getSingin)
+router.get('/accounts/signup', usersControllers.getSingup)
+// Iniciar sesion y salir
+router.get('/accounts/login', usersControllers.getLogin)
+router.get('/accounts/logout', usersControllers.returnLogout)
 
-router.get('/accounts/signup', (req, res) => {
-    usersControllers.getSingup(req, res)
-})
+router.post('/accounts/local/user', usersControllers.setUser)
 
-router.get('/accounts/login', (req, res) => {
-    usersControllers.getLogin(req, res)
-})
-router.post('/accounts/local', (req, res) => {
-    usersControllers.setUser(req, res)
-})
-router.get('/accounts/logout', (req, res) => {
-    usersControllers.getLogout(req, res)
-})
+
+
 
 // Rutas habilitadas solo en desarrollo
 router.get('/accounts/users', (req, res) => {

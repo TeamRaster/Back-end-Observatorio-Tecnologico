@@ -31,7 +31,7 @@ const UsersSchema = new Schema({
         type      : String,
         default   : 'Usuario'
     },
-    cratedAt      : {
+    creacionFecha : {
         type      : Date,
         default   : Date.now
     }

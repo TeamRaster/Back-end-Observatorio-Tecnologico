@@ -16,7 +16,6 @@ const routerUser = require('./routes/routerUser')
 const routerUserPlus = require('./routes/routerUserPlus')
 const routerAdministrator = require('./routes/routerAdministrator')
 const validatorUsers = require('./middlewares/validatorUsers')
-const validatorAdministrators = require('./middlewares/validatorAdministrators')
 const config = require('./config/config.js') // variables de config (dbs, puertos, keytokens)
 
 // Recibe la url como si fuera un objeto JSON
@@ -30,35 +29,37 @@ app.set('view engine', 'pug')
 // Elementos estaticos
 app.use(express.static(path.join(__dirname, 'public')))
 
+// Mensajes de errores, sessiones
+app.use(flash())
+
 app.use(session({
   store: new RedisStore({}),
   secret: config.SECRET_TOKEN,
   resave: false,
   saveUninitialized: true
 }))
-// Mensajes de errores, sessiones
-app.use(flash())
 
 // Configuracion Passport
 require('./config/passport')(app)
 
-// Rutas de la aplicacion
 app.use(routerAccounts)
-// Rutas del usuario normal
-app.use('/', routerUser)
-// todo agregar middleware para validar a usuarios con sesion iniciada
-app.use('/app', routerUserPlus)
-// todo agregar middleware para validar a Administradores
-app.use('/app/administrator', routerAdministrator)
 
-// Cuando se usan promesas en mongoose
-mongoose.Promise = global.Promise;
+app.use('/', routerUser)
+app.use('/app', validatorUsers.isLoggedIn, routerUserPlus)
+app.use('/app/administrator', validatorUsers.isAdministrator, routerAdministrator)
 
 // Conexion a la base de datos
 mongoose.connect(config.db, (err, res) => {
   if (err) return console.log(`Error conexion base de datos [./index.js]: ${err}`)
-  // console.log('Conexion establecida con la base de datos [./index.js]')
 })
+
+
+
+
+
+
+
+
 
 
 // Puerto en el que se ejecuta el server
