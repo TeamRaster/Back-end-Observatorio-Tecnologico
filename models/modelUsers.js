@@ -26,7 +26,7 @@ const UsersSchema = new Schema({
         type      : String,
         minlength : [6, "[Password]: Minimo 8 caracteres"],
         trim      : true,
-        select    : false
+        // select    : false
     },
     photo         : {
         type      : String,

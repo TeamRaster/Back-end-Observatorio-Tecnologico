@@ -11,13 +11,11 @@ function localConfig(app, passport, config) {
     }, (username, password, done) => {
         User.findOne({ email : username }, (err, user) => {
             if (err) return done(err)
-            else if(!user) return done(null, false)
+            else if(!user) return done(null, false, { msg: 'No existe el usuario' })
             user.comparePassword(password, user.password, function (err, isMatch) {
-                if (err) return  done(err)
-
-                if (!isMatch) return done(null, false, { msg: 'El usuario o contraseña con coinciden' })
-
-                return done(null, user, { msg: 'success' })
+                if (err) return  done(null, false, {message: `Error ${err}`})
+                else if (!isMatch) return done(null, false, { msg: 'El usuario o contraseña con coinciden' })
+                else return done(null, user, { msg: 'success' })
             })
         })
     }))
