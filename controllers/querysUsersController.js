@@ -1,7 +1,7 @@
 'use strict'
 
 const User = require('../models/modelUsers')
-
+const bcrypt = require('bcrypt-nodejs')
 
 // CRUD Usuarios
 
@@ -50,12 +50,14 @@ function setUser(req, res) {
     let user = new User({
         username   : req.body.username,
         email      : req.body.email,
-        password   : req.body.password,
         photo      : req.body.photo,
+        password   : req.body.password,
         provider   : 'Local',
-        mode       : req.body.options,
-        password_confirmation : req.body.password_confirmation
     })
+
+    if (req.body.options === "true") user.administrator = true
+    else user.administrator = false
+
     user.save().then((us) => {
         console.log('[Successful]: Usuario guardado')
         res.redirect('/')

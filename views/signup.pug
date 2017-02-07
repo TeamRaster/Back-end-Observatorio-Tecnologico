@@ -19,17 +19,14 @@ block main
         .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
           label(for="password" class="mdl-textfield__label") Contraseña:
           input(type="password", class="mdl-textfield__input", name="password", id="password")
-        .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
-          label(for="password_confirmation" class="mdl-textfield__label") Repetir Contraseña:
-          input(type="password", class="mdl-textfield__input", name="password_confirmation", id="password_confirmation")
         .row.center-xs
           .col-xs-6
             label(class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-1")
-              input(type="radio" id="option-1" class="mdl-radio__button" name="options" value="Usuario" checked)
+              input(type="radio" id="option-1" class="mdl-radio__button" name="options" value="false" checked)
               span(class="mdl-radio__label") Usuario
           .col-xs-6
             label(class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-2")
-              input(type="radio" id="option-2" class="mdl-radio__button" name="options" value="Administrador")
+              input(type="radio" id="option-2" class="mdl-radio__button" name="options" value="true")
               span(class="mdl-radio__label") Administrador
 
         div

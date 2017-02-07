@@ -7,12 +7,15 @@ block main
   .row.center-xs
     .col-xs-8
       if(user)
-        img(src="" + user.photo)
+        if(user.photo)
+          img(src="" + user.photo)
+        else
+          p Imagen no disponible
         p Nombre: #{user.username}
         p Proveedor: #{user.provider}
         p ProveedorID: #{user.providerId}
-        p Rango: #{user.mode}
-        p Fecha de Registro: #{user.cratedAt}
+        p Adminisitrador: #{user.administrator}
+        p Fecha de Registro: #{user.fechaCreacion}
         a.mdl-button.mdl-js-button.mdl-button--raised.mdl-js-ripple-effect(href="/accounts/logout") Cerrar Sesion
 
 

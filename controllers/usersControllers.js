@@ -3,6 +3,7 @@
 const User = require('../models/modelUsers')
 const querysUsers = require('../controllers/querysUsersController')
 
+
 function getIndex(req, res) {
     return res.render('index')
 }

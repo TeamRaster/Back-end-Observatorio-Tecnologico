@@ -1,22 +1,27 @@
 'use strict'
 
-const LocalinStrategy = require('passport-local').Strategy
+const LocalStrategy = require('passport-local').Strategy
 const User = require('../../models/modelUsers')
 
 function localConfig(app, passport, config) {
-    passport.use(new LocalinStrategy({
+    passport.use(new LocalStrategy({
         usernameField  : config.localAuth.username,
         passwordField  : config.localAuth.password
 
     }, (username, password, done) => {
-        User.findOne({ username : username }, (err, user) => {
+        User.findOne({ email : username }, (err, user) => {
             if (err) return done(err)
             else if(!user) return done(null, false)
-            else if(user.password === password) return done(null, user)
-            else return done(null, false, {message: 'El usuario o contraseña con coinciden'})
+            user.comparePassword(password, user.password, function (err, isMatch) {
+                if (err) return  done(err)
+
+                if (!isMatch) return done(null, false, { msg: 'El usuario o contraseña con coinciden' })
+
+                return done(null, user, { msg: 'success' })
+            })
         })
     }))
-    app.get('/auth/local', passport.authenticate('local', {
+    app.post('/auth/local', passport.authenticate('local', {
         successRedirect  : config.successRedirect,
         failureRedirect  : config.failureRedirect,
         failureFlash     : true

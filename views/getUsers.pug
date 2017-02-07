@@ -9,11 +9,17 @@ block main
           tr: th(colspan="3") Usuarios registrados actualmente
         tbody
           tr
-            td ID Usuario
-            td FacebookID
             td Nombre
+            td Proveedor de datos
+            td idProveedor
+            td Rango
+            td Correo
+            td Fecha de registro
           for user in users
             tr.table
-              td: p= user._id
               td: p= user.username
+              td: p= user.provider
+              td: p= user.providerId
+              td: p= user.administrator
               td: p= user.email
+              td: p= user.fechaCreacion

@@ -9,6 +9,7 @@ const mongoose = require('mongoose')
 const session = require('express-session')
 const flash = require('connect-flash')
 const RedisStore = require('connect-redis')(session)
+const bcrypt = require('bcrypt-nodejs')
 // const logger = require('morgan');
 
 const routerAccounts = require('./routes/routerAccounts')
@@ -64,6 +65,6 @@ mongoose.connect(config.db, (err, res) => {
 
 // Puerto en el que se ejecuta el server
 app.listen(config.port, () => {
-    //
+//
 })
 

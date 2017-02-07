@@ -9,9 +9,5 @@ router.get('/', (req, res) => {
   res.send('Pagina del administrador')
 })
 
-// router.get('/logout', usersControllers.)
-
-
-
 // Exportacion de las rutas
 module.exports = router;
