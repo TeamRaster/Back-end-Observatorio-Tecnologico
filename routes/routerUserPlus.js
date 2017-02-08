@@ -45,7 +45,7 @@ router.route('/users/:id') // Crud a users de manera individual
     .delete(() => {})
 
 router.route('/users') // Crud a users de manera grupal
-    .get(() => {})
+    .get(() => {message: user})
     .post(() => {})
 
 

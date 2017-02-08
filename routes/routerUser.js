@@ -9,7 +9,7 @@ const usuariosCrudController = require('../controllers/usuariosCrudController')
 // Vistas =========================================================
 router.get('/', routesController.getViewIndex)
 
-// router.get('/ofertas', routesController.getIndex)
+//router.get('/ofertas', routesController.getIndex)
 // router.get('/demandas', routesController.getIndex)
 // router.get('/noticias', routesController.getIndex)
 
