@@ -9,10 +9,9 @@ const mongoose = require('mongoose')
 const session = require('express-session')
 const flash = require('connect-flash')
 const RedisStore = require('connect-redis')(session)
-const bcrypt = require('bcrypt-nodejs')
 // const logger = require('morgan');
 
-const routerAccounts = require('./routes/routerAccounts')
+
 const routerUser = require('./routes/routerUser')
 const routerUserPlus = require('./routes/routerUserPlus')
 const routerAdministrator = require('./routes/routerAdministrator')
@@ -43,7 +42,6 @@ app.use(session({
 // Configuracion Passport
 require('./config/passport')(app)
 
-app.use(routerAccounts)
 
 app.use('/', routerUser)
 app.use('/app', validatorUsers.isLoggedIn, routerUserPlus)
@@ -53,12 +51,6 @@ app.use('/app/administrator', validatorUsers.isAdministrator, routerAdministrato
 mongoose.connect(config.db, (err, res) => {
   if (err) return console.log(`Error conexion base de datos [./index.js]: ${err}`)
 })
-
-
-
-
-
-
 
 
 
