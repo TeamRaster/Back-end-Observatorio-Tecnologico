@@ -6,6 +6,8 @@ module.exports = {
 
 // CRUD Noticia =======================================================
     setNewNoticia: function (req, res) {
+        console.log(req.body)
+
         let notice = new News({
             titulo: req.body.titulo,
             imagen: req.body.imagen,
@@ -14,7 +16,7 @@ module.exports = {
             categoria: req.body.categoria,
         })
 
-        News.save().then((noti) => {
+        notice.save().then((noti) => {
             console.log('[Successful]: Noticia guardada')
             //res.redirect('/')
             //res.redirect('/')

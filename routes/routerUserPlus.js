@@ -54,30 +54,6 @@ router.route('/noti') // Crud a noticias de manera grupal
          return res.status(200).send({message: "pagina del admin    "});
 
     })
-    .post(newsCrudController.setNewNoticia)
-
-// CRUD Demandas =======================================================
-router.route('/demandas/:id') // Crud a demandas de manera individual
-    .get(() => {})
-    .put(() => {})
-    .delete(() => {})
-
-router.route('/demandas') // Crud a demandas de manera grupal
-    .get(() => {})
-    .post(() => {})
-
-// CRUD Usuarios =======================================================
-router.route('/users/:id') // Crud a users de manera individual
-    .get(() => {})
-    .put(() => {})
-    .delete(() => {})
-
-router.route('/users') // Crud a users de manera grupal
-    .get(() => {})
-    .post(() => {})
-
-//router.route('/users/all', consulta.getUsersAll)
-
 
 
     // Exportacion de las rutas
