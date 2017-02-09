@@ -7,7 +7,9 @@ const viewsController = require('../controllers/viewsController')
 const usersCrudController = require('../controllers/usersCrudController')
 
 // Vistas =========================================================
-router.get('/', viewsController.getViewIndex)
+router.get('/', (req, res) => {
+    res.render('index')
+})
 
 // router.get('/ofertas', viewsController.getIndex)
 // router.get('/demandas', viewsController.getIndex)

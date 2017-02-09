@@ -7,10 +7,10 @@ module.exports = {
 // CRUD Users =======================================================
     setNewUser: function(req, res) {
         let user = new User({
-            username   : req.body.username,
-            email      : req.body.email,
-            photo      : req.body.photo,
-            password   : req.body.password,
+            username   : req.fields.username,
+            email      : req.fields.email,
+            photo      : req.fields.photo,
+            password   : req.fields.password,
             provider   : 'Local',
         })
 

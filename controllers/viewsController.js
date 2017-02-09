@@ -4,7 +4,7 @@ module.exports = {
 
 // Vistas =========================================================
     getViewIndex: function(req, res) {
-        res.render('index')
+        return res.render('index')
     },
     getViewSingin: function(req, res) {
         let error_message = req.flash('error')[0]

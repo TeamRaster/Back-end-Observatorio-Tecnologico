@@ -9,7 +9,7 @@ block main
       h3 Registrate
   .row.center-xs
     .col-xs-5
-      form(method="POST" action="/accounts/local/user")
+      form(method="POST" action="/accounts/local/user" enctype="multipart/form-data")
         .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
           label(for="username" class="mdl-textfield__label") Nombre de Usuario:
           input(type="text", class="mdl-textfield__input", name="username", id="username")
