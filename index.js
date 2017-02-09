@@ -17,6 +17,8 @@ const routerUserPlus = require('./routes/routerUserPlus')
 const routerAdministrator = require('./routes/routerAdministrator')
 const validateUsers = require('./middlewares/validateUsers')
 const config = require('./config/config.js')  // variables de configuracion (dbs, puertos, keytokens)
+const consultasController = require('./controllers/consultasController')
+const noticiasCrudController = require('./controllers/noticiasCrudController')
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
@@ -42,7 +44,8 @@ require('./config/passport')(app)  // Configuracion Passport y pasamos como para
 app.use('/', routerUser)  // Rutas que accesibles para todos
 app.use('/app', validateUsers.isLoggedIn, routerUserPlus)  // Rutas que accesibles para usuarios registrados y con sesion iniciada
 app.use('/app/administrator', validateUsers.isAdministrator, routerAdministrator)  // Rutas que accesibles para Administradores
-
+app.use('/admin', routerUserPlus)
+app.use('/noticias', noticiasCrudController.setNewNoticia, routerUserPlus)
 
 mongoose.connect(config.db, (err, res) => {  // Conexion a la base de datos
   if (err) return console.log(`Error conexion base de datos [./index.js]: ${err}`)
@@ -51,4 +54,3 @@ mongoose.connect(config.db, (err, res) => {  // Conexion a la base de datos
 app.listen(config.port, () => {
 //
 })
-
