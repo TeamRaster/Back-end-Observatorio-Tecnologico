@@ -4,11 +4,11 @@
 const express = require('express')
 const router = express.Router()
 
-const usersControllers = require('../controllers/routesController')
+const viewsController = require('../controllers/viewsController')
 
-router.get('/', (req, res) => {
-  res.send('Pagina del administrador')
-})
+// router.get('/', (req, res) => {
+//   res.send('Pagina del administrador')
+// })
 
 // Exportacion de las rutas
 module.exports = router;
