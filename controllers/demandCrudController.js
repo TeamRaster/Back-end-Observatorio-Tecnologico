@@ -12,13 +12,14 @@ module.exports = {
     getAllDemandas: function(req, res) {
 
     },
-    getDemanda: function(req, res) {
+    getDemandaById: function(req, res) {
 
     },
-    updateDemanda: function(req, res) {
+    updateDemandaById: function(req, res) {
 
     },
-    removeDemanda: function(req, res) {
+    removeDemandaById: function(req, res) {
 
     }
+
 }

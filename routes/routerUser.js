@@ -3,8 +3,12 @@
 const express = require('express')
 const router = express.Router()
 
+//<<<<<<< HEAD
+//const routesController = require('../controllers/routesController')
+//=======
 const viewsController = require('../controllers/viewsController')
 const usersCrudController = require('../controllers/usersCrudController')
+//>>>>>>> origin/Develop
 
 // Vistas =========================================================
 router.get('/', (req, res) => {

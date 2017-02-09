@@ -27,6 +27,7 @@ module.exports = {
             res.send(err)
         })
     },
+
     getAllOfertas: function(req, res) {
         Offer.find({}), function (err, offerStored) {
             if(err) {
@@ -45,10 +46,17 @@ module.exports = {
             res.send(offer)
         })
     },
-    updateOferta: function(req, res) {
+    getOfertaById: function(req, res) {
 
     },
-    removeOferta: function(req, res) {
 
-    }
+    updateOfertaById: function(req, res) {
+
+    },
+
+    deleteOfertaById: function(req, res) {
+
+    },
+
+
 }

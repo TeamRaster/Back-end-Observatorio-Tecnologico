@@ -28,13 +28,15 @@ module.exports = {
     getAllNoticias: function(req, res) {
 
     },
-    getNoticia: function(req, res) {
+    getNoticiaById: function(req, res) {
 
     },
-    updateNoticia: function(req, res) {
+    updateNoticiaById: function(req, res) {
 
     },
-    removeNoticia: function(req, res) {
+    removeNoticiaById: function(req, res) {
 
-    }
+    },
+
+
 }
