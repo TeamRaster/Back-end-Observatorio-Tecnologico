@@ -14,7 +14,7 @@ module.exports = {
             ext           : ext_,
             description   : req.fields.description,
             category      : req.fields.category,
-            contact       : 'id_contact', // todo Cuando este en funcionamiento
+            contact       : 'id_contact', // todo Cuando este en funcionamiento, usar id de cada equema para relacionarlo
             creator       : 'id_creator'
         })
 
@@ -28,10 +28,22 @@ module.exports = {
         })
     },
     getAllOfertas: function(req, res) {
-
+        Offer.find({}), function (err, offerStored) {
+            if(err) {
+                console.log('Hubo un error al buscar todas las Ofertas[offerCrudController]')
+                res.send(err)
+            }
+            res.send(offerStored)
+        }
     },
     getOferta: function(req, res) {
-
+        Offer.findById(req.params.id, function (err, offer) {
+            if(err) {
+                console.log('Hubo un error al buscar usuario por id [offerCrudController]')
+                res.send(err)
+            }
+            res.send(offer)
+        })
     },
     updateOferta: function(req, res) {
 
