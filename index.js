@@ -44,7 +44,9 @@ app.use('/', routerUser)  // Rutas que accesibles para todos
 app.use('/app', validateUsers.isLoggedIn, routerUserPlus)  // Rutas que accesibles para usuarios registrados y con sesion iniciada
 app.use('/app/administrator', validateUsers.isAdministrator, routerAdministrator)  // Rutas que accesibles para Administradores
 app.use('/admin', routerUserPlus)
-app.use('/noticias', noticiasCrudController.setNewNoticia, routerUserPlus)
+//app.use('/noticias', noticiasCrudController.setNewNoticia, routerUserPlus)
+
+mongoose.Promise = global.Promise;  // Arregla warning promesas xD
 
 mongoose.connect(config.db, (err, res) => {  // Conexion a la base de datos
   if (err) return console.log(`Error conexion base de datos [./index.js]: ${err}`)
