@@ -1,6 +1,6 @@
 'use strict'
 
-const modelUsers = require('../models/modelUsers')
+const User = require('../models/modelUsers')
 
 module.exports = {
 
