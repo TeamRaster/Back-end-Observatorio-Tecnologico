@@ -3,13 +3,13 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const OfertaSchema = new Schema({
-    empresa       : String,
-    imagen        : String,
-    extension     : String,
-    descripcion   : String,
-    categoria     : String,
-    creacionOferta: {
+const OfferSchema = new Schema({
+    business      : String,
+    image         : String,
+    ext           : String,
+    description   : String,
+    category      : String,
+    creationOffer : {
         type      : Date,
         require   : Date.now
     },
@@ -23,4 +23,16 @@ const OfertaSchema = new Schema({
     }
 })
 
-module.exports = mongoose.model('Oferta', OfertaSchema)
+OfferSchema.pre('save', function (next) {
+    let newOffer = this
+    if (!newOffer.isModified('image')) {
+        console.log('La imagen no tiene nombre[modelOffer]')
+        return next()
+    } else {
+        console.log('El nombre de la imagen ha sido modificada[modelOffer]')
+    }
+
+    newOffer.image = newOffer._id
+})
+
+module.exports = mongoose.model('Offer', OfferSchema)

@@ -30,5 +30,9 @@ router.get('/accounts/logout', usersCrudController.getDestroySession)
 router.post('/accounts/local/user', usersCrudController.setNewUser)
 
 
+// Temporales =======================================================
+router.get('/accounts/users', usersCrudController.getAllUsers)
+
+
 // Exportacion de las rutas
 module.exports = router
