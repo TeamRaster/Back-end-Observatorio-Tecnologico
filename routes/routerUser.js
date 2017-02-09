@@ -4,7 +4,6 @@ const express = require('express')
 const router = express.Router()
 
 const routesController = require('../controllers/routesController')
-const usuariosCrudController = require('../controllers/usuariosCrudController')
 
 // Vistas =========================================================
 router.get('/', routesController.getViewIndex)
