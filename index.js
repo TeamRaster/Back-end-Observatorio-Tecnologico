@@ -34,11 +34,11 @@ app.use(session({  // Configuracion de las sesiones
     saveUninitialized: false
 }))
 
-app.use(formidable({ keepExtensions: false }))  // Middleware que ayuda a subir archivos al servidor
-
 app.use(flash())  // Muestra mensajes de error que se pueden llegar a generar
 
 require('./config/passport')(app)  // Configuracion Passport y pasamos como parametro el servidor
+
+app.use(formidable({ keepExtensions: false }))  // Middleware que ayuda a subir archivos al servidor
 
 app.use('/', routerUser)  // Rutas que accesibles para todos
 app.use('/app', validateUsers.isLoggedIn, routerUserPlus)  // Rutas que accesibles para usuarios registrados y con sesion iniciada

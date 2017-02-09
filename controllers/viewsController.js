@@ -9,6 +9,7 @@ module.exports = {
     getViewSingin: function(req, res) {
         let error_message = req.flash('error')[0]
         res.locals.error_message = error_message
+        console.log('Entrando al sigin')
         res.render('signin', {error: res.locals.error_message})
     },
     getViewSingup: function(req, res) {

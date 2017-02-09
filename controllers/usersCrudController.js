@@ -63,6 +63,7 @@ module.exports = {
 
 // Sesiones ========================================================
     getNewSession: function(req, res) {
+        console.log('getNewSession')
         res.render('user', {user: req.user})
     },
     getDestroySession: function(req, res) {

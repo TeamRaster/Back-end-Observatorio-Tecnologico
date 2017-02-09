@@ -5,10 +5,12 @@ const User = require('../../models/modelUsers')
 
 function localConfig(app, passport, config) {
     passport.use(new LocalStrategy({
-        usernameField  : config.localAuth.email,
+        usernameField  : config.localAuth.username,
         passwordField  : config.localAuth.password
 
     }, (username, password, done) => {
+        console.log(username)
+        console.log(password)
         User.findOne({ email : username }, (err, user) => {
             if (err) return done(err)
             else if(!user) return done(null, false, { msg: 'No existe el usuario' })
