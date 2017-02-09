@@ -1,7 +1,6 @@
 'use strict'
 
-const modelNotices = require('../models/modelNotices')
-const consultasController = require('../controllers/consultasController')
+const modelNews = require('../models/modelNews')
 
 module.exports = {
 

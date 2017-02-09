@@ -4,7 +4,7 @@ module.exports = {
 
 // Vistas =========================================================
     getViewIndex: function(req, res) {
-        return res.render('index')
+        res.render('index')
     },
     getViewSingin: function(req, res) {
         let error_message = req.flash('error')[0]
@@ -15,21 +15,10 @@ module.exports = {
         res.render('signup')
     },
 
-
-// Sesiones ========================================================
-    getNewSession: function(req, res) {
-        res.render('user', {user: req.user})
-    },
-    getDestroySession: function(req, res) {
-        req.logout()
-        res.redirect('/')
-    },
-
-
 // Usuarios plus ===================================================
-    getViewIndexPlus: function (req, res) {
-        res.send('Pagina del usuario con inicio de sesion ')
-    },
+//     getViewIndexPlus: function (req, res) {
+//         res.send('Pagina del usuario con inicio de sesion')
+//     },
     getViewNewOferta: function(req, res) {
 
     },
@@ -60,7 +49,7 @@ module.exports = {
 
 
 // Administradores =================================================
-    getViewIndexAdministrator: function(req, res) {
-        res.send('Pagina del administrador')
-    }
+//     getViewIndexAdministrator: function(req, res) {
+//         res.send('Pagina del administrador')
+//     }
 }

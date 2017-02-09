@@ -3,25 +3,25 @@
 const express = require('express')
 const router = express.Router()
 
-const routesController = require('../controllers/routesController')
-const usuariosCrudController = require('../controllers/usuariosCrudController')
+const viewsController = require('../controllers/viewsController')
+const usersCrudController = require('../controllers/usersCrudController')
 
 // Vistas =========================================================
-router.get('/', routesController.getViewIndex)
+router.get('/', viewsController.getViewIndex)
 
-// router.get('/ofertas', routesController.getIndex)
-// router.get('/demandas', routesController.getIndex)
-// router.get('/noticias', routesController.getIndex)
+// router.get('/ofertas', viewsController.getIndex)
+// router.get('/demandas', viewsController.getIndex)
+// router.get('/noticias', viewsController.getIndex)
 
-router.get('/accounts/signin', routesController.getViewSingin)
-router.get('/accounts/signup', routesController.getViewSingup)
+router.get('/accounts/signin', viewsController.getViewSingin)
+router.get('/accounts/signup', viewsController.getViewSingup)
 
 // Sesiones ========================================================
-router.get('/accounts/login', routesController.getNewSession)
-router.get('/accounts/logout', routesController.getDestroySession)
+router.get('/accounts/login', usersCrudController.getNewSession)
+router.get('/accounts/logout', usersCrudController.getDestroySession)
 
 // CRUD Users =======================================================
-router.post('/accounts/local/user', usuariosCrudController.setNewUser)
+router.post('/accounts/local/user', usersCrudController.setNewUser)
 
 
 // Exportacion de las rutas

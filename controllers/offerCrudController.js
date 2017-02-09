@@ -1,7 +1,6 @@
 'use strict'
 
-const modelOferta = require('../models/modelOferta')
-const consultasController = require('../controllers/consultasController')
+const modelOffer = require('../models/modelOffer')
 
 module.exports = {
 
