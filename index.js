@@ -20,20 +20,20 @@ const validateUsers = require('./middlewares/validateUsers')
 const config = require('./config/config.js') // variables de config (dbs, puertos, keytokens)
 
 // Recibe la url como si fuera un objeto JSON
-// app.use(formidable({ keepExtensions: true }))
-// app.use(bodyParser.urlencoded({ extended: false }))
-// app.use(bodyParser.json())
+// app.use(formidable({ keepExtensions: false }))
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
 app.use(cookieParser())
 
-// Mensajes de errores, sessiones
-app.use(flash())
 
 app.use(session({
-  store: new RedisStore({}),
+  cookie: {maxAge: 60000},
   secret: config.SECRET_TOKEN,
   resave: false,
   saveUninitialized: false
 }))
+// Mensajes de errores, sessiones
+app.use(flash())
 
 
 // Configuracion Passport
