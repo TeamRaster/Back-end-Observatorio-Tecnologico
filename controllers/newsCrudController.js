@@ -1,13 +1,12 @@
 'use strict'
 
-const consultasController = require('../controllers/consultasController')
-const Notice = require('../models/modelNews')
+const News = require('../models/modelNews')
 
 module.exports = {
 
 // CRUD Noticia =======================================================
     setNewNoticia: function (req, res) {
-        let notice = new Notice({
+        let notice = new News({
             titulo: req.body.titulo,
             imagen: req.body.imagen,
             extension: req.body.extension,

@@ -7,11 +7,12 @@ block main
   .row.center-xs
     .col-xs-8
       if(user)
+        p= user
         if(user.photo)
           img(src="" + user.photo)
         else
           p Imagen no disponible
-        p Nombre: #{user.username}
+        p Nombre: #{user[0].username}
         p Proveedor: #{user.provider}
         p ProveedorID: #{user.providerId}
         p Adminisitrador: #{user.administrator}

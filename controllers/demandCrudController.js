@@ -1,6 +1,6 @@
 'use strict'
 
-const modelDemand = require('../models/modelDemand')
+const Demand = require('../models/modelDemand')
 
 module.exports = {
 

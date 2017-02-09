@@ -1,8 +1,5 @@
 'use strict'
 
-const consultasController = require('../controllers/consultasController')
-
-
 module.exports = {
 
 // Vistas =========================================================

@@ -4,7 +4,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const bcrypt = require('bcrypt-nodejs')
 
-const NoticesSchema = new Schema({
+const NewsSchema = new Schema({
     titulo: {
         type      : String,
         require   : true
@@ -34,5 +34,5 @@ const NoticesSchema = new Schema({
 })
 
 
-module.exports = mongoose.model('Notice', NoticesSchema)
+module.exports = mongoose.model('News', NewsSchema)
 

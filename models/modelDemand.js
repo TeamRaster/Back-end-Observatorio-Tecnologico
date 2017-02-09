@@ -3,7 +3,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const DemandaSchema = new Schema({
+const DemandSchema = new Schema({
     empresa       : String,
     imagen        : String,
     extension     : String,
@@ -23,5 +23,5 @@ const DemandaSchema = new Schema({
     }
 })
 
-module.exports = mongoose.model('Demanda', DemandaSchema)
+module.exports = mongoose.model('Demand', DemandSchema)
 
