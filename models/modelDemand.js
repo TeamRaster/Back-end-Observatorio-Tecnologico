@@ -24,4 +24,3 @@ const DemandSchema = new Schema({
 })
 
 module.exports = mongoose.model('Demand', DemandSchema)
-

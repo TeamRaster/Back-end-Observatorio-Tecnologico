@@ -27,11 +27,25 @@ module.exports = {
     },
     getAllNoticias: function(req, res) {
 
+
     },
     getNoticiaById: function(req, res) {
 
     },
     updateNoticiaById: function(req, res) {
+        var newId = req.params.newId;
+        var update = req.body;
+        //lo que ecibe ña funcion callback la data ;)
+        News.findByIdAndUpdate(newsId, update, (err, newsUpdated) => {
+          if (err) {
+            return res.status(500).send({message: 'Error en DB ' + err});
+          }
+
+            return res.status(200).send({news: newstUpdated});
+
+          //return res.status(200).send({product});
+        });
+
 
     },
     removeNoticiaById: function(req, res) {
