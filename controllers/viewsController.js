@@ -18,21 +18,10 @@ module.exports = {
         res.render('signup')
     },
 
-
-// Sesiones ========================================================
-    getNewSession: function(req, res) {
-        res.render('user', {user: req.user})
-    },
-    getDestroySession: function(req, res) {
-        req.logout()
-        res.redirect('/')
-    },
-
-
 // Usuarios plus ===================================================
-    getViewIndexPlus: function (req, res) {
-        res.send('Pagina del usuario con inicio de sesion ')
-    },
+//     getViewIndexPlus: function (req, res) {
+//         res.send('Pagina del usuario con inicio de sesion')
+//     },
     getViewNewOferta: function(req, res) {
 
     },
