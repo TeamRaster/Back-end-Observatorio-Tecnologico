@@ -3,11 +3,8 @@
 const express = require('express')
 const router = express.Router()
 
-//<<<<<<< HEAD
-//=======
 const viewsController = require('../controllers/viewsController')
 const usersCrudController = require('../controllers/usersCrudController')
-//>>>>>>> origin/Develop
 
 // Vistas =========================================================
 router.get('/', (req, res) => {
@@ -23,7 +20,6 @@ router.get('/accounts/signup', viewsController.getViewSingup)
 
 // Sesiones ========================================================
 router.get('/accounts/login', usersCrudController.getNewSession)
-
 router.get('/accounts/logout', usersCrudController.getDestroySession)
 
 // CRUD Users =======================================================
