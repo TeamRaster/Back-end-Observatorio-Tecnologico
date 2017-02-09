@@ -62,7 +62,10 @@ module.exports = {
 
 
 // Sesiones ========================================================
-    getNewSession: function(req, res) {
+    getNewSession: function(req, res){
+        console.log(' Ususario ', req.user)
+        //console.log(' Ususario ', req.locals.user)
+
         res.render('user', {user: req.user})
     },
     getDestroySession: function(req, res) {
