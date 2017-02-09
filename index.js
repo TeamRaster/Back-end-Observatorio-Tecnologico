@@ -18,7 +18,7 @@ const routerAdministrator = require('./routes/routerAdministrator')
 const validateUsers = require('./middlewares/validateUsers')
 const config = require('./config/config.js')  // variables de configuracion (dbs, puertos, keytokens)
 const consultasController = require('./controllers/consultasController')
-const noticiasCrudController = require('./controllers/noticiasCrudController')
+const noticiasCrudController = require('./controllers/newsCrudController')
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
