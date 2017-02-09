@@ -15,6 +15,9 @@ const RedisStore = require('connect-redis')(session)
 const routerUser = require('./routes/routerUser')
 const routerUserPlus = require('./routes/routerUserPlus')
 const routerAdministrator = require('./routes/routerAdministrator')
+const consultasController = require('./controllers/consultasController')
+const noticiasCrudController = require('./controllers/noticiasCrudController')
+
 const validatorUsers = require('./middlewares/validatorUsers')
 const config = require('./config/config.js') // variables de config (dbs, puertos, keytokens)
 
@@ -44,8 +47,12 @@ require('./config/passport')(app)
 
 
 app.use('/', routerUser)
+app.use('/admin', routerUserPlus)
 app.use('/app', validatorUsers.isLoggedIn, routerUserPlus)
+app.use('/noticias', noticiasCrudController.setNewNoticia, routerUserPlus)
+
 app.use('/app/administrator', validatorUsers.isAdministrator, routerAdministrator)
+//app.use('/users/todos', consultasController.getViewIndexTodoUsers, routerUserPlus)
 
 // Conexion a la base de datos
 mongoose.connect(config.db, (err, res) => {
@@ -59,4 +66,3 @@ mongoose.connect(config.db, (err, res) => {
 app.listen(config.port, () => {
 //
 })
-

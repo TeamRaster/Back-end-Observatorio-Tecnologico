@@ -1,5 +1,8 @@
 'use strict'
 
+const consultasController = require('../controllers/consultasController')
+
+
 module.exports = {
 
 // Vistas =========================================================
@@ -62,5 +65,16 @@ module.exports = {
 // Administradores =================================================
     getViewIndexAdministrator: function(req, res) {
         res.send('Pagina del administrador')
+    },
+
+    getViewIndexTodoUsers: function(req, res) {
+
+        User.find()
+        .then(function (users) {
+            res.locals.users = users
+            return res.render('getUsers', {users: res.locals.users})
+            //return users
+        });
+
     }
 }

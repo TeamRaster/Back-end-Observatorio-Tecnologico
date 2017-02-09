@@ -8,7 +8,15 @@ module.exports = {
 // Usuario =======================================================
     getUserOne: function(req, res) { },
 
-    getUsersAll: function(req, res) { },
+    getUsersAll: function(req, res) {
+        User.find()
+        .then(function (users) {
+            res.locals.users = users
+            return res.render('panelUser', {users: res.locals.users})
+            //return users
+        });
+
+    },
 
     getUserById: function(req, res) { },
 
@@ -79,4 +87,3 @@ module.exports = {
     deleteNoticiaById: function(req, res) { },
 
 }
-
