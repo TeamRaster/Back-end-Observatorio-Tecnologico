@@ -48,7 +48,7 @@ require('./config/passport')(app)
 
 app.use('/', routerUser)
 app.use('/admin', routerUserPlus)
-app.use('/app', validatorUsers.isLoggedIn, routerUserPlus)
+app.use('/app', validatorUsers.isLoggedIn, routerUserPlus) // TODO checar
 app.use('/noticias', noticiasCrudController.setNewNoticia, routerUserPlus)
 
 app.use('/app/administrator', validatorUsers.isAdministrator, routerAdministrator)
