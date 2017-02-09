@@ -14,7 +14,7 @@ module.exports = {
             categoria: req.body.categoria,
         })
 
-        notice.save().then((noti) => {
+        News.save().then((noti) => {
             console.log('[Successful]: Noticia guardada')
             //res.redirect('/')
             //res.redirect('/')

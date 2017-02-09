@@ -5,7 +5,7 @@ const User = require('../../models/modelUsers')
 
 function localConfig(app, passport, config) {
     passport.use(new LocalStrategy({
-        usernameField  : config.localAuth.username,
+        usernameField  : config.localAuth.email,
         passwordField  : config.localAuth.password
 
     }, (username, password, done) => {
@@ -13,7 +13,7 @@ function localConfig(app, passport, config) {
             if (err) return done(err)
             else if(!user) return done(null, false, { msg: 'No existe el usuario' })
             user.comparePassword(password, user.password, function (err, isMatch) {
-                if (err) return  done(null, false, {message: `Error ${err}`})
+                if (err) return  done(null, false, {message: `Error en auth local ${err}`})
                 else if (!isMatch) return done(null, false, { msg: 'El usuario o contraseña con coinciden' })
                 else return done(null, user, { msg: 'success' })
             })

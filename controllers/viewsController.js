@@ -16,37 +16,28 @@ module.exports = {
     },
 
 // Usuarios plus ===================================================
-//     getViewIndexPlus: function (req, res) {
-//         res.send('Pagina del usuario con inicio de sesion')
-//     },
-    getViewNewOferta: function(req, res) {
-
+    getViewIndexPlus: function (req, res) {
+        // res.send('Pagina del usuario con inicio de sesion')
+    },
+    getViewOferta: function(req, res) {
+        // res.render('offers/newOffer')
     },
 
-    getViewEditOferta: function(req, res) {
-
+    getViewDemanda: function(req, res) {
+        // res.render('demands/newDemand')
     },
 
-    getViewNewDemanda: function(req, res) {
-
+    getViewNoticia: function(req, res) {
+        // res.render('news/newNew')
     },
 
-    getViewEditDemanda: function(req, res) {
-
+    getViewGroups: function(req, res) {
+        // res.render('news/newNew')
     },
 
-    getViewNewNoticia: function(req, res) {
-
+    getView: function(req, res) {
+        // res.render('news/newNew')
     },
-
-    getViewEditNoticia: function(req, res) {
-
-    },
-
-    getViewCompletarRegistro: function(req, res) {
-
-    },
-
 
 // Administradores =================================================
     getViewIndexAdministrator: function(req, res) {
@@ -54,7 +45,6 @@ module.exports = {
     },
 
     getViewIndexTodoUsers: function(req, res) {
-
         User.find()
         .then(function (users) {
             res.locals.users = users

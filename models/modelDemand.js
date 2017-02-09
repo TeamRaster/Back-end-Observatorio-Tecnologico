@@ -4,12 +4,12 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const DemandSchema = new Schema({
-    empresa       : String,
-    imagen        : String,
-    extension     : String,
-    descripcion   : String,
-    categoria     : String,
-    creacionOferta: {
+    business      : String,
+    image         : String,
+    ext           : String,
+    description   : String,
+    category      : String,
+    creationOffer : {
         type      : Date,
         require   : Date.now
     },

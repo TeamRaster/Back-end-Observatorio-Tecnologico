@@ -40,22 +40,24 @@ module.exports = {
     getOferta: function(req, res) {
         Offer.findById(req.params.id, function (err, offer) {
             if(err) {
-                console.log('Hubo un error al buscar usuario por id [offerCrudController]')
+                console.log('Hubo un error al buscar oferta por id [offerCrudController]')
                 res.send(err)
             }
             res.send(offer)
         })
     },
-    getOfertaById: function(req, res) {
-
-    },
-
     updateOfertaById: function(req, res) {
 
     },
 
     deleteOfertaById: function(req, res) {
-
+        Offer.findOneAndRemove({_id: req.params.id}, function (err) {
+            if (err) {
+                console.log('Error al borrar la oferta')
+                res.send(err)
+            }
+            res.send('Se borro exitosamente')
+        })
     },
 
 
