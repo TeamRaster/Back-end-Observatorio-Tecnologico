@@ -76,9 +76,5 @@ router.route('/users') // Crud a users de manera grupal
     .get(usersCrudController.getAllUsers)
     .post(usersCrudController.setNewUser)
 
-//router.route('/users/all', consulta.getUsersAll)
-
-
-
     // Exportacion de las rutas
 module.exports = router;

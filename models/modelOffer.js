@@ -4,7 +4,10 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const OfferSchema = new Schema({
-    business      : String,
+    business      : {
+        type      : String,
+        maxlength : [50, "[Business]: Maximo 50 caracteres"]
+    },
     ext           : {
         type      : String,
         default   : 'jpg'
@@ -13,8 +16,10 @@ const OfferSchema = new Schema({
         type      : String,
         default   : 'No disponible'
     },
-    description   : String,
-    category      : String,
+    description   : {
+        type      : String
+    },
+    category      : [String],
     creationOffer : {
         type      : Date,
         require   : Date.now
