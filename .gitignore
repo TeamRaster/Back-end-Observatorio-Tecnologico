@@ -55,4 +55,4 @@ configAuth.js
 
 #Imagenes #
 #########
-public/images/imagesOffers
+public/images/*.*
