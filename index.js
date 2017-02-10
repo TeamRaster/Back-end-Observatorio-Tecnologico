@@ -17,11 +17,9 @@ const routerUserPlus = require('./routes/routerUserPlus')
 const routerAdministrator = require('./routes/routerAdministrator')
 const validateUsers = require('./middlewares/validateUsers')
 const config = require('./config/config.js')  // variables de configuracion (dbs, puertos, keytokens)
-// const noticiasCrudController = require('./controllers/newsCrudController')
-const News = require('./models/modelNews')
-const Product = require('./models/product')
+
 app.use(bodyParser.urlencoded({ extended: false }))
-//app.use(bodyParser.json())
+app.use(bodyParser.json())
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))  // Archivos estaticos, ideal para los estilos, js, etc
 app.set('view engine', 'pug')  // Motor de vistas
