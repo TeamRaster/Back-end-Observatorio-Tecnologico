@@ -11,15 +11,19 @@ const offerCrudController = require('../controllers/offerCrudController')
 const usersCrudController = require('../controllers/usersCrudController')
 
 // Vistas ==============================================================
-// router.get('/', usersCrudController.getViewIndexPlus)
+router.get('/', viewsController.getViewIndexPlus)
 
 // Rutas Ofertas ========================================================
-router.get('/ofertas/new', viewsController.getViewOffer)
-router.get('/ofertas/:id/edit', viewsController.getViewOfferEdit)
+router.get('/offers/new', viewsController.getViewOffer)
+router.get('/offers/:id/edit', viewsController.getViewOfferEdit)
 
 // Rutas Demandas ========================================================
-router.get('/demandas/new', viewsController.getViewDemand)
-router.get('/demandas/:id/edit', viewsController.getViewDemandEdit)
+router.get('/demands/new', viewsController.getViewDemand)
+router.get('/demands/:id/edit', viewsController.getViewDemandEdit)
+
+// Rutas Directory ========================================================
+router.get('/directories/new', viewsController.getViewDemand)
+router.get('/directories/:id/edit', viewsController.getViewDemandEdit)
 
 // Rutas Usuarios ========================================================
 // router.get('/users/new', usersControllers.getViewIndexPlus)

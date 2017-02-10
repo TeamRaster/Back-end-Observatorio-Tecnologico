@@ -17,7 +17,7 @@ module.exports = {
 
 // Usuarios plus ===================================================
     getViewIndexPlus: function (req, res) {
-        // res.send('Pagina del usuario con inicio de sesion')
+        res.send('Pagina del usuario con inicio de sesion')
     },
     getViewOffer: function(req, res) {
         res.render('viewsUserPlus/offers/offer')
@@ -46,18 +46,42 @@ module.exports = {
         // res.render('news/newNew')
     },
 
-// Administradores =================================================
-    getViewIndexAdministrator: function(req, res) {
-        res.send('Pagina del administrador')
+    getViewFile: function(req, res) {
+        res.send('Tu puedes ver tus archivos publicados')
     },
 
-    getViewIndexTodoUsers: function(req, res) {
-        User.find()
-        .then(function (users) {
-            res.locals.users = users
-            return res.render('getUsers', {users: res.locals.users})
-            //return users
-        });
+    getViewFileEdit: function(req, res) {
+        res.send('Tu puedes eliminar archivos, que solo tu has publicado')
+    },
 
-    }
+// Administradores =================================================
+    getViewIndexAdministrator: function(req, res) {
+        res.send('Pagina principal del administrador')
+    },
+
+    getViewSlider: function(req, res) {
+        res.send('Tu puedes agregar una nueva imagen al Slider')
+    },
+
+    getViewSliderEdit: function(req, res) {
+        res.send('Tu puedes editar una imagen del Slider')
+    },
+
+    getViewFileAdmin: function(req, res) {
+        res.send('Tu puedes ver los archivos publicados')
+    },
+
+    getViewFileEditAdmin: function(req, res) {
+        res.send('Tu puedes eliminar archivos, aunque esten dentro de un grupo')
+    },
+
+    getViewCommentId: function(req, res) {
+        res.send('Tu puedes ver todos los comentarios por cada noticia')
+    },
+
+    getViewStatsId: function(req, res) {
+        res.send('Tu puedes ver todos los stats(likes, dislikes) por cada noticia')
+    },
+
+
 }
