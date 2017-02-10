@@ -18,12 +18,11 @@ module.exports = {
 
         notice.save().then((noti) => {
             console.log('[Successful]: Noticia guardada')
-            //res.redirect('/')
-            //res.redirect('/')
             return res.status(200).send({"notice": noti})
+
         }, (error) => {
             console.log(`[Error Save]: Noticia no almacenada ${error}`)
-            return res.status(500).send({"notice": "mal  "})
+            return res.status(500).send({"notice": error})
         })
 
     },
@@ -34,7 +33,8 @@ module.exports = {
                 console.log('Hubo un error al buscar todas las Noticias[newsCrudController]')
                 res.status(500).send({"error": err})
             }
-            res.send(newsStored)
+            console.log('Sucesss')
+             return res.status(200).send({message: "pagina del admin    "});
         }
 
     },
