@@ -33,7 +33,7 @@ module.exports = {
                 res.redirect('/')
                 return
             }
-            res.render('TestAllUsers', {users: userStored})
+            res.render('./viewsUserPlus/users/userAll', {users: userStored})
         })
     },
 

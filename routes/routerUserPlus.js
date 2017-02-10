@@ -12,25 +12,19 @@ const usersCrudController = require('../controllers/usersCrudController')
 
 // Vistas ==============================================================
 // router.get('/', usersControllers.getViewIndexPlus)
-//
-// router.get('/ofertas/new', usersControllers.getViewIndexPlus)
-// router.get('/ofertas/:id/edit', usersControllers.getViewIndexPlus)
-//
-// router.get('/demandas/new', usersControllers.getViewIndexPlus)
-// router.get('/demandas/:id/edit', usersControllers.getViewIndexPlus)
-//
-// router.get('/users/new', usersControllers.getViewIndexPlus)
-// router.get('/users/:id/edit', usersControllers.getViewIndexPlus)
-
-router.get('/users/all', function(req, res) {
-     //return res.render('admin', {});
-     return res.status(200).send({message: "pagina del admin    "});
-})
 
 // Rutas Ofertas ========================================================
 router.get('/ofertas/new', viewsController.getViewOffer)
-
 router.get('/ofertas/:id/edit', viewsController.getViewOfferEdit)
+
+// Rutas Demandas ========================================================
+router.get('/demandas/new', viewsController.getViewDemand)
+router.get('/demandas/:id/edit', viewsController.getViewDemandEdit)
+//
+// Rutas Usuarios ========================================================
+// router.get('/users/new', usersControllers.getViewIndexPlus)
+// router.get('/users/:id/edit', usersControllers.getViewIndexPlus)
+
 
 // CRUD Ofertas ========================================================
 router.route('/ofertas/:id') // Crud a ofertas de manera individual

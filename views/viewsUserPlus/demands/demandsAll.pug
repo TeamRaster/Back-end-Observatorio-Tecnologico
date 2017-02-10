@@ -1,0 +1,27 @@
+extends ../../layout/layoutIndex
+
+block title
+  title Todos los Usuarios
+
+block main
+  .row.center-xs
+    .col-xs-10
+      if (demands != "")
+        table.highlight
+          thead
+            tr
+              th business
+              th image
+              th description
+              th category
+          tbody
+            each demand in demands
+              tr
+                td #{demand.business}
+                td #{demand.image}
+                td #{demand.description}
+                td #{demand.category}
+      else
+        h2 No hay demandas en la base de datos
+
+

@@ -1,15 +1,15 @@
 extends ../../layout/layoutIndex
 
 block title
-  title Nuevas ofertas
+  title Nueva Demanda
 
 block main
   .row.center-xs
     .col-xs-5
-      h3 Ofertas
+      h3 Demandas
   .row.center-xs
     .col-xs-5
-      form(method="POST" action="/app/ofertas" enctype="multipart/form-data")
+      form(method="POST" action="/app/demandas" enctype="multipart/form-data")
         .input-field.col.s12
           label(for="business") Empresa:
           input(type="text", class="validate", name="business", id="business")
@@ -28,6 +28,8 @@ block main
               input(type="text", class="file-path validate")
         div
           input(type="submit", class="btn", name="btn", id="btn", value="Publicar")
+
+
 
 
 

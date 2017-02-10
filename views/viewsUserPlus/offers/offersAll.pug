@@ -1,0 +1,25 @@
+extends ../../layout/layoutIndex
+
+block title
+  title Todas las Ofertas
+
+block main
+  .row.center-xs
+    .col-xs-10
+      if (offers != "")
+        table.highlight
+          thead
+            tr
+              th business
+              th image
+              th description
+              th category
+          tbody
+            each offer in offers
+              tr
+                td #{offer.business}
+                td #{offer.image}
+                td #{offer.description}
+                td #{offer.category}
+      else
+        h2 No hay ofertas en la base de datos

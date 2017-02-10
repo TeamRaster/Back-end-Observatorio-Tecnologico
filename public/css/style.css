@@ -2,19 +2,6 @@
   border: 1px solid #76ff03;
 }
 
-.table:nth-child(even) {
-  background-color: lightsteelblue;
-}
-
-table tr td{
-  padding: 5px 15px;
-  border: 1px solid;
-}
-
-table {
-  border-collapse: collapse;
-}
-
 .top-space {
   margin-top: 35px;
   margin-bottom: 35px;

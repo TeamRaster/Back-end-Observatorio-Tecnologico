@@ -10,25 +10,25 @@ block main
   .row.center-xs
     .col-xs-5
       form(method="POST" action="/accounts/local/user" enctype="multipart/form-data")
-        .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
-          label(for="username" class="mdl-textfield__label") Nombre de Usuario:
-          input(type="text", class="mdl-textfield__input", name="username", id="username")
-        .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
-          label(for="email" class="mdl-textfield__label") Correo:
-          input(type="text", class="mdl-textfield__input", name="email", id="email")
-        .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
-          label(for="password" class="mdl-textfield__label") Contraseña:
-          input(type="password", class="mdl-textfield__input", name="password", id="password")
-        .row.center-xs
-          .col-xs-6
-            label(class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-1")
-              input(type="radio" id="option-1" class="mdl-radio__button" name="options" value="false" checked)
-              span(class="mdl-radio__label") Usuario
-          .col-xs-6
-            label(class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-2")
-              input(type="radio" id="option-2" class="mdl-radio__button" name="options" value="true")
-              span(class="mdl-radio__label") Administrador
-
+        .input-field.col.s12
+          label(for="username") Nombre de Usuario:
+          input(type="text", class="validate", name="username", id="username")
+        .input-field.col.s12
+          label(for="email") Correo:
+          input(type="text", class="validate", name="email", id="email")
+        .input-field.col.s12
+          label(for="password") Contraseña:
+          input(type="password", class="validate", name="password", id="password")
+        .input-field.col.s12
+          .row.center-xs
+            .col-xs-6
+              p
+                input(name="options" type="radio" id="test1" value="false")
+                label(for="test1") Usuario
+            .col-xs-6
+              p
+                input(name="options" type="radio" id="test2" value="true")
+                label(for="test2") Administrador
         div
-          input(type="submit", class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent", name="btn", id="btn", value="Registrarse")
+          input(type="submit", class="btn", name="btn", id="btn", value="Registrarse")
 

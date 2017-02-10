@@ -6,6 +6,7 @@ const fs = require('fs')
 module.exports = {
 
 // CRUD Ofertas =======================================================
+
     setNewOffer: function (req, res) {
         let ext_ = req.files.image.name.split(".").pop()
         let newOffer = new Offer({
@@ -31,15 +32,18 @@ module.exports = {
         })
     },
 
+
     getAllOffers: function(req, res) {
         Offer.find({}, function (err, offerStored) {
             if(err) {
                 console.log('Hubo un error al buscar todas las Ofertas[offerCrudController]')
                 res.send(err)
             }
-            res.send(offerStored)
+            res.render('./viewsUserPlus/offers/offersAll', {offers: offerStored})
         })
     },
+
+
     getOffer: function(req, res) {
         Offer.findById(req.params.id, function (err, offer) {
             if(err) {
@@ -50,6 +54,8 @@ module.exports = {
             res.send(offer)
         })
     },
+
+
     updateOfferById: function(req, res) {
         Offer.findById(req.params.id, function (err, offer) {
             if(err) {
@@ -65,6 +71,7 @@ module.exports = {
             })
         })
     },
+
 
     deleteOfferById: function(req, res) {
         Offer.findOneAndRemove({_id: req.params.id}, function (err) {
