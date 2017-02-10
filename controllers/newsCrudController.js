@@ -6,6 +6,8 @@ module.exports = {
 
 // CRUD Noticia =======================================================
     setNewNoticia: function (req, res) {
+        console.log(req.body)
+
         let notice = new News({
             titulo: req.body.titulo,
             imagen: req.body.imagen,
@@ -14,24 +16,39 @@ module.exports = {
             categoria: req.body.categoria,
         })
 
-        News.save().then((noti) => {
+        notice.save().then((noti) => {
             console.log('[Successful]: Noticia guardada')
             //res.redirect('/')
             //res.redirect('/')
-            res.status(200).send({"notice": notice})
+            return res.status(200).send({"notice": noti})
         }, (error) => {
             console.log(`[Error Save]: Noticia no almacenada ${error}`)
-            res.render('signup')
+            return res.status(500).send({"notice": "mal  "})
         })
 
     },
-    getAllNoticias: function(req, res) {
 
+    getAllNoticias: function(req, res) {
+        News.find({}), function (err, newsStored) {
+            if(err) {
+                console.log('Hubo un error al buscar todas las Noticias[newsCrudController]')
+                res.status(500).send({"error": err})
+            }
+            res.send(newsStored)
+        }
 
     },
     getNoticiaById: function(req, res) {
+        News.findById(req.params.id, function (err, newStored) {
+            if(err) {
+                console.log('Hubo un error al buscar oferta por id [offerCrudController]')
+                res.status(500).send({"error": err})
+            }
+            res.send(newStored)
+        })
 
     },
+
     updateNoticiaById: function(req, res) {
         var newId = req.params.newId;
         var update = req.body;
@@ -43,13 +60,18 @@ module.exports = {
 
             return res.status(200).send({news: newstUpdated});
 
-          //return res.status(200).send({product});
         });
 
 
     },
     removeNoticiaById: function(req, res) {
-
+        News.findOneAndRemove({_id: req.params.id}, function (err) {
+            if (err) {
+                console.log('Error al borrar la oferta')
+                res.status(500).send({message: 'Error en DB ' + err});
+            }
+            res.send('Se borro exitosamente')
+        })
     },
 
 

@@ -11,7 +11,7 @@ const offerCrudController = require('../controllers/offerCrudController')
 const usersCrudController = require('../controllers/usersCrudController')
 
 // Vistas ==============================================================
-// router.get('/', usersControllers.getViewIndexPlus)
+// router.get('/', usersCrudController.getViewIndexPlus)
 
 // Rutas Ofertas ========================================================
 router.get('/ofertas/new', viewsController.getViewOffer)
@@ -20,11 +20,16 @@ router.get('/ofertas/:id/edit', viewsController.getViewOfferEdit)
 // Rutas Demandas ========================================================
 router.get('/demandas/new', viewsController.getViewDemand)
 router.get('/demandas/:id/edit', viewsController.getViewDemandEdit)
-//
+
 // Rutas Usuarios ========================================================
 // router.get('/users/new', usersControllers.getViewIndexPlus)
 // router.get('/users/:id/edit', usersControllers.getViewIndexPlus)
 
+router.get('/users/all', function(req, res) {
+     //return res.render('admin', {});
+     return res.status(200).send({message: "pagina del admin    "});
+
+})
 
 // CRUD Ofertas ========================================================
 router.route('/ofertas/:id') // Crud a ofertas de manera individual
@@ -53,23 +58,27 @@ router.route('/noti') // Crud a noticias de manera grupal
 
 // CRUD Demandas =======================================================
 router.route('/demandas/:id') // Crud a demandas de manera individual
-    .get((req, res) => {})
-    .put((req, res) => {})
-    .delete((req, res) => {})
+    .get(() => {})
+    .put(() => {})
+    .delete(() => {})
 
 router.route('/demandas') // Crud a demandas de manera grupal
-    .get((req, res) => {})
-    .post((req, res) => {})
-
+    .get(() => {})
+    .post(() => {})
 
 // CRUD Usuarios =======================================================
 router.route('/users/:id') // Crud a users de manera individual
-    .get((req, res) => {})
-    .put((req, res) => {})
-    .delete((req, res) => {})
+    .get(() => {})
+    .put(() => {})
+    .delete(() => {})
 
 router.route('/users') // Crud a users de manera grupal
-    .get((req, res) => {})
-    .post((req, res) => {})
+    .get(() => {})
+    .post(() => {})
 
+//router.route('/users/all', consulta.getUsersAll)
+
+
+
+    // Exportacion de las rutas
 module.exports = router;
