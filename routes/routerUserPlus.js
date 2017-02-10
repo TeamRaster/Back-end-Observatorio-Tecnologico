@@ -58,23 +58,23 @@ router.route('/noti') // Crud a noticias de manera grupal
 
 // CRUD Demandas =======================================================
 router.route('/demandas/:id') // Crud a demandas de manera individual
-    .get(() => {})
-    .put(() => {})
-    .delete(() => {})
+    .get(demandCrudController.getDemanda)
+    .put(demandCrudController.updateDemandaById)
+    .delete(demandCrudController.removeDemandaById)
 
 router.route('/demandas') // Crud a demandas de manera grupal
-    .get(() => {})
-    .post(() => {})
+    .get(demandCrudController.getAllDemandas)
+    .post(demandCrudController.setNewDemanda)
 
 // CRUD Usuarios =======================================================
 router.route('/users/:id') // Crud a users de manera individual
-    .get(() => {})
-    .put(() => {})
-    .delete(() => {})
+    .get(usersCrudController.getUser)
+    // .put(usersCrudController.updateUser)
+    .delete(usersCrudController.removeUser)
 
 router.route('/users') // Crud a users de manera grupal
-    .get(() => {})
-    .post(() => {})
+    .get(usersCrudController.getAllUsers)
+    .post(usersCrudController.setNewUser)
 
 //router.route('/users/all', consulta.getUsersAll)
 
