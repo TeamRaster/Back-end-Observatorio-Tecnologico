@@ -20,20 +20,24 @@ module.exports = {
     getViewIndexPlus: function (req, res) {
         // res.send('Pagina del usuario con inicio de sesion')
     },
-    getViewOferta: function(req, res) {
-        // res.render('offers/newOffer')
+    getViewOffer: function(req, res) {
+        res.render('viewsUserPlus/offers/Offer')
+    },
+    getViewOfferEdit: function(req, res) {
+
+        res.render('viewsUserPlus/offers/updateOffer', {id: req.params.id})
     },
 
-    getViewDemanda: function(req, res) {
-        // res.render('demands/newDemand')
+    getViewDemand: function(req, res) {
+        // res.render('demands/Demand')
     },
 
-    getViewNoticia: function(req, res) {
-        // res.render('news/newNew')
+    getViewNews: function(req, res) {
+        // res.render('news/New')
     },
 
     getViewGroups: function(req, res) {
-        // res.render('news/newNew')
+        // res.render('groups/group')
     },
 
     getView: function(req, res) {

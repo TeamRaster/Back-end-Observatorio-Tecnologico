@@ -1,0 +1,32 @@
+extends ../../layout/layoutIndex
+
+block title
+  title Ofertas
+
+block main
+  .row.center-xs
+    .col-xs-5
+      h3 Editar la oferta #{id}
+  .row.center-xs
+    .col-xs-5
+      form(method="POST" action="/app/ofertas/" + id + "?_method=PUT" enctype="multipart/form-data")
+        .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+          label(for="business" class="mdl-textfield__label") Empresa:
+          input(type="text", class="mdl-textfield__input", name="business", id="business")
+        .mdl-textfield.mdl-js-textfield
+          textarea.mdl-textfield__input(type="text" rows= "5" id="sample5")
+          label(class="mdl-textfield__label" for="sample5" name="description") Descripcion
+        .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+          label(for="category" class="mdl-textfield__label") Categoria:
+          input(type="text", class="mdl-textfield__input", name="category", id="category")
+        .mmdl-textfield.mdl-js-textfield
+          input(type="file", class="mdl-textfield__input", name="image", id="image")
+        div
+          input(type="submit", class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent", name="btn", id="btn", value="Actualizar")
+
+
+
+
+
+
+

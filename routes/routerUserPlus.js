@@ -27,17 +27,20 @@ router.get('/users/all', function(req, res) {
      return res.status(200).send({message: "pagina del admin    "});
 })
 
+// Rutas Ofertas ========================================================
+router.get('/ofertas/new', viewsController.getViewOffer)
+
+router.get('/ofertas/:id/edit', viewsController.getViewOfferEdit)
+
 // CRUD Ofertas ========================================================
 router.route('/ofertas/:id') // Crud a ofertas de manera individual
-    .get((req, res) => {
-        off
-    })
-    .put((req, res) => {})
-    .delete((req, res) => {})
+    .get(offerCrudController.getOffer)
+    .put(offerCrudController.updateOfferById)
+    .delete(offerCrudController.deleteOfferById)
 
 router.route('/ofertas') // Crud a ofertas de manera grupal
-    .get((req, res) => {})
-    .post((req, res) => {})
+    .get(offerCrudController.getAllOffers)
+    .post(offerCrudController.setNewOffer)
 
 
 // CRUD Noticias =======================================================
