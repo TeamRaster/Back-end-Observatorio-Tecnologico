@@ -5,25 +5,25 @@ const Schema = mongoose.Schema
 const bcrypt = require('bcrypt-nodejs')
 
 const NewsSchema = new Schema({
-    titulo: {
+    title: {
         type      : String,
         require   : true
     },
-    imagen: {
+    image: {
         type      : String
     },
     extension     : String,
-    texto: {
+    text: {
         type      : String
     },
-    categoria: {
+    category: {
         type      : [String]
     },
     creator: {
         type      : Schema.Types.ObjectId,
         ref       : "User"
     },
-    comentarios: {
+    comments: {
         type      : Schema.Types.ObjectId,
         ref       : "Comment"
     },
@@ -35,4 +35,3 @@ const NewsSchema = new Schema({
 
 
 module.exports = mongoose.model('News', NewsSchema)
-

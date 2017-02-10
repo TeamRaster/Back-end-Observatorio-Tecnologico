@@ -1,0 +1,33 @@
+extends ../../layout/layoutIndex
+
+block title
+  title Todas las Noticias
+
+block main
+  .row.center-xs
+    .col-xs-10
+      if (news != "")
+        table.highlight
+          thead
+            tr
+              th title
+              th image
+              th text
+              th category
+              th creator
+              th comments
+              th likes
+          tbody
+            each noti in news
+              tr
+                td #{noti.category}
+                td #{noti.title}
+                td #{noti.image}
+                td #{noti.text}
+                td #{noti.category}
+                td #{noti.creator}
+                td #{noti.comments}
+                td #{noti.likes}
+
+      else
+        h2 No hay Noticias en la base de datos

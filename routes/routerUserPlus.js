@@ -38,7 +38,8 @@ router.route('/ofertas/:id') // Crud a ofertas de manera individual
     .delete(offerCrudController.deleteOfferById)
 
 router.route('/ofertas') // Crud a ofertas de manera grupal
-    .get(offerCrudController.getAllOffers)
+    //.get(offerCrudController.getAllOffers)
+    //.get(offerCrudController.viewSetNewOffer)
     .post(offerCrudController.setNewOffer)
 
 
@@ -49,13 +50,8 @@ router.route('/noticias/:id') // Crud a noticias de manera individual
     .delete(newsCrudController.removeNoticiaById)
 
 router.route('/noti') // Crud a noticias de manera grupal
-    .get(
-        newsCrudController.getAllNoticias
-        /*function(req, res) {
-         //return res.render('admin', {});
-         return res.status(200).send({message: "pagina del admin    "});}*/
-     )
-    .post(newsCrudController.setNewNoticia)
+    .get(newsCrudController.viewSetNewNoticia)
+     .post(newsCrudController.setNewNoticia)
 
 // CRUD Demandas =======================================================
 router.route('/demandas/:id') // Crud a demandas de manera individual

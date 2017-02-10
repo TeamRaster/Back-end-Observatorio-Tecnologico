@@ -5,25 +5,31 @@ const News = require('../models/modelNews')
 module.exports = {
 
 // CRUD Noticia =======================================================
+    viewSetNewNoticia: function (req, res) {
+            res.render('./viewsUserPlus/news/news');
+        },
+
     setNewNoticia: function (req, res) {
-        console.log(req.body)
 
-        let notice = new News({
-            titulo: req.body.titulo,
-            imagen: req.body.imagen,
-            extension: req.body.extension,
-            texto: req.body.texto,
-            categoria: req.body.categoria,
-        })
+            console.log(req.fields)
 
-        notice.save().then((noti) => {
-            console.log('[Successful]: Noticia guardada')
-            return res.status(200).send({"notice": noti})
+            let notice = new News({
+                title: req.fields.title,
+                image: req.fields.image,
+                extension: req.fields.extension,
+                text: req.fields.text,
+                category: req.fields.category,
+            })
 
-        }, (error) => {
-            console.log(`[Error Save]: Noticia no almacenada ${error}`)
-            return res.status(500).send({"notice": error})
-        })
+            notice.save().then((noti) => {
+                console.log('[Successful]: Noticia guardada')
+                return res.status(200).send({"notice": noti})
+
+            }, (error) => {
+                console.log(`[Error Save]: Noticia no almacenada ${error}`)
+                return res.status(500).send({"notice": error})
+            })
+
 
     },
 
@@ -40,10 +46,14 @@ module.exports = {
     },
     getNoticiaById: function(req, res) {
         News.findById(req.params.id, function (err, newStored) {
+
             if(err) {
-                console.log('Hubo un error al buscar oferta por id [offerCrudController]')
+                console.log('Hubo un error al buscar noticia por id [newsCrudController]')
                 res.status(500).send({"error": err})
             }
+            if(!newStored)
+                return res.status(404).send({message: 'No existe la noticia  '});
+
             res.send(newStored)
         })
 

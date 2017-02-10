@@ -18,9 +18,10 @@ const routerAdministrator = require('./routes/routerAdministrator')
 const validateUsers = require('./middlewares/validateUsers')
 const config = require('./config/config.js')  // variables de configuracion (dbs, puertos, keytokens)
 // const noticiasCrudController = require('./controllers/newsCrudController')
-
+const News = require('./models/modelNews')
+const Product = require('./models/product')
 app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json())
+//app.use(bodyParser.json())
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))  // Archivos estaticos, ideal para los estilos, js, etc
 app.set('view engine', 'pug')  // Motor de vistas
@@ -40,11 +41,13 @@ require('./config/passport')(app)  // Configuracion Passport y pasamos como para
 
 app.use(formidable({ keepExtensions: false }))  // Middleware que ayuda a subir archivos al servidor
 
+app.use('/admin', routerUserPlus)// temporal
+
 app.use('/', routerUser)  // Rutas que accesibles para todos
-app.use('/app', routerUserPlus)  // Rutas que accesibles para usuarios registrados y con sesion iniciada
+app.use('/app', validateUsers.isLoggedIn, routerUserPlus)  // Rutas que accesibles para usuarios registrados y con sesion iniciada
 app.use('/app/administrator', validateUsers.isAdministrator, routerAdministrator)  // Rutas que accesibles para Administradores
 
-app.use('/admin', routerUserPlus)// temporal
+
 //app.use('/noticias', noticiasCrudController.setNewNoticia, routerUserPlus)
 
 //mongoose.Promise = global.Promise;  // Arregla warning promesas xD
