@@ -18,40 +18,50 @@ module.exports = {
             // creator       : 'id_creator'
         })
 
-        newOffer.save().then((offer) => {
+        newOffer.save().then((StoredOffer) => {
             newOffer.image = newOffer._id  // Coloca de nombre, el id del registro que se hizo
             newOffer.save(function (err) {  // Volvemos a guardar el nombre de la imagen
-                if (err) res.send(err)
+                if (err) {
+                    console.log('=========================================================')
+                    console.log(`[OfferCrud/setNew]: Error oferta no almacenada ${err}`)
+                    console.log('=========================================================')
+                    res.redirect('/app/offers')
+                }
             })
             fs.rename(req.files.image.path, "public/images/imagesOffers/" + newOffer._id + "." + ext_)  // Sube el archivo a la carpeta indicada
             console.log('[Successful]: Oferta guardada con exito')
-            res.send(offer)  // Por el momento solo muestra la oferta en json para ver que efectivamente se ha subido
+            res.redirect('/app/offers')  // Por el momento solo muestra la oferta en json para ver que efectivamente se ha subido
         }, (error) => {
-            console.log(`[Error Save]: Oferta no almacenada ${error}`)
-            res.send(err)  // En caso de que ocurra un error lo manda a imprimir
+            console.log('=========================================================')
+            console.log(`[OfferCrud/setNew]: Error oferta no almacenada ${error}`)
+            console.log('=========================================================')
+            res.redirect('/app/offers')  // En caso de que ocurra un error lo manda a imprimir
         })
     },
 
 
     getAllOffers: function(req, res) {
-        Offer.find({}, function (err, offerStored) {
+        Offer.find({}, function (err, storedOffers) {
             if(err) {
-                console.log('Hubo un error al buscar todas las Ofertas[offerCrudController]')
-                res.send(err)
+                console.log('=========================================================')
+                console.log(`[OfferCrud/getAll]: Error al buscar todas las demandas ${err}`)
+                console.log('=========================================================')
+                res.redirect('/app/offers')
             }
-            res.render('./viewsUserPlus/offers/offersAll', {offers: offerStored})
+            res.render('./viewsUserPlus/offers/offersAll', {offers: storedOffers})
         })
     },
 
 
     getOffer: function(req, res) {
-        Offer.findById(req.params.id, function (err, offer) {
+        Offer.findById(req.params.id, function (err, StoredOffer) {
             if(err) {
-                console.log('Hubo un error al buscar oferta por id [offerCrudController]')
-                res.send(err)
+                console.log('=========================================================')
+                console.log(`[OfferCrud/getOffer]: Error al buscar la oferta ${err}`)
+                console.log('=========================================================')
+                res.redirect('/app/offers')
             }
-            // res.locals.offer = offer
-            res.send(offer)
+            res.render('./viewsUserPlus/offers/offer', {offer: StoredOffer})
         })
     },
 
@@ -59,15 +69,22 @@ module.exports = {
     updateOfferById: function(req, res) {
         Offer.findById(req.params.id, function (err, offer) {
             if(err) {
-                console.log('Hubo un error al buscar oferta por id [offerCrudController]')
-                res.send(err)
+                console.log('=========================================================')
+                console.log(`[OfferCrud/update]: Error al buscar la oferta ${err}`)
+                console.log('=========================================================')
+                res.redirect('/app/offers')
             }
             offer.business    = req.fields.business
             offer.description = req.fields.description
             offer.category    = req.fields.category
             offer.save(function (err) {
-                if (err) res.send(err)
-                res.send(offer)
+                if (err) {
+                    console.log('=========================================================')
+                    console.log(`[OfferCrud/update]: Error al actualizar los datos ${err}`)
+                    console.log('=========================================================')
+                    res.redirect('/app/offers')
+                }
+                res.redirect('/app/offers')
             })
         })
     },
@@ -76,12 +93,12 @@ module.exports = {
     deleteOfferById: function(req, res) {
         Offer.findOneAndRemove({_id: req.params.id}, function (err) {
             if (err) {
-                console.log('Error al borrar la oferta')
-                res.send(err)
+                console.log('=========================================================')
+                console.log(`[OfferCrud/update]: Error al eliminar los datos ${err}`)
+                console.log('=========================================================')
+                res.redirect('/app/offers')
             }
-            res.send('Se borro exitosamente')
+            res.redirect('/app/offers')
         })
     },
-
-
 }

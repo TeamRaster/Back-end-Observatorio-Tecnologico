@@ -6,7 +6,7 @@ const Schema = mongoose.Schema
 const OfferSchema = new Schema({
     business      : {
         type      : String,
-        maxlength : [50, "[Business]: Maximo 50 caracteres"]
+        maxlength : [100, "[modelOffer/business]: Maximo 100 caracteres"]
     },
     ext           : {
         type      : String,

@@ -18,68 +18,87 @@ module.exports = {
             // creator       : 'id_creator'
         })
 
-        newDemand.save().then((offer) => {
+        newDemand.save().then((Storeddemand) => {
             newDemand.image = newDemand._id  // Coloca de nombre, el id del registro que se hizo
             newDemand.save(function (err) {  // Volvemos a guardar el nombre de la imagen
-                if (err) res.send(err)
+                if (err) {
+                    console.log('=========================================================')
+                    console.log(`[DemandCrud/setNew]: Error demanda no almacenada ${err}`)
+                    console.log('=========================================================')
+                    res.redirect('/app/demands')
+                }
             })
             fs.rename(req.files.image.path, "public/images/imagesDemands/" + newDemand._id + "." + ext_)  // Sube el archivo a la carpeta indicada
-            console.log('[Successful]: Oferta guardada con exito')
-            res.send(offer)  // Por el momento solo muestra la oferta en json para ver que efectivamente se ha subido
+            console.log('[Successful]: Demanda guardada con exito')
+            res.redirect('/app/demands')
         }, (error) => {
-            console.log(`[Error Save]: Oferta no almacenada ${error}`)
-            res.send(err)  // En caso de que ocurra un error lo manda a imprimir
+            console.log('=========================================================')
+            console.log(`[DemandCrud/setNew]: Error demanda no almacenada ${error}`)
+            console.log('=========================================================')
+            res.redirect('/app/demands')  // En caso de que ocurra un error lo manda a imprimir
         })
     },
 
 
-    getAllDemandas: function(req, res) {
+    getAllDemands: function(req, res) {
         Demand.find({}, function (err, demandStored) {
             if(err) {
-                console.log('Hubo un error al buscar todas las Demandas[demandCrudController]')
-                res.send(err)
+                console.log('=========================================================')
+                console.log(`[DemandCrud/getAll]: Error al buscar todas las demandas ${err}`)
+                console.log('=========================================================')
+                res.redirect('/app/demands')
             }
             res.render('./viewsUserPlus/demands/demandsAll', {demands: demandStored})
         })
     },
 
 
-    getDemanda: function(req, res) {
-        Demand.findById(req.params.id, function (err, demand) {
+    getDemand: function(req, res) {
+        Demand.findById(req.params.id, function (err, StoredDemand) {
             if(err) {
-                console.log('Hubo un error al buscar la demanda por id [demandCrudController]')
-                res.send(err)
+                console.log('=========================================================')
+                console.log(`[DemandCrud/getDemand]: Error al buscar la demanda ${err}`)
+                console.log('=========================================================')
+                res.redirect('/app/demands')
             }
-            res.send(demand)
+            res.render('./viewsUserPlus/demands/demand', {demand: StoredDemand})
         })
     },
 
 
-    updateDemandaById: function(req, res) {
-        Demand.findById(req.params.id, function (err, demand) {
+    updateDemandById: function(req, res) {
+        Demand.findById(req.params.id, function (err, StoredDemand) {
             if(err) {
-                console.log('Hubo un error al buscar oferta por id [demandCrudController]')
-                res.send(err)
+                console.log('=========================================================')
+                console.log(`[DemandCrud/update]: Error al buscar la demanda ${err}`)
+                console.log('=========================================================')
+                res.redirect('/app/demands')
             }
-            demand.business    = req.fields.business
-            demand.description = req.fields.description
-            demand.category    = req.fields.category
-            demand.save(function (err) {
-                if (err) res.send(err)
-                res.send(demand)
+            StoredDemand.business    = req.fields.business
+            StoredDemand.description = req.fields.description
+            StoredDemand.category    = req.fields.category
+            StoredDemand.save(function (err) {
+                if (err) {
+                    console.log('=========================================================')
+                    console.log(`[DemandCrud/update]: Error al actualizar los datos ${err}`)
+                    console.log('=========================================================')
+                    res.redirect('/app/demands')
+                }
+                res.redirect('/app/demands')
             })
         })
     },
 
 
-    removeDemandaById: function(req, res) {
+    deleteDemandById: function(req, res) {
         Demand.findOneAndRemove({_id: req.params.id}, function (err) {
             if (err) {
-                console.log('Error al borrar la demanda')
-                res.send(err)
+                console.log('=========================================================')
+                console.log(`[DemandCrud/delete]: Error al eliminar los datos ${err}`)
+                console.log('=========================================================')
+                res.redirect('/app/demands')
             }
-            res.send('Se borro exitosamente')
+            res.redirect('/app/demands')
         })
-    }
-
+    },
 }

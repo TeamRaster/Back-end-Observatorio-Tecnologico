@@ -13,10 +13,10 @@ router.get('/', (req, res) => {
     res.render('index')
 })
 
+// Resumen de lo que se muestra al usuario normal
 router.get('/users', usersCrudController.getAllUsers)
-router.get('/ofertas', offerCrudController.getAllOffers)
-router.get('/demandas', demandCrudController.getAllDemandas)
-// router.get('/noticias', )
+router.get('/offers', offerCrudController.getAllOffers)
+router.get('/demands', demandCrudController.getAllDemands)
 
 router.get('/accounts/signin', viewsController.getViewSingin)
 router.get('/accounts/signup', viewsController.getViewSingup)

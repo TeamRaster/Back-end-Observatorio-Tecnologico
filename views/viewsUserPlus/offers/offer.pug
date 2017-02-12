@@ -1,35 +1,16 @@
 extends ../../layout/layoutIndex
 
 block title
-  title Nuevas ofertas
+  title offer
 
 block main
   .row.center-xs
     .col-xs-5
-      h3 Ofertas
+      h3 oferta
   .row.center-xs
-    .col-xs-5
-      form(method="POST" action="/app/ofertas" enctype="multipart/form-data")
-        .input-field.col.s12
-          label(for="business") Empresa:
-          input(type="text", class="validate", name="business", id="business")
-        .input-field.col.s12
-          textarea.materialize-textarea(type="text" rows= "5" id="sample5" data-length="100")
-          label(class="mdl-textfield__label" for="sample5" name="description") Descripcion
-        .input-field.col.s12
-          label(for="category") Categoria:
-          input(type="text", class="validate", name="category", id="category")
-        .input-field.col.s12
-          .file-field.input-field
-            .btn
-              span File
-              input(type="file", name="image", id="image")
-            .file-path-wrapper
-              input(type="text", class="file-path validate")
-        div
-          input(type="submit", class="btn", name="btn", id="btn", value="Publicar")
-
-
-
-
-
+    .col-xs-10
+      h5 Empresa: #{offer.business}
+      h5 Descripcion: #{offer.description}
+      h5 Categoria: #{offer.category}
+      h5 Foto
+      img(src="/images/imagesOffers/" + offer.image + "." + offer.ext)

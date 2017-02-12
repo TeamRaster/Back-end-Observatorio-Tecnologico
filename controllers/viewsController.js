@@ -1,5 +1,8 @@
 'use strict'
 
+const Offer = require('../models/modelOffer')
+const Demand = require('../models/modelDemand')
+
 module.exports = {
 
 // Vistas =========================================================
@@ -19,33 +22,53 @@ module.exports = {
     getViewIndexPlus: function (req, res) {
         res.send('Pagina del usuario con inicio de sesion')
     },
+
+    // Formulario para nuevas ofertas, y para editar
     getViewOffer: function(req, res) {
-        res.render('viewsUserPlus/offers/offer')
+        res.render('viewsUserPlus/offers/offerNew')
     },
     getViewOfferEdit: function(req, res) {
-        res.render('viewsUserPlus/offers/offerUpdate', {id: req.params.id})
+        Offer.findById(req.params.id, function (err, StoredOffer) {
+            if(err) {
+                console.log('[viewsController/getViewOfferEdit]: Error al hacer la busqueda')
+                res.send(err)
+            }
+
+            res.render('viewsUserPlus/offers/offerUpdate', {offer: StoredOffer})
+        })
     },
 
+    // Formulario para nuevas demandas, y para editar
     getViewDemand: function(req, res) {
-        res.render('viewsUserPlus/demands/demand', {id: req.params.id})
+        res.render('viewsUserPlus/demands/demandNew')
     },
 
     getViewDemandEdit: function(req, res) {
-        res.render('viewsUserPlus/demands/demandUpdate', {id: req.params.id})
+        Demand.findById(req.params.id, function (err, StoredDemand) {
+            if(err) {
+                console.log('[viewsController/getViewDemandEdit]: Error al hacer la busqueda')
+                res.send(err)
+            }
+
+            res.render('viewsUserPlus/demands/demandUpdate', {demand: StoredDemand})
+        })
     },
 
-    getViewNews: function(req, res) {
+    // Formulario para editar usuarios
+    getViewUserEdit: function(req, res) {
+        res.send('Tu puedes eliminar archivos, que solo tu has publicado')
+    },
+
+    // Formulario para nuevos grupos, y para editar
+    getViewGroups: function(req, res) {
         // res.render('news/New')
     },
 
-    getViewGroups: function(req, res) {
+    getViewGroupsEdit: function(req, res) {
         // res.render('groups/group')
     },
 
-    getView: function(req, res) {
-        // res.render('news/newNew')
-    },
-
+    // Formulario para nuevos archivos, y para editar
     getViewFile: function(req, res) {
         res.send('Tu puedes ver tus archivos publicados')
     },
@@ -54,11 +77,13 @@ module.exports = {
         res.send('Tu puedes eliminar archivos, que solo tu has publicado')
     },
 
+
 // Administradores =================================================
     getViewIndexAdministrator: function(req, res) {
         res.send('Pagina principal del administrador')
     },
 
+    // Formulario para nuevas imagenes en el slider, y para editar
     getViewSlider: function(req, res) {
         res.send('Tu puedes agregar una nueva imagen al Slider')
     },
@@ -67,6 +92,7 @@ module.exports = {
         res.send('Tu puedes editar una imagen del Slider')
     },
 
+    // Formulario para administrar archivos, y para editar por id
     getViewFileAdmin: function(req, res) {
         res.send('Tu puedes ver los archivos publicados')
     },
@@ -75,6 +101,7 @@ module.exports = {
         res.send('Tu puedes eliminar archivos, aunque esten dentro de un grupo')
     },
 
+    // Formulario para administrar commentarios, y para editar por id
     getViewCommentId: function(req, res) {
         res.send('Tu puedes ver todos los comentarios por cada noticia')
     },

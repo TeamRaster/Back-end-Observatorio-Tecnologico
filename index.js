@@ -41,9 +41,10 @@ app.use(formidable({ keepExtensions: false }))  // Middleware que ayuda a subir 
 
 app.use('/admin', routerUserPlus)// temporal
 
+// Se desactivaron las validaciones para hacer pruebas
 app.use('/', routerUser)  // Rutas que accesibles para todos
-app.use('/app', validateUsers.isLoggedIn, routerUserPlus)  // Rutas que accesibles para usuarios registrados y con sesion iniciada
-app.use('/app/administrator', validateUsers.isAdministrator, routerAdministrator)  // Rutas que accesibles para Administradores
+app.use('/app', routerUserPlus)  // Rutas que accesibles para usuarios registrados y con sesion iniciada
+app.use('/app/administrator', routerAdministrator)  // Rutas que accesibles para Administradores
 
 
 //app.use('/noticias', noticiasCrudController.setNewNoticia, routerUserPlus)

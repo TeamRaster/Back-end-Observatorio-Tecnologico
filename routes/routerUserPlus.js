@@ -10,40 +10,34 @@ const demandCrudController = require('../controllers/demandCrudController')
 const offerCrudController = require('../controllers/offerCrudController')
 const usersCrudController = require('../controllers/usersCrudController')
 
-// Vistas ==============================================================
+// Vistas =======================================================
 router.get('/', viewsController.getViewIndexPlus)
 
-// Rutas Ofertas ========================================================
+// Rutas Ofertas Formularios
 router.get('/offers/new', viewsController.getViewOffer)
 router.get('/offers/:id/edit', viewsController.getViewOfferEdit)
 
-// Rutas Demandas ========================================================
+// Rutas Demandas Formularios
 router.get('/demands/new', viewsController.getViewDemand)
 router.get('/demands/:id/edit', viewsController.getViewDemandEdit)
 
-// Rutas Directory ========================================================
+// Rutas Directory Formularios
 router.get('/directories/new', viewsController.getViewDemand)
 router.get('/directories/:id/edit', viewsController.getViewDemandEdit)
 
-// Rutas Usuarios ========================================================
-// router.get('/users/new', usersControllers.getViewIndexPlus)
-// router.get('/users/:id/edit', usersControllers.getViewIndexPlus)
+// Rutas Usuarios Formularios
+router.get('/users/new', viewsController.getViewSingup)
+router.get('/users/:id/edit', viewsController.getViewIndexPlus)
 
-router.get('/users/all', function(req, res) {
-     //return res.render('admin', {});
-     return res.status(200).send({message: "pagina del admin    "});
 
-})
-
-// CRUD Ofertas ========================================================
-router.route('/ofertas/:id') // Crud a ofertas de manera individual
+// CRUD Ofertas =======================================================
+router.route('/offers/:id') // Crud a ofertas de manera individual
     .get(offerCrudController.getOffer)
     .put(offerCrudController.updateOfferById)
     .delete(offerCrudController.deleteOfferById)
 
-router.route('/ofertas') // Crud a ofertas de manera grupal
-    //.get(offerCrudController.getAllOffers)
-    //.get(offerCrudController.viewSetNewOffer)
+router.route('/offers') // Crud a ofertas de manera grupal
+    .get(offerCrudController.getAllOffers)
     .post(offerCrudController.setNewOffer)
 
 
@@ -57,15 +51,17 @@ router.route('/noti') // Crud a noticias de manera grupal
     .get(newsCrudController.viewSetNewNoticia)
      .post(newsCrudController.setNewNoticia)
 
-// CRUD Demandas =======================================================
-router.route('/demandas/:id') // Crud a demandas de manera individual
-    .get(demandCrudController.getDemanda)
-    .put(demandCrudController.updateDemandaById)
-    .delete(demandCrudController.removeDemandaById)
 
-router.route('/demandas') // Crud a demandas de manera grupal
-    .get(demandCrudController.getAllDemandas)
+// CRUD Demandas =======================================================
+router.route('/demands/:id') // Crud a demandas de manera individual
+    .get(demandCrudController.getDemand)
+    .put(demandCrudController.updateDemandById)
+    .delete(demandCrudController.deleteDemandById)
+
+router.route('/demands') // Crud a demandas de manera grupal
+    .get(demandCrudController.getAllDemands)
     .post(demandCrudController.setNewDemanda)
+
 
 // CRUD Usuarios =======================================================
 router.route('/users/:id') // Crud a users de manera individual
@@ -77,5 +73,6 @@ router.route('/users') // Crud a users de manera grupal
     .get(usersCrudController.getAllUsers)
     .post(usersCrudController.setNewUser)
 
-    // Exportacion de las rutas
+
+// Exportacion de las rutas =======================================================
 module.exports = router;

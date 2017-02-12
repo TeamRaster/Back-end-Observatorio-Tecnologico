@@ -1,0 +1,26 @@
+extends ./layout/layoutIndex
+
+block title
+  title Update User
+
+block main
+  .row.center-xs
+    .col-xs-8
+      h3 Actualizando usuario #{user._id}
+  .row.center-xs
+    .col-xs-5
+      form(method="POST" action="/users/" + user._id + "?_method=PUT" enctype="multipart/form-data")
+        .input-field.col.s12
+          label(for="username") Nombre de Usuario:
+          input(type="text", class="validate", name="username", id="username" value="")
+        .input-field.col.s12
+          label(for="email") Correo:
+          input(type="text", class="validate", name="email", id="email" value="")
+        .input-field.col.s12
+          label(for="password") Contraseña:
+          input(type="password", class="validate", name="password", id="password" value="")
+        div
+          input(type="submit", class="btn", name="btn", id="btn", value="Actualizar")
+
+
+
