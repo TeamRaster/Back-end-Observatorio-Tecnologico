@@ -1,0 +1,24 @@
+extends ../../layout/layoutIndex
+
+block title
+  title Users
+
+block main
+  .row.center-xs
+    .col-xs-5
+      h3 Users
+  .row.center-xs
+    .col-xs-10
+      if(user)
+        h5 Nombre: #{user.username}
+        h5 Proveedor: #{user.provider}
+        h5 ProveedorID: #{user.providerId}
+        h5 Adminisitrador: #{user.administrator}
+        h5 Fecha de Registro: #{user.creationUser}
+        h5 Foto
+          if(user.photo && user.ext)
+            img(src="/images/imagesUsers/" + user.photo + "." + user.ext)
+          else if(user.photo )
+            img(src="" + user.photo)
+          else
+            p Imagen no disponible

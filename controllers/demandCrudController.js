@@ -18,7 +18,7 @@ module.exports = {
             // creator       : 'id_creator'
         })
 
-        newDemand.save().then((Storeddemand) => {
+        newDemand.save().then((StoredDemand) => {
             newDemand.image = newDemand._id  // Coloca de nombre, el id del registro que se hizo
             newDemand.save(function (err) {  // Volvemos a guardar el nombre de la imagen
                 if (err) {
@@ -28,6 +28,7 @@ module.exports = {
                     res.redirect('/app/demands')
                 }
             })
+
             fs.rename(req.files.image.path, "public/images/imagesDemands/" + newDemand._id + "." + ext_)  // Sube el archivo a la carpeta indicada
             console.log('[Successful]: Demanda guardada con exito')
             res.redirect('/app/demands')

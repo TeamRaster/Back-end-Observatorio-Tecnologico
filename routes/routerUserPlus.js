@@ -26,8 +26,8 @@ router.get('/directories/new', viewsController.getViewDemand)
 router.get('/directories/:id/edit', viewsController.getViewDemandEdit)
 
 // Rutas Usuarios Formularios
-router.get('/users/new', viewsController.getViewSingup)
-router.get('/users/:id/edit', viewsController.getViewIndexPlus)
+router.get('/users/new', viewsController.getViewUserNew)
+router.get('/users/:id/edit', viewsController.getViewUserEdit)
 
 
 // CRUD Ofertas =======================================================
@@ -66,8 +66,8 @@ router.route('/demands') // Crud a demandas de manera grupal
 // CRUD Usuarios =======================================================
 router.route('/users/:id') // Crud a users de manera individual
     .get(usersCrudController.getUser)
-    // .put(usersCrudController.updateUser)
-    .delete(usersCrudController.removeUser)
+    .put(usersCrudController.updateUser)
+    .delete(usersCrudController.deleteUser)
 
 router.route('/users') // Crud a users de manera grupal
     .get(usersCrudController.getAllUsers)

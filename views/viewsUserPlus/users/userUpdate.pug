@@ -1,4 +1,4 @@
-extends ./layout/layoutIndex
+extends ../../layout/layoutIndex
 
 block title
   title Update User
@@ -6,19 +6,26 @@ block title
 block main
   .row.center-xs
     .col-xs-8
-      h3 Actualizando usuario #{user._id}
+      h3 Actualizando usuario #{user.id}
   .row.center-xs
     .col-xs-5
-      form(method="POST" action="/users/" + user._id + "?_method=PUT" enctype="multipart/form-data")
+      form(method="POST" action="/app/users/" + user.id + "?_method=PUT" enctype="multipart/form-data")
         .input-field.col.s12
           label(for="username") Nombre de Usuario:
-          input(type="text", class="validate", name="username", id="username" value="")
+          input(type="text", class="validate", name="username", id="username" value="" + user.username data-length="50" autofocus)
         .input-field.col.s12
           label(for="email") Correo:
-          input(type="text", class="validate", name="email", id="email" value="")
+          input(type="text", class="validate", name="email", id="email" value="" + user.email data-length="50")
         .input-field.col.s12
           label(for="password") Contraseña:
-          input(type="password", class="validate", name="password", id="password" value="")
+          input(type="password", class="validate", name="password", id="password" placeholder="8-16 caracteres" data-length="16")
+        .input-field.col.s12
+          .file-field.input-field
+            .btn
+              span File
+              input(type="file", name="photo", id="photo")
+            .file-path-wrapper
+              input(type="text", class="file-path validate" value="" + user.photo)
         div
           input(type="submit", class="btn", name="btn", id="btn", value="Actualizar")
 

@@ -2,6 +2,7 @@
 
 const Offer = require('../models/modelOffer')
 const Demand = require('../models/modelDemand')
+const User = require('../models/modelUsers')
 
 module.exports = {
 
@@ -12,7 +13,7 @@ module.exports = {
     getViewSingin: function(req, res) {
         let error_message = req.flash('error')[0]
         res.locals.error_message = error_message
-        res.render('signin', {error: res.locals.error_message})
+        res.render('signin', {error: error_message})
     },
     getViewSingup: function(req, res) {
         res.render('signup')
@@ -30,8 +31,10 @@ module.exports = {
     getViewOfferEdit: function(req, res) {
         Offer.findById(req.params.id, function (err, StoredOffer) {
             if(err) {
+                console.log('=========================================================')
                 console.log('[viewsController/getViewOfferEdit]: Error al hacer la busqueda')
-                res.send(err)
+                console.log('=========================================================')
+                res.redirect('/app/offers')
             }
 
             res.render('viewsUserPlus/offers/offerUpdate', {offer: StoredOffer})
@@ -46,8 +49,10 @@ module.exports = {
     getViewDemandEdit: function(req, res) {
         Demand.findById(req.params.id, function (err, StoredDemand) {
             if(err) {
+                console.log('=========================================================')
                 console.log('[viewsController/getViewDemandEdit]: Error al hacer la busqueda')
-                res.send(err)
+                console.log('=========================================================')
+                res.redirect('/app/demands')
             }
 
             res.render('viewsUserPlus/demands/demandUpdate', {demand: StoredDemand})
@@ -55,8 +60,20 @@ module.exports = {
     },
 
     // Formulario para editar usuarios
+    getViewUserNew: (req, res) => {
+        res.render('viewsUserPlus/users/userNew')
+    },
     getViewUserEdit: function(req, res) {
-        res.send('Tu puedes eliminar archivos, que solo tu has publicado')
+        User.findById(req.params.id, function (err, storedUser) {
+            if(err) {
+                console.log('=========================================================')
+                console.log('[viewsController/getViewUserEdit]: Error al hacer la busqueda')
+                console.log('=========================================================')
+                res.redirect('/app/users')
+            }
+
+            res.render('viewsUserPlus/users/userUpdate', {user: storedUser})
+        })
     },
 
     // Formulario para nuevos grupos, y para editar

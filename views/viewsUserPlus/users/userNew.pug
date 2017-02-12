@@ -1,15 +1,15 @@
-extends ./layout/layoutIndex
+extends ../../layout/layoutIndex
 
 block title
-  title Registro de Usuarios
+  title News Users
 
 block main
   .row.center-xs
-    .col-xs-8
-      h3 Registrate
+    .col-xs-5
+      h3 Usuarios normales como administradores
   .row.center-xs
     .col-xs-5
-      form(method="POST" action="/accounts/local/user" enctype="multipart/form-data")
+      form(method="POST" action="/app/users" enctype="multipart/form-data")
         .input-field.col.s12
           label(for="username") Nombre de Usuario:
           input(type="text", class="validate", name="username", id="username" data-length="50" autofocus required)
@@ -18,7 +18,15 @@ block main
           input(type="email", class="validate", name="email", id="email" data-length="60" required)
         .input-field.col.s12
           label(for="password") Contraseña:
-          input(type="password", class="validate", name="password", id="password" placeholder="minimo 8 caracteres" data-length="16" required)
+          input(type="password", class="validate", name="password", id="password" placeholder="8-16 caracteres" data-length="16" required)
+        .input-field.col.s12
+          .row.center-xs
+            .col-xs-6
+              input(name="options" type="radio" id="test1" value="false" checked)
+              label(for="test1") Usuario
+            .col-xs-6
+              input(name="options" type="radio" id="test2" value="true")
+              label(for="test2") Administrador
         .input-field.col.s12
           .file-field.input-field
             .btn
@@ -27,4 +35,4 @@ block main
             .file-path-wrapper
               input(type="text" class="file-path validate")
         div
-          input(type="submit", class="btn", name="btn", id="btn", value="Registrarse")
+          input(type="submit", class="btn", name="btn", id="btn", value="Crear nuevo usuario")

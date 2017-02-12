@@ -16,13 +16,13 @@ block main
       a(href="/auth/linkedin" class="btn") Linkedin
   .row.center-xs
     .col-xs-5
-      p= error
+      h5= error
   .row.center-xs
     .col-xs-5
       form(method="POST" action="/auth/local")
         .input-field.col.s12
           label(for="username") Correo Electronico:
-          input(type="text", class="validate", name="username", id="username")
+          input(type="email", class="validate", name="username", id="username" autofocus)
         .input-field.col.s12
           label(for="password") Contraseña:
           input(type="password", class="validate", name="password", id="password")

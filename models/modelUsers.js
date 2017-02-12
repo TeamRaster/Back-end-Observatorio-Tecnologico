@@ -9,34 +9,39 @@ const bcrypt = require('bcrypt-nodejs')
 const UsersSchema = new Schema({
     providerId    : {
         type      : String,
-        default   : 'No disponible'
+        default   : 'Aun no disponible'
     },
     username      : {
         type      : String,
-        maxlength : [50, "[Nombre]: Maximo 50 caracteres"],
+        minlength : [3, "[Username]: Minimo 3 caracteres"],
+        maxlength : [50, "[Username]: Maximo 50 caracteres"],
     },
     email         : {
         type      : String,
-        default   : 'Aun falta por confirmar',
+        default   : 'Aun no disponible',
         lowercase : true,
         trim      : true,
         unique    : true
     },
     password      : {
         type      : String,
-        minlength : [8, "[Password]: Minimo 8 caracteres"],
+        // minlength : [8, "[Password]: Minimo 8 caracteres"],
+        // maxlength : [16, "[Password]: Maximo 16 caracteres"],
         trim      : true
     },
-    photo         : {
+    photo: {
         type      : String,
-        default   : 'No disponible'
+        default   : 'Aun no disponible'
     },
-    provider      : String,
-    administrator : {
-        type      : Boolean,
-        default   : false
+    ext           : String,
+    provider: {
+        type      : String,
+        default   : 'Local'
     },
-    creationUser : {
+    administrator: {
+        type      : Boolean
+    },
+    creationUser: {
         type      : Date,
         default   : Date.now
     }
@@ -46,10 +51,7 @@ UsersSchema.pre('save', function (next) {
     let user = this
     // Detecta cuando se cambia la contraseña con el hash
     if (!user.isModified('password')) {
-        console.log('La contraseña aun no esta encriptada')
         return next()
-    } else {
-        console.log('La contraseña esta encriptada')
     }
 
     // Hace uso de la funcion

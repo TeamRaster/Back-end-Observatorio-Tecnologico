@@ -15,7 +15,7 @@ block main
               th email
               th administrator
               th fechaCreacion
-              th(colspan="2") crud
+              th(colspan="3") crud
           tbody
             each user in users
               tr
@@ -24,11 +24,12 @@ block main
                 td #{user.email}
                 td #{user.administrator}
                 td #{user.creationUser}
-                td: a.waves-effect.waves-light.btn.margin-small(href="app/users/" + user._id + "/edit") Edit
+                td: a.waves-effect.waves-light.btn.margin-small(href="/app/users/" + user._id + "/edit") Edit
+                td: a.waves-effect.waves-light.btn.margin-small(href="/app/users/" + user._id) View
                 td
-                  form(method="POST" action="/app/ofertas/" + user._id + "?_method=DELETE" enctype="multipart/form-data")
-                    input.waves-effect.waves-light.btn.margin-small(type="submit", value="Delete")
+                  form(method="POST" action="/app/users/" + user._id + "?_method=DELETE" enctype="multipart/form-data")
+                    input.btn.margin-small(type="submit", value="Delete")
       else
-        h2 No hay Usuarios en la base de datos
-          .row.center-xs
-            a.waves-effect.waves-light.btn(href="/") Regresar al Inicio
+        h3 No hay Usuarios en la base de datos
+        .row.center-xs
+          a.waves-effect.waves-light.btn(href="/") Regresar al Inicio

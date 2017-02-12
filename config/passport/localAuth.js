@@ -9,15 +9,13 @@ function localConfig(app, passport, config) {
         passwordField  : config.localAuth.password
 
     }, (username, password, done) => {
-        console.log(username)
-        console.log(password)
-        User.findOne({ email : username }, (err, user) => {
+        User.findOne({ email : username }, (err, storedUser) => {
             if (err) return done(err)
-            else if(!user) return done(null, false, { msg: 'No existe el usuario' })
-            user.comparePassword(password, user.password, function (err, isMatch) {
+            else if(!storedUser) return done(null, false, { message: 'No existe el usuario' })
+            storedUser.comparePassword(password, storedUser.password, function (err, isMatch) {
                 if (err) return  done(null, false, {message: `Error en auth local ${err}`})
-                else if (!isMatch) return done(null, false, { msg: 'El usuario o contraseña con coinciden' })
-                else return done(null, user, { msg: 'success' })
+                else if (!isMatch) return done(null, false, { message: 'El usuario o contraseña con coinciden' })
+                else return done(null, storedUser, { message: 'success' })
             })
         })
     }))
