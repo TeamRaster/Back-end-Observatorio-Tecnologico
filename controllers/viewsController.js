@@ -4,33 +4,34 @@ const Offer = require('../models/modelOffer')
 const Demand = require('../models/modelDemand')
 const User = require('../models/modelUsers')
 const Image = require('../models/modelSlider')
+const Source = require('../models/modelSource')
 
 module.exports = {
 
 // Vistas =========================================================
-    getViewIndex: function(req, res) {
+    getViewIndex: (req, res) => {
         return res.render('index')
     },
-    getViewSingin: function(req, res) {
+    getViewSingin: (req, res) => {
         let error_message = req.flash('error')[0]
         res.locals.error_message = error_message
         res.render('signin', {error: error_message})
     },
-    getViewSingup: function(req, res) {
+    getViewSingup: (req, res) => {
         res.render('signup')
     },
 
 // Usuarios plus ===================================================
-    getViewIndexPlus: function (req, res) {
+    getViewIndexPlus:  (req, res) => {
         res.send('Pagina del usuario con inicio de sesion')
     },
 
     // Formulario para nuevas ofertas, y para editar
-    getViewOffer: function(req, res) {
+    getViewOffer: (req, res) => {
         res.render('viewsUserPlus/offers/offerNew')
     },
-    getViewOfferEdit: function(req, res) {
-        Offer.findById(req.params.id, function (err, StoredOffer) {
+    getViewOfferEdit: (req, res) => {
+        Offer.findById(req.params.id,  (err, StoredOffer) => {
             if(err) {
                 console.log('=========================================================')
                 console.log('[viewsController/getViewOfferEdit]: Error al hacer la busqueda')
@@ -43,12 +44,12 @@ module.exports = {
     },
 
     // Formulario para nuevas demandas, y para editar
-    getViewDemand: function(req, res) {
+    getViewDemand: (req, res) => {
         res.render('viewsUserPlus/demands/demandNew')
     },
 
-    getViewDemandEdit: function(req, res) {
-        Demand.findById(req.params.id, function (err, StoredDemand) {
+    getViewDemandEdit: (req, res) => {
+        Demand.findById(req.params.id,  (err, StoredDemand) => {
             if(err) {
                 console.log('=========================================================')
                 console.log('[viewsController/getViewDemandEdit]: Error al hacer la busqueda')
@@ -64,8 +65,8 @@ module.exports = {
     getViewUserNew: (req, res) => {
         res.render('viewsUserPlus/users/userNew')
     },
-    getViewUserEdit: function(req, res) {
-        User.findById(req.params.id, function (err, storedUser) {
+    getViewUserEdit: (req, res) => {
+        User.findById(req.params.id,  (err, storedUser) => {
             if(err) {
                 console.log('=========================================================')
                 console.log('[viewsController/getViewUserEdit]: Error al hacer la busqueda')
@@ -78,40 +79,40 @@ module.exports = {
     },
 
     // Formulario para nuevos grupos, y para editar
-    getViewGroups: function(req, res) {
+    getViewGroups: (req, res) => {
         // res.render('news/New')
     },
 
-    getViewGroupsEdit: function(req, res) {
+    getViewGroupsEdit: (req, res) => {
         // res.render('groups/group')
     },
 
     // Formulario para nuevos archivos, y para editar
-    getViewFile: function(req, res) {
+    getViewFile: (req, res) => {
         res.send('Tu puedes ver tus archivos publicados')
     },
 
-    getViewFileEdit: function(req, res) {
+    getViewFileEdit: (req, res) => {
         res.send('Tu puedes eliminar archivos, que solo tu has publicado')
     },
 
 
 // Administradores =================================================
-    getViewIndexAdministrator: function(req, res) {
+    getViewIndexAdministrator: (req, res) => {
         res.send('Pagina principal del administrador')
     },
 
 
     // Formulario para nuevas imagenes en el slider, y para editar
-    getViewSliderNew: function(req, res) {
-        res.render('./viewsAdministrator/events/new')
+    getViewSliderNew: (req, res) => {
+        res.render('viewsAdministrator/events/new')
     },
 
     getViewSliderEdit: (req, res) => {
         Image.findById(req.params.id, (err, storedEvent) => {
             if (err) {
                 console.log('=========================================================')
-                console.log('[viewsController/update]: Error al hacer la busqueda')
+                console.log('[viewsController/getViewSliderEdit]: Error al hacer la busqueda')
                 console.log('=========================================================')
                 res.redirect('/app/administrator/events')
             }
@@ -120,22 +121,40 @@ module.exports = {
     },
 
 
+    // Formulario para nuevas fuentes de informacion, y para editar
+    getViewSourceNew: (req, res) => {
+        res.render('viewsAdministrator/sources/new')
+    },
+
+    getViewSourceEdit: (req, res) => {
+        Source.findById(req.params.id, (err, storedSource) => {
+            if (err) {
+                console.log('=========================================================')
+                console.log('[viewsController/getVieSourceEdit]: Error al hacer la busqueda')
+                console.log('=========================================================')
+                res.redirect('/app/administrator/sources')
+            }
+            res.render('viewsAdministrator/sources/update', {source: storedSource})
+        })
+    },
+
+
     // Formulario para administrar archivos, y para editar por id
-    getViewFileAdmin: function(req, res) {
+    getViewFileAdmin: (req, res) => {
         res.send('Tu puedes ver los archivos publicados')
     },
 
-    getViewFileEditAdmin: function(req, res) {
+    getViewFileEditAdmin: (req, res) => {
         res.send('Tu puedes eliminar archivos, aunque esten dentro de un grupo')
     },
 
 
     // Formulario para administrar commentarios, y para editar por id
-    getViewCommentId: function(req, res) {
+    getViewCommentId: (req, res) => {
         res.send('Tu puedes ver todos los comentarios por cada noticia')
     },
 
-    getViewStatsId: function(req, res) {
+    getViewStatsId: (req, res) => {
         res.send('Tu puedes ver todos los stats(likes, dislikes) por cada noticia')
     },
 

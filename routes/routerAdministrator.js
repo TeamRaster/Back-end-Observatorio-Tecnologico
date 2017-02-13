@@ -6,6 +6,7 @@ const router = express.Router()
 
 const viewsController = require('../controllers/viewsController')
 const sliderCrudController = require('../controllers/sliderCrudController')
+const sourceCrudController = require('../controllers/sourceCrudController')
 
 // Vistas ==============================================================
 router.get('/', viewsController.getViewIndexAdministrator)
@@ -26,7 +27,17 @@ router.route('/events')
 
 
 // Fuentes de informacion ========================================================
-router.get('/sources', viewsController.getViewCommentId)
+router.get('/sources/:id/edit', viewsController.getViewSourceEdit)
+router.get('/sources/new', viewsController.getViewSourceNew)
+
+router.route('/sources/:id')
+    .get(sourceCrudController.getSource)
+    .put(sourceCrudController.updateSource)
+    .delete(sourceCrudController.deleteSource)
+
+router.route('/sources')
+    .get(sourceCrudController.getSources)
+    .post(sourceCrudController.setSource)
 
 
 // Observatorio ========================================================
