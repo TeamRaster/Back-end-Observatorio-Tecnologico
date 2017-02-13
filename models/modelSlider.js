@@ -8,12 +8,8 @@ const SliderSchema = new Schema({
         type    : Date,
         default : Date.now
     },
-    ext         : String,
     name        : String,
-    author: {
-        type    : Schema.Types.ObjectId,
-        ref     : "User"
-    }
+    category    : String
 })
 
 module.exports = mongoose.model('Slider', SliderSchema)

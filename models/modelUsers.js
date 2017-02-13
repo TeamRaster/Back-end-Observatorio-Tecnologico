@@ -50,16 +50,15 @@ const UsersSchema = new Schema({
 UsersSchema.pre('save', function (next) {
     let user = this
     // Detecta cuando se cambia la contraseña con el hash
-    if (!user.isModified('password')) {
-        return next()
+    if (user.isModified('password')) {
+        // Hace uso de la funcion
+        this.hashPassword(user.password, function (err, hash) {
+            if (err) return next(err)
+            user.password = hash
+            console.log(user.password)
+            next()
+        })
     }
-
-    // Hace uso de la funcion
-    this.hashPassword(user.password, function (err, hash) {
-        if (err) return next(err)
-        user.password = hash
-        next()
-    })
 })
 
 UsersSchema.methods.hashPassword = function (candidatePassword, cb) {

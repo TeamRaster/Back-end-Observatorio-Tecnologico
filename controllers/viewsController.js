@@ -3,6 +3,7 @@
 const Offer = require('../models/modelOffer')
 const Demand = require('../models/modelDemand')
 const User = require('../models/modelUsers')
+const Image = require('../models/modelSlider')
 
 module.exports = {
 
@@ -100,14 +101,24 @@ module.exports = {
         res.send('Pagina principal del administrador')
     },
 
+
     // Formulario para nuevas imagenes en el slider, y para editar
-    getViewSlider: function(req, res) {
-        res.send('Tu puedes agregar una nueva imagen al Slider')
+    getViewSliderNew: function(req, res) {
+        res.render('./viewsAdministrator/events/new')
     },
 
-    getViewSliderEdit: function(req, res) {
-        res.send('Tu puedes editar una imagen del Slider')
+    getViewSliderEdit: (req, res) => {
+        Image.findById(req.params.id, (err, storedEvent) => {
+            if (err) {
+                console.log('=========================================================')
+                console.log('[viewsController/update]: Error al hacer la busqueda')
+                console.log('=========================================================')
+                res.redirect('/app/administrator/events')
+            }
+            res.render('viewsAdministrator/events/update', {event: storedEvent})
+        })
     },
+
 
     // Formulario para administrar archivos, y para editar por id
     getViewFileAdmin: function(req, res) {
@@ -117,6 +128,7 @@ module.exports = {
     getViewFileEditAdmin: function(req, res) {
         res.send('Tu puedes eliminar archivos, aunque esten dentro de un grupo')
     },
+
 
     // Formulario para administrar commentarios, y para editar por id
     getViewCommentId: function(req, res) {
