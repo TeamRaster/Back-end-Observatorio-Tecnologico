@@ -70,8 +70,13 @@ module.exports = {
             }
 
             storedSource.title = req.fields.title
-            // todo aun no esta lista
-            // storedSource.image = req.fields.imageName
+
+            if (req.files.image.name != "") {
+                let ext_ = req.files.image.name.split(".").pop()
+                fs.unlink("public/images/imagesSources/" + storedSource.image)
+                fs.rename(req.files.image.path, "public/images/imagesSources/" + storedSource._id + "." + ext_)
+            }
+
             storedSource.save( err => {
                 if (err) {
                     console.log('=========================================================')
@@ -86,13 +91,14 @@ module.exports = {
 
 
     deleteSource: (req, res) => {
-        Source.findOneAndRemove({_id: req.params.id}, err => {
+        Source.findOneAndRemove({_id: req.params.id}, (err, storedSource) => {
             if (err) {
                 console.log('=========================================================')
                 console.log(`[SourceCrud/delete]: Error al eliminar los datos ${err}`)
                 console.log('=========================================================')
                 res.redirect('/app/administrator/sources')
             }
+            fs.unlink("public/images/imagesSources/" + storedSource.image)
             res.redirect('/app/administrator/sources')
         })
     },
