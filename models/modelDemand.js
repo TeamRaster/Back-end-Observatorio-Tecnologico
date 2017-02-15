@@ -34,4 +34,10 @@ const DemandSchema = new Schema({
     // }
 })
 
+DemandSchema.pre('save', function(next) {
+    let demand = this
+    demand.image = demand.id + '.' + demand.ext
+    next()
+})
+
 module.exports = mongoose.model('Demand', DemandSchema)

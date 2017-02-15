@@ -43,8 +43,8 @@ module.exports = {
     },
 
     // Formulario para nuevas demandas, y para editar
-    getViewDemand: (req, res) => {
-        res.render('viewsUserPlus/demands/demandNew')
+    getViewDemandNew: (req, res) => {
+        res.render('viewsUserPlus/demands/new')
     },
 
     getViewDemandEdit: (req, res) => {
@@ -56,7 +56,7 @@ module.exports = {
                 res.redirect('/app/demands')
             }
 
-            res.render('viewsUserPlus/demands/demandUpdate', {demand: StoredDemand})
+            res.render('viewsUserPlus/demands/update', {demand: StoredDemand})
         })
     },
 

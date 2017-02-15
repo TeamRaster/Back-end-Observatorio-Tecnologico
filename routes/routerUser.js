@@ -16,7 +16,7 @@ router.get('/', (req, res) => {
 // Resumen de lo que se muestra al usuario normal
 router.get('/users', usersCrudController.getAllUsers)
 router.get('/offers', offerCrudController.getAllOffers)
-router.get('/demands', demandCrudController.getAllDemands)
+router.get('/demands', demandCrudController.getDemands)
 
 router.get('/accounts/signin', viewsController.getViewSingin)
 router.get('/accounts/signup', viewsController.getViewSingup)

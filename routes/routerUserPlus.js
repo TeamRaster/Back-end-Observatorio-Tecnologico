@@ -18,12 +18,12 @@ router.get('/offers/new', viewsController.getViewOffer)
 router.get('/offers/:id/edit', viewsController.getViewOfferEdit)
 
 // Rutas Demandas Formularios
-router.get('/demands/new', viewsController.getViewDemand)
+router.get('/demands/new', viewsController.getViewDemandNew)
 router.get('/demands/:id/edit', viewsController.getViewDemandEdit)
 
 // Rutas Directory Formularios
-router.get('/directories/new', viewsController.getViewDemand)
-router.get('/directories/:id/edit', viewsController.getViewDemandEdit)
+// router.get('/directories/new', viewsController.getViewDemand)
+// router.get('/directories/:id/edit', viewsController.getViewDemandEdit)
 
 // Rutas Usuarios Formularios
 router.get('/users/new', viewsController.getViewUserNew)
@@ -55,12 +55,12 @@ router.route('/noti') // Crud a noticias de manera grupal
 // CRUD Demandas =======================================================
 router.route('/demands/:id') // Crud a demandas de manera individual
     .get(demandCrudController.getDemand)
-    .put(demandCrudController.updateDemandById)
-    .delete(demandCrudController.deleteDemandById)
+    .put(demandCrudController.updateDemand)
+    .delete(demandCrudController.deleteDemand)
 
 router.route('/demands') // Crud a demandas de manera grupal
-    .get(demandCrudController.getAllDemands)
-    .post(demandCrudController.setNewDemanda)
+    .get(demandCrudController.getDemands)
+    .post(demandCrudController.setDemand)
 
 
 // CRUD Usuarios =======================================================
