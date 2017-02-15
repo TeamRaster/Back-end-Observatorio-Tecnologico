@@ -14,7 +14,7 @@ router.get('/', (req, res) => {
 })
 
 // Resumen de lo que se muestra al usuario normal
-router.get('/users', usersCrudController.getAllUsers)
+
 router.get('/offers', offerCrudController.getAllOffers)
 router.get('/demands', demandCrudController.getDemands)
 
@@ -26,7 +26,7 @@ router.get('/accounts/login', usersCrudController.getNewSession)
 router.get('/accounts/logout', usersCrudController.getDestroySession)
 
 // CRUD Users =======================================================
-router.post('/accounts/local/user', usersCrudController.setNewUser)
+router.post('/accounts/local/user', usersCrudController.setUser)
 
 // Exportacion de las rutas
 module.exports = router

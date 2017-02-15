@@ -6,10 +6,14 @@ const router = express.Router()
 
 const viewsController = require('../controllers/viewsController')
 const sourceCrudController = require('../controllers/sourceCrudController')
+const usersCrudController = require('../controllers/usersCrudController')
 
 // Vistas ==============================================================
-router.get('/', viewsController.getViewIndexAdministrator)
+router.get('/', viewsController.getViewIndexA)
 
+// Rutas Usuarios Formularios solo para administradores
+router.get('/users', usersCrudController.getUsers)
+router.get('/users/new', viewsController.getViewUserNew)
 
 // Fuentes de informacion ========================================================
 router.get('/sources/:id/edit', viewsController.getViewSourceEdit)

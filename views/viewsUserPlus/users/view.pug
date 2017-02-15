@@ -17,7 +17,7 @@ block main
         h5 Fecha de Registro: #{user.creationUser}
         h5 Foto
           if(user.photo && user.ext)
-            img(src="/images/imagesUsers/" + user.photo + "." + user.ext)
+            img(src="/images/imagesUsers/" + user.photo)
           else if(user.photo )
             img(src="" + user.photo)
           else

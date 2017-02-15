@@ -26,7 +26,6 @@ router.get('/demands/:id/edit', viewsController.getViewDemandEdit)
 // router.get('/directories/:id/edit', viewsController.getViewDemandEdit)
 
 // Rutas Usuarios Formularios
-router.get('/users/new', viewsController.getViewUserNew)
 router.get('/users/:id/edit', viewsController.getViewUserEdit)
 
 
@@ -70,8 +69,8 @@ router.route('/users/:id') // Crud a users de manera individual
     .delete(usersCrudController.deleteUser)
 
 router.route('/users') // Crud a users de manera grupal
-    .get(usersCrudController.getAllUsers)
-    .post(usersCrudController.setNewUser)
+    .get(usersCrudController.getUsers)
+    .post(usersCrudController.setUser)
 
 
 // Exportacion de las rutas =======================================================

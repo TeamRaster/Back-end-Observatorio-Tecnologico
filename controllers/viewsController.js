@@ -20,6 +20,8 @@ module.exports = {
         res.render('signup')
     },
 
+
+
 // Usuarios plus ===================================================
     getViewIndexPlus:  (req, res) => {
         res.send('Pagina del usuario con inicio de sesion')
@@ -62,7 +64,7 @@ module.exports = {
 
     // Formulario para editar usuarios
     getViewUserNew: (req, res) => {
-        res.render('viewsUserPlus/users/userNew')
+        res.render('viewsAdministrator/users/new')
     },
     getViewUserEdit: (req, res) => {
         User.findById(req.params.id,  (err, storedUser) => {
@@ -73,31 +75,14 @@ module.exports = {
                 res.redirect('/app/users')
             }
 
-            res.render('viewsUserPlus/users/userUpdate', {user: storedUser})
+            res.render('viewsUserPlus/users/update', {user: storedUser})
         })
     },
 
-    // Formulario para nuevos grupos, y para editar
-    getViewGroups: (req, res) => {
-        // res.render('news/New')
-    },
-
-    getViewGroupsEdit: (req, res) => {
-        // res.render('groups/group')
-    },
-
-    // Formulario para nuevos archivos, y para editar
-    getViewFile: (req, res) => {
-        res.send('Tu puedes ver tus archivos publicados')
-    },
-
-    getViewFileEdit: (req, res) => {
-        res.send('Tu puedes eliminar archivos, que solo tu has publicado')
-    },
 
 
 // Administradores =================================================
-    getViewIndexAdministrator: (req, res) => {
+    getViewIndexA: (req, res) => {
         res.send('Pagina principal del administrador')
     },
 

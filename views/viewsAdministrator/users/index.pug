@@ -5,6 +5,12 @@ block title
 
 block main
   .row.center-xs
+    .col-xs-8
+      h3 Administracion de usuarios
+  .row.center-xs
+    a.waves-effect.waves-light.btn(href="/") Regresar al Inicio
+    a.waves-effect.waves-light.btn.margin-small(href="/app/administrator/users/new") new
+  .row.center-xs
     .col-xs-10
       if (users != "")
         table.highlight.centered
@@ -31,5 +37,3 @@ block main
                     input.btn.margin-small(type="submit", value="Delete")
       else
         h3 No hay Usuarios en la base de datos
-        .row.center-xs
-          a.waves-effect.waves-light.btn(href="/") Regresar al Inicio
