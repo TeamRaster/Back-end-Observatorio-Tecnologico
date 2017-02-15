@@ -7,10 +7,12 @@ module.exports = {
     setSource: (req, res) => {
         let ext_ = req.files.image.name.split(".").pop()
         let source = new Source({
-            title       : req.fields.title
+            title  : req.fields.title,
+            type   : req.fields.types
+            // author       : req.fields.title,
         })
 
-        source.save().then((storedSource) => {
+        source.save(err => {
             source.image = source._id + "." + ext_
             source.save( err => {
                 if (err) {
@@ -23,12 +25,6 @@ module.exports = {
 
             fs.rename(req.files.image.path, "public/images/imagesSources/" + source._id + "." + ext_)
             console.log('[Successful]: Datos almacenados')
-            res.redirect('/app/administrator/sources')
-
-        }, err => {
-            console.log('=========================================================')
-            console.log(`[SourceCrud/set]: Error datos no almacenados ${err}`)
-            console.log('=========================================================')
             res.redirect('/app/administrator/sources')
         })
     },
@@ -46,6 +42,17 @@ module.exports = {
         })
     },
 
+    getall: (req, res) => {
+        Source.find({type: req.params.type}, (err, storedSources) => {
+            if (err) {
+                console.log('=========================================================')
+                console.log(`[SourceCrud/getAll]: Error al buscar los datos ${err}`)
+                console.log('=========================================================')
+                res.redirect('/app/administrator/sources')
+            }
+            res.render('./viewsAdministrator/sources/index', {sources: storedSources})
+        })
+    },
 
     getSource: (req, res) => {
         Source.findById(req.params.id, (err, storedSource) => {
@@ -70,6 +77,7 @@ module.exports = {
             }
 
             storedSource.title = req.fields.title
+            storedSource.type = req.fields.types
 
             if (req.files.image.name != "") {
                 let ext_ = req.files.image.name.split(".").pop()

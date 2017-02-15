@@ -14,6 +14,16 @@ block main
           label(for="title") Titulo:
           input(type="text" class="validate" name="title" id="title" autofocus data-length="100" required)
         .input-field.col.s12
+          p
+            input(type="radio" class="with-gap" name="types" id="observatory" checked value="observatory")
+            label(for="observatory") Observatorio
+          p
+            input(type="radio" class="with-gap" name="types" id="source" value="source")
+            label(for="source") Fuente de Informacion
+          p
+            input(type="radio" class="with-gap" name="types" id="event" value="event")
+            label(for="event") Evento
+        .input-field.col.s12
           .file-field.input-field
             .btn
               span Imagen

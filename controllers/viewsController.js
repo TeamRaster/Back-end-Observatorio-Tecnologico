@@ -3,7 +3,6 @@
 const Offer = require('../models/modelOffer')
 const Demand = require('../models/modelDemand')
 const User = require('../models/modelUsers')
-const Image = require('../models/modelSlider')
 const Source = require('../models/modelSource')
 
 module.exports = {
@@ -101,25 +100,6 @@ module.exports = {
     getViewIndexAdministrator: (req, res) => {
         res.send('Pagina principal del administrador')
     },
-
-
-    // Formulario para nuevas imagenes en el slider, y para editar
-    getViewSliderNew: (req, res) => {
-        res.render('viewsAdministrator/events/new')
-    },
-
-    getViewSliderEdit: (req, res) => {
-        Image.findById(req.params.id, (err, storedEvent) => {
-            if (err) {
-                console.log('=========================================================')
-                console.log('[viewsController/getViewSliderEdit]: Error al hacer la busqueda')
-                console.log('=========================================================')
-                res.redirect('/app/administrator/events')
-            }
-            res.render('viewsAdministrator/events/update', {event: storedEvent})
-        })
-    },
-
 
     // Formulario para nuevas fuentes de informacion, y para editar
     getViewSourceNew: (req, res) => {

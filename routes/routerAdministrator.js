@@ -5,30 +5,16 @@ const express = require('express')
 const router = express.Router()
 
 const viewsController = require('../controllers/viewsController')
-const sliderCrudController = require('../controllers/sliderCrudController')
 const sourceCrudController = require('../controllers/sourceCrudController')
 
 // Vistas ==============================================================
 router.get('/', viewsController.getViewIndexAdministrator)
 
 
-// Eventos(Slide) ========================================================
-router.get('/events/:id/edit', viewsController.getViewSliderEdit)
-router.get('/events/new', viewsController.getViewSliderNew)
-
-router.route('/events/:id')
-    .get(sliderCrudController.getImage)
-    .put(sliderCrudController.updateImage)
-    .delete(sliderCrudController.deleteImage)
-
-router.route('/events')
-    .get(sliderCrudController.getImages)
-    .post(sliderCrudController.setImage)
-
-
 // Fuentes de informacion ========================================================
 router.get('/sources/:id/edit', viewsController.getViewSourceEdit)
 router.get('/sources/new', viewsController.getViewSourceNew)
+router.get('/sources/:type/all', sourceCrudController.getall)
 
 router.route('/sources/:id')
     .get(sourceCrudController.getSource)
@@ -36,12 +22,8 @@ router.route('/sources/:id')
     .delete(sourceCrudController.deleteSource)
 
 router.route('/sources')
-    .get(sourceCrudController.getSources)
     .post(sourceCrudController.setSource)
-
-
-// Observatorio ========================================================
-router.get('/observatories', viewsController.getViewCommentId)
+    .get(sourceCrudController.getSources)
 
 
 // El administrador tambien puede eliminar ofertas, demandas, archivos etc pero solo de ser necesario

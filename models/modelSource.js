@@ -9,7 +9,12 @@ const SourceSchema = new Schema({
         default : Date.now
     },
     title       : String,
-    image       : String
+    image       : String,
+    author: {
+        type    : Schema.Types.ObjectId,
+        ref     : "User"
+    },
+    type        : String
 })
 
 module.exports = mongoose.model('Source', SourceSchema)
