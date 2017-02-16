@@ -56,3 +56,7 @@ configAuth.js
 #Imagenes #
 #########
 public/images/imagesOffers
+
+
+#libreria handlebars apra templates y renderizado S.io#
+public/js/handlebars-v4.0.5.js

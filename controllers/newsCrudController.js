@@ -1,5 +1,8 @@
 'use strict'
 
+const redis = require('redis')
+const client = redis.createClient()
+
 const News = require('../models/modelNews')
 
 module.exports = {
@@ -30,18 +33,49 @@ module.exports = {
                 return res.status(500).send({"notice": error})
             })
 
-
     },
 
     getAllNoticias: function(req, res) {
-        News.find({}), function (err, newsStored) {
+        News.find({}, function (err, newsStored) {
             if(err) {
                 console.log('Hubo un error al buscar todas las Noticias[newsCrudController]')
                 res.status(500).send({"error": err})
+
             }
             console.log('Sucesss')
-             return res.status(200).send({message: "pagina del admin    "});
-        }
+
+            // Publicar en el cliente REDIS SOCKETIO
+            //client.publish('images', newsStored.toString())
+            //client.publish('images', (res.locals.toString()))
+            console.log('Cliente news ctrlr-----------')
+            console.log('images', Object.keys(res.locals) )
+            //console.log('images', Object.keys(res) )
+            //console.log('images', Object.keys(res.req.fields) )
+            //console.log('images', Object.keys(res.req.res) )
+            //console.log('images', Object.keys(res.locals[0]) )
+            var claves = {dwl: "dwe", w: "efwef"};
+            console.log('images', newsStored)
+
+            console.log('images', typeof res.locals )
+
+            let pubJSON = { //parsear publicacion a JSON  para client socket PUBSUB
+                'title': newsStored[0]['title'],
+                'category': newsStored[0]['category'],
+                'id' : newsStored[0]['_id']
+            }
+
+            //client.publish('images' , newsStored.toString())
+            client.publish('images', JSON.stringify(pubJSON))
+
+            //client.publish('images', JSON.stringify(newsStored))
+            console.log('./viewsUserPlus/news/newsAll',  typeof newsStored)
+
+            res.render('./viewsUserPlus/news/newsAll', {news: newsStored})
+
+            console.log('images', newsStored.toString())
+            // return res.status(200).send({message: "pagina del admin    "});
+        })
+
 
     },
     getNoticiaById: function(req, res) {

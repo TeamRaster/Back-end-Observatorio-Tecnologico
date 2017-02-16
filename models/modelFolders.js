@@ -4,9 +4,8 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const FilesSchema = new Schema({
-    extension     : String,
-    nombre        : String,
-    creacionFile  : {
+    name        : String,
+    creationDate  : {
         type      : Date,
         require   : Date.now
     },
@@ -14,11 +13,10 @@ const FilesSchema = new Schema({
         type      : Schema.Types.ObjectId,
         ref       : "User"
     },
-    folder: {
+    group: {
         type      : Schema.Types.ObjectId,
-        ref       : "Folder"
-    },
-
+        ref       : "Group"
+    }
 })
 
-module.exports = mongoose.model('File', FilesSchema)
+module.exports = mongoose.model('Folder', FolsersSchema)
