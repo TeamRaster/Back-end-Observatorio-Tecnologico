@@ -4,15 +4,26 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const ContactSchema = new Schema({
-    telefono     : String,
-    direccion    : String,
-    correo       : String,
+    phone        : {
+        type     : Number,
+        maxlength : [10, "[Phone]: Maximo 10 caracteres"],
+    },
+    address      : {
+        type     : String,
+        lowercase : true,
+        trim      : true
+    },
+    emailContact : {
+        type     : String,
+        lowercase : true,
+        trim      : true
+    },
     linkFacebook : String,
     linkTwitter  : String,
     linkLinkedin : String,
-    creator: {
-        type      : Schema.Types.ObjectId,
-        ref       : "User"
+    author: {
+        type     : Schema.Types.ObjectId,
+        ref      : "User"
     }
 })
 

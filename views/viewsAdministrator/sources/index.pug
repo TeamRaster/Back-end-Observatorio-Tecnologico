@@ -1,0 +1,45 @@
+extends ../../layout/layoutIndex
+
+block title
+  title Events Slider
+
+block main
+  .row.center-xs
+    .col-xs-8
+      h3 Sources Information
+  .row.center-xs
+    a.waves-effect.waves-light.btn(href="/") Regresar al Inicio
+    a.waves-effect.waves-light.btn.margin-small(href="/app/administrator/sources/new") new
+  h4 Filtros en la tabla
+  .row
+    a.waves-effect.waves-light.btn.margin-small(href="/app/administrator/sources") all
+    a.waves-effect.waves-light.btn.margin-small(href="/app/administrator/sources/observatory/all") observatory
+    a.waves-effect.waves-light.btn.margin-small(href="/app/administrator/sources/source/all") source
+    a.waves-effect.waves-light.btn.margin-small(href="/app/administrator/sources/event/all") event
+  .row.center-xs
+    .col-xs-12
+      if (sources != "")
+        table.highlight.centered
+          thead
+            tr
+              th Titulo
+              th Imagen
+              th Autor
+              th Tipo
+              th Fecha
+              th(colspan="3") crud
+          tbody
+            each source in sources
+              tr
+                td #{source.title}
+                td #{source.image}
+                td #{source.author}
+                td #{source.type}
+                td #{source.creationSource}
+                td: a.waves-effect.waves-light.btn.margin-small(href="/app/administrator/sources/" + source._id + "/edit") E
+                td: a.waves-effect.waves-light.btn.margin-small(href="/app/administrator/sources/" + source._id) V
+                td
+                  form(method="POST" action="/app/administrator/sources/" + source._id + "?_method=DELETE" enctype="multipart/form-data")
+                    input.btn.margin-small(type="submit", value="D")
+      else
+        h3 Esta tabla se encuentra vacia

@@ -1,0 +1,18 @@
+extends ../../layout/layoutIndex
+
+block title
+  title Demand
+
+block main
+  .row.center-xs
+    .col-xs-5
+      h3 Demandas
+  .row.center-xs
+    .col-xs-10
+      h5 Empresa: #{demand.business}
+      h5 Descripcion: #{demand.description}
+      h5 Categoria: #{demand.category}
+      h5 Foto
+      img(src="/images/imagesDemands/" + demand.image)
+
+

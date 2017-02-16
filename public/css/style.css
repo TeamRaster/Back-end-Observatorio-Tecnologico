@@ -6,3 +6,12 @@
   margin-top: 35px;
   margin-bottom: 35px;
 }
+
+.paddig-big {
+    padding: 30px 40px;
+}
+
+.margin-small {
+    margin-left: 10px;
+    margin-right: 10px;
+}

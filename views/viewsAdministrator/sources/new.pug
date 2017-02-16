@@ -1,0 +1,35 @@
+extends ../../layout/layoutIndex
+
+block title
+  title Events Slider
+
+block main
+  .row.center-xs
+    .col-xs-8
+      h3 Sources Information
+  .row.center-xs
+    .col-xs-5
+      form(method="POST" action="/app/administrator/sources" enctype="multipart/form-data")
+        .input-field.col.s12
+          label(for="title") Titulo:
+          input(type="text" class="validate" name="title" id="title" autofocus data-length="100" required)
+        .input-field.col.s12
+          p
+            input(type="radio" class="with-gap" name="types" id="observatory" checked value="observatory")
+            label(for="observatory") Observatorio
+          p
+            input(type="radio" class="with-gap" name="types" id="source" value="source")
+            label(for="source") Fuente de Informacion
+          p
+            input(type="radio" class="with-gap" name="types" id="event" value="event")
+            label(for="event") Evento
+        .input-field.col.s12
+          .file-field.input-field
+            .btn
+              span Imagen
+              input(type="file" name="image" id="image" required)
+            .file-path-wrapper
+              input(type="text" class="file-path validate")
+        div
+          input(type="submit" class="btn" name="btn" id="btn" value="Publicar")
+

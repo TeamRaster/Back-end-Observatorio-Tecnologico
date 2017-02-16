@@ -5,14 +5,15 @@ const Schema = mongoose.Schema
 
 
 const CommentSchema = new Schema({
-    creacionComment: {
+    creationComment: {
         type      : Date,
         require   : Date.now
     },
     comments: {
-        type      : String
+        type      : String,
+        maxlength : [150, "[Comment]: Maximo 150 caracteres por cada comentario"],
     },
-    creator: {
+    author: {
         type      : Schema.Types.ObjectId,
         ref       : "User"
     }

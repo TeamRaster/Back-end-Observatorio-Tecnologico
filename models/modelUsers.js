@@ -9,15 +9,16 @@ const bcrypt = require('bcrypt-nodejs')
 const UsersSchema = new Schema({
     providerId    : {
         type      : String,
-        default   : 'No disponible'
+        unique    : true
     },
     username      : {
         type      : String,
-        maxlength : [50, "[Nombre]: Maximo 50 caracteres"],
+        minlength : [1, "[Username]: Minimo 1 caracteres"],
+        maxlength : [50, "[Username]: Maximo 50 caracteres"],
     },
     email         : {
         type      : String,
-        default   : 'Aun falta por confirmar',
+        default   : 'Aun no disponible',
         lowercase : true,
         trim      : true,
         unique    : true
@@ -25,18 +26,22 @@ const UsersSchema = new Schema({
     password      : {
         type      : String,
         minlength : [8, "[Password]: Minimo 8 caracteres"],
+        maxlength : [16, "[Password]: Maximo 16 caracteres"],
         trim      : true
     },
-    photo         : {
+    photo: {
         type      : String,
-        default   : 'No disponible'
+        default   : 'Aun no disponible'
     },
-    provider      : String,
-    administrator : {
-        type      : Boolean,
-        default   : false
+    ext           : String,
+    provider: {
+        type      : String,
+        default   : 'Local'
     },
-    fechaCreacion : {
+    administrator: {
+        type      : Boolean
+    },
+    creationUser: {
         type      : Date,
         default   : Date.now
     }
@@ -44,20 +49,19 @@ const UsersSchema = new Schema({
 
 UsersSchema.pre('save', function (next) {
     let user = this
-    // Detecta cuando se cambia la contraseña con el hash
-    if (!user.isModified('password')) {
-        console.log('La contraseña aun no esta encriptada')
-        return next()
+    console.log(user.password)
+    user.photo = user.id + '.' + user.ext
+    user.providerId = user.id
+    if (user.isModified('password')) {  // Crea un hash solo si el usuario ha modificado el campo password
+        // Llamada al metodo personalizado
+        this.hashPassword(user.password, function (err, hash) {
+            if (err) return next(err)
+            user.password = hash
+            next()
+        })
     } else {
-        console.log('La contraseña esta encriptada')
-    }
-
-    // Hace uso de la funcion
-    this.hashPassword(user.password, function (err, hash) {
-        if (err) return next(err)
-        user.password = hash
         next()
-    })
+    }
 })
 
 UsersSchema.methods.hashPassword = function (candidatePassword, cb) {

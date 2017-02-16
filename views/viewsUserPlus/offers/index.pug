@@ -1,0 +1,38 @@
+extends ../../layout/layoutIndex
+
+block title
+  title Offers
+
+block main
+  .row.center-xs
+    p Puedes hacer el crud a las ofertas pero aun hay bugs, a la hora de actualizar
+  .row.center-xs
+    a.waves-effect.waves-light.btn.teal.darken-4(href="/") Regresar al Inicio
+    a.waves-effect.waves-light.btn.margin-small.teal.darken-4(href="/app/offers/new") New
+  .row.center-xs
+    .col-xs-10
+      if (offers != "")
+        table.highlight.centered
+          thead
+            tr
+              th business
+              th image
+              th description
+              th category
+              th(colspan="3") crud
+          tbody
+            each offer in offers
+              tr
+                td #{offer.business}
+                td #{offer.image}
+                td #{offer.description}
+                td #{offer.category}
+                td: a.waves-effect.waves-light.btn.margin-small(href="/app/offers/" + offer._id + "/edit") Edit
+                td: a.waves-effect.waves-light.btn.margin-small(href="/app/offers/" + offer._id) View
+                td
+                  form(method="POST" action="/app/offers/" + offer._id + "?_method=DELETE" enctype="multipart/form-data")
+                    input.btn.margin-small(type="submit", value="Delete")
+      else
+        h3 No hay ofertas en la base de datos
+
+

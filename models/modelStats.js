@@ -5,7 +5,8 @@ const Schema = mongoose.Schema
 
 const StatsSchema = new Schema({
     likes       : Number,
-    creator: {
+    dislikes    : Number,
+    author: {
         type    : Schema.Types.ObjectId,
         ref     : "User"
     }

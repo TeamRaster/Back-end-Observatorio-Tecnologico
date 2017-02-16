@@ -13,14 +13,25 @@ block main
     .col-xs-2
       a.waves-effect.waves-light.btn(href="/accounts/signup") Registrarse
 
-  .row.center-xs.top-space
-    .col-xs-4
-      a.waves-effect.waves-light.btn(href="/users") Administracion de Usuarios
-  .row.center-xs.top-space
-    .col-xs-4
-      a.waves-effect.waves-light.btn(href="/ofertas") Administracion de Ofertas
-  .row.center-xs.top-space
-    .col-xs-4
-      a.waves-effect.waves-light.btn(href="/demandas") Administracion de Demandas
+  h4 Admin
+  .row.center-xs.top-space.z-depth-1.paddig-big
+    .col-xs-10
+      a.waves-effect.waves-light.btn.margin-small.blue.darken-4(href="/app/administrator/sources") Sources
+
+  h4 Offers
+  .row.center-xs.top-space.z-depth-1.paddig-big
+    .col-xs-10
+      a.waves-effect.waves-light.btn.margin-small.teal.darken-4(href="/app/offers") Offers
+
+  h4 Users
+  .row.center-xs.top-space.z-depth-1.paddig-big
+    .col-xs-10
+      a.waves-effect.waves-light.btn.margin-small.orange.darken-4(href="/app/administrator/users") Users
+
+  h4 Demands
+  .row.center-xs.top-space.z-depth-1.paddig-big
+    .col-xs-10
+      a.waves-effect.waves-light.btn.margin-small(href="/app/demands") Demands
+
 
 

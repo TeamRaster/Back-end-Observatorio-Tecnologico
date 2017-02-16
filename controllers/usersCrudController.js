@@ -1,73 +1,107 @@
 'use strict'
 
 const User = require('../models/modelUsers')
+const fs = require('fs')
 
 module.exports = {
-
-// CRUD Users =======================================================
-    setNewUser: function(req, res) {
+    setUser: (req, res) => {
+        let ext_ = req.files.photo.name.split(".").pop()
         let user = new User({
-            username   : req.fields.username,
-            email      : req.fields.email,
-            photo      : req.fields.photo,
-            password   : req.fields.password,
-            provider   : 'Local',
+            username      : req.fields.username,
+            email         : req.fields.email,
+            password      : req.fields.password,
+            ext           : ext_,
+            administrator : req.fields.options != "true" ? false : true
         })
 
-        if (req.body.options === "true") user.administrator = true
-        else user.administrator = false
-
-        user.save().then((us) => {
-            console.log('[Successful]: Usuario guardado')
-            res.redirect('/')
-        }, (error) => {
-            console.log(`[Error Save]: Usuario no almacenado ${error}`)
-            res.render('signup')
-        })
-    },
-
-    getAllUsers: function(req, res) {
-        User.find({}, function (err, userStored) {
-            if(err) {
-                console.log('Hubo un error al buscar todos los usuarios[usersCrudController]')
-                res.redirect('/')
-                return
-            }
-            res.render('./viewsUserPlus/users/userAll', {users: userStored})
-        })
-    },
-
-    getUser: function(req, res) {
-        User.findById(req.params.id, function (err, user) {
-            if(err) {
-                console.log('Hubo un error al buscar usuario por id [usersCrudController]')
-                res.redirect('/')
-                return
-            }
-            res.send(user)
-        })
-    },
-    updateUser: function(req, res) {
-
-    },
-    removeUser: function(req, res) {
-        User.findOneAndRemove({_id: req.params.id}, function (err) {
+        user.save( err => {
             if (err) {
-                console.log('Error al borrar usuario')
+                console.log('=========================================================')
+                console.log(`[DemandCrud/set]: Error datos no almacenados ${err}`)
+                console.log('=========================================================')
                 res.redirect('/')
             }
-            res.redirect('/')
+            fs.rename(req.files.photo.path, "public/images/imagesUsers/" + user._id + "." + ext_)
+            console.log('[Successful]: Usuario guardado')
+            res.redirect('/app/administrator/users')
+        })
+    },
+
+
+    getUsers: (req, res) => {
+        User.find({}, (err, storedUsers) => {
+            if(err) {
+                console.log('=========================================================')
+                console.log(`[usersCrud/getAll]: Error al recuperar todos los usuarios guardados ${err}`)
+                console.log('=========================================================')
+                res.redirect('/app/administrator/users')
+            }
+            res.render('./viewsAdministrator/users/index', {users: storedUsers})
+        })
+    },
+
+
+    getUser: (req, res) => {
+        User.findById(req.params.id, (err, storedUser) => {
+            if(err) {
+                console.log('=========================================================')
+                console.log(`[usersCrud/getUser]: Error al recuperar el usuario almacenado ${err}`)
+                console.log('=========================================================')
+                res.redirect('/app/administrator/users')
+            }
+            res.render('./viewsUserPlus/users/view', {user: storedUser})
+        })
+    },
+
+
+    updateUser: (req, res) => {
+        User.findById(req.params.id, (err, storedUser) => {
+            if(err) {
+                console.log('=========================================================')
+                console.log(`[usersCrud/updateUser]: Error al buscar usuario por id ${err}`)
+                console.log('=========================================================')
+                res.redirect('/app/administrator/users')
+            }
+            storedUser.username  = req.fields.username
+            storedUser.email     = req.fields.email
+            if(req.fields.password != "") {
+                storedUser.password  = req.fields.password
+            }
+            else if (req.files.photo.name != "") {
+                fs.unlink("public/images/imagesUsers/" + storedUser.photo)
+                fs.rename(req.files.photo.path, "public/images/imagesUsers/" + storedUser.photo)
+            }
+            storedUser.save(err => {
+                if (err) {
+                    console.log('=========================================================')
+                    console.log(`[usersCrud/updateUser]: Error al guardar el usuario ${err}`)
+                    console.log('=========================================================')
+                }
+                res.redirect('/app/administrator/users')
+            })
+        })
+    },
+
+
+    deleteUser: (req, res) => {
+        User.findOneAndRemove({_id: req.params.id}, (err, storedUser) => {
+            if (err) {
+                console.log('=========================================================')
+                console.log(`[usersCrud/deleteUser]: Error al borrar los datos ${err}`)
+                console.log('=========================================================')
+                res.redirect('/app/administrator/users')
+            }
+            fs.unlink("public/images/imagesUsers/" + storedUser.photo)
+            res.redirect('/app/administrator/users')
         })
     },
 
 
 // Sesiones ========================================================
-    getNewSession: function(req, res){
-        console.log(' Ususario ', req.user)
-        //console.log(' Ususario ', req.locals.user)
-        res.render('user', {user: req.user})
+    getNewSession: (req, res) => {
+        res.render('./viewsUserPlus/users/view', {user: req.user})
     },
-    getDestroySession: function(req, res) {
+    getDestroySession: (req, res) => {
         req.logout()
         res.redirect('/')
     }

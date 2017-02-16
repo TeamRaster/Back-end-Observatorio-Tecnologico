@@ -4,7 +4,10 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const OfferSchema = new Schema({
-    business      : String,
+    business      : {
+        type      : String,
+        maxlength : [100, "[modelOffer/business]: Maximo 100 caracteres"]
+    },
     ext           : {
         type      : String,
         default   : 'jpg'
@@ -13,8 +16,10 @@ const OfferSchema = new Schema({
         type      : String,
         default   : 'No disponible'
     },
-    description   : String,
-    category      : String,
+    description   : {
+        type      : String
+    },
+    category      : [String],
     creationOffer : {
         type      : Date,
         require   : Date.now
@@ -29,26 +34,10 @@ const OfferSchema = new Schema({
     // }
 })
 
-// OfferSchema.pre('save', function (next) {
-//     let newOffer = this
-//     // Detecta cuando se cambia la contraseña con el hash
-//     if (!newOffer.isModified('image')) {
-//         console.log('Image no tiene nombre')
-//         return next()
-//     } else {
-//         console.log(`Se ha establecido un nombre a la imagen: ${newOffer._id}`)
-//     }
-//
-//     // Hace uso de la funcion
-//     this.renameImage(newOffer._id, function (err, name) {
-//         if (err) return next(err)
-//         newOffer.image = name
-//         next()
-//     })
-// })
-//
-// OfferSchema.methods.renameImage = function (newName, cb) {
-//     return cb(null, newName)
-// }
+OfferSchema.pre('save', function(next) {
+    let offer = this
+    offer.image = offer.id + '.' + offer.ext
+    next()
+})
 
 module.exports = mongoose.model('Offer', OfferSchema)

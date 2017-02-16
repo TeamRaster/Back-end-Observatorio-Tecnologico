@@ -1,0 +1,18 @@
+extends ../../layout/layoutIndex
+
+block title
+  title offer
+
+block main
+  .row.center-xs
+    .col-xs-5
+      h3 oferta
+  .row.center-xs
+    .col-xs-10
+      h5 Empresa: #{offer.business}
+      h5 Descripcion: #{offer.description}
+      h5 Categoria: #{offer.category}
+      h5 Foto
+      img(src="/images/imagesOffers/" + offer.image)
+
+
