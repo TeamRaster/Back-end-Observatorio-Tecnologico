@@ -16,6 +16,10 @@ const CommentSchema = new Schema({
     author: {
         type      : Schema.Types.ObjectId,
         ref       : "User"
+    },
+    toNew: {
+        type      : Schema.Types.ObjectId,
+        ref       : "News"
     }
 })
 
