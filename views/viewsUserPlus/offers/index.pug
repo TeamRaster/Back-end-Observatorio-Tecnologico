@@ -7,7 +7,8 @@ block main
   .row.center-xs
     p Puedes hacer el crud a las ofertas pero aun hay bugs, a la hora de actualizar
   .row.center-xs
-    a.waves-effect.waves-light.btn(href="/") Regresar al Inicio
+    a.waves-effect.waves-light.btn.teal.darken-4(href="/") Regresar al Inicio
+    a.waves-effect.waves-light.btn.margin-small.teal.darken-4(href="/app/offers/new") New
   .row.center-xs
     .col-xs-10
       if (offers != "")
@@ -30,6 +31,8 @@ block main
                 td: a.waves-effect.waves-light.btn.margin-small(href="/app/offers/" + offer._id) View
                 td
                   form(method="POST" action="/app/offers/" + offer._id + "?_method=DELETE" enctype="multipart/form-data")
-                    input.waves-effect.waves-light.btn.margin-small(type="submit", value="Delete")
+                    input.btn.margin-small(type="submit", value="Delete")
       else
         h3 No hay ofertas en la base de datos
+
+

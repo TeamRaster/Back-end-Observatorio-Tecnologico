@@ -14,7 +14,7 @@ const usersCrudController = require('../controllers/usersCrudController')
 router.get('/', viewsController.getViewIndexPlus)
 
 // Rutas Ofertas Formularios
-router.get('/offers/new', viewsController.getViewOffer)
+router.get('/offers/new', viewsController.getViewOfferNew)
 router.get('/offers/:id/edit', viewsController.getViewOfferEdit)
 
 // Rutas Demandas Formularios
@@ -32,12 +32,12 @@ router.get('/users/:id/edit', viewsController.getViewUserEdit)
 // CRUD Ofertas =======================================================
 router.route('/offers/:id') // Crud a ofertas de manera individual
     .get(offerCrudController.getOffer)
-    .put(offerCrudController.updateOfferById)
-    .delete(offerCrudController.deleteOfferById)
+    .put(offerCrudController.updateOffer)
+    .delete(offerCrudController.deleteOffer)
 
 router.route('/offers') // Crud a ofertas de manera grupal
-    .get(offerCrudController.getAllOffers)
-    .post(offerCrudController.setNewOffer)
+    .get(offerCrudController.getOffers)
+    .post(offerCrudController.setOffer)
 
 
 // CRUD Noticias =======================================================

@@ -28,8 +28,8 @@ module.exports = {
     },
 
     // Formulario para nuevas ofertas, y para editar
-    getViewOffer: (req, res) => {
-        res.render('viewsUserPlus/offers/offerNew')
+    getViewOfferNew: (req, res) => {
+        res.render('viewsUserPlus/offers/new')
     },
     getViewOfferEdit: (req, res) => {
         Offer.findById(req.params.id,  (err, StoredOffer) => {
@@ -40,7 +40,7 @@ module.exports = {
                 res.redirect('/app/offers')
             }
 
-            res.render('viewsUserPlus/offers/offerUpdate', {offer: StoredOffer})
+            res.render('viewsUserPlus/offers/update', {offer: StoredOffer})
         })
     },
 

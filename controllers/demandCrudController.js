@@ -22,12 +22,9 @@ module.exports = {
                 console.log('=========================================================')
                 res.redirect('/app/demands')
             }
-            fs.rename(req.files.image.path, "public/images/imagesDemands/" + newDemand._id + "." + ext_)  // Sube el archivo a la carpeta indicada
+            fs.rename(req.files.image.path, "public/images/imagesDemands/" + newDemand._id + "." + ext_)
             console.log('[Successful]: Demanda guardada con exito')
             res.redirect('/app/demands')
-            // newDemand.image = newDemand._id  // Coloca de nombre, el id del registro que se hizo
-            // newDemand.save( err => {  // Volvemos a guardar el nombre de la imagen
-            // })
         })
     },
 

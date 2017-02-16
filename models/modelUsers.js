@@ -9,11 +9,11 @@ const bcrypt = require('bcrypt-nodejs')
 const UsersSchema = new Schema({
     providerId    : {
         type      : String,
-        default   : 'Aun no disponible'
+        unique    : true
     },
     username      : {
         type      : String,
-        minlength : [3, "[Username]: Minimo 3 caracteres"],
+        minlength : [1, "[Username]: Minimo 1 caracteres"],
         maxlength : [50, "[Username]: Maximo 50 caracteres"],
     },
     email         : {
@@ -25,8 +25,8 @@ const UsersSchema = new Schema({
     },
     password      : {
         type      : String,
-        // minlength : [8, "[Password]: Minimo 8 caracteres"],
-        // maxlength : [16, "[Password]: Maximo 16 caracteres"],
+        minlength : [8, "[Password]: Minimo 8 caracteres"],
+        maxlength : [16, "[Password]: Maximo 16 caracteres"],
         trim      : true
     },
     photo: {
