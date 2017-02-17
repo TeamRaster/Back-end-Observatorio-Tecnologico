@@ -46,7 +46,7 @@ router.route('/noticias/:id') // Crud a noticias de manera individual
     .delete(newsCrudController.removeNoticiaById)
 
 router.route('/noti') // Crud a noticias de manera grupal
-    .get(newsCrudController.viewSetNewNoticia)
+    .get(newsCrudController.getAllNoticias)
      .post(newsCrudController.setNewNoticia)
 
 

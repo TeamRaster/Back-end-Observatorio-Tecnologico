@@ -1,21 +1,21 @@
 extends ../../layout/layoutIndex
 
 block title
-  title Nuevas Noticias
+  title Nuevas ofertas
 
 block main
   .row.center-xs
     .col-xs-5
-      h3  Publicar Post
+      h3 Ofertas
   .row.center-xs
     .col-xs-5
-      form(method="POST" action="/app/noti" enctype="multipart/form-data")
+      form(method="POST" action="/app/ofertas" enctype="multipart/form-data")
         .input-field.col.s12
-          label(for="title") Título:
-          input(type="text", class="validate", name="title", id="business")
+          label(for="business") Empresa:
+          input(type="text", class="validate", name="business", id="business")
         .input-field.col.s12
           textarea.materialize-textarea(type="text" rows= "5" id="sample5" data-length="100")
-          label(class="mdl-textfield__label" for="sample5" name="text") Contenido texto
+          label(class="mdl-textfield__label" for="sample5" name="description") Descripcion
         .input-field.col.s12
           label(for="category") Categoria:
           input(type="text", class="validate", name="category", id="category")
@@ -28,3 +28,8 @@ block main
               input(type="text", class="file-path validate")
         div
           input(type="submit", class="btn", name="btn", id="btn", value="Publicar")
+
+
+
+
+

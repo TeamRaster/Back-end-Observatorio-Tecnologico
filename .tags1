@@ -1,0 +1,13 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	0	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+viewSetNewNoticia	C:\ProyectoOb\controllers\newsCrudController.js	/^    viewSetNewNoticia: function (req, res) {$/;"	function	line:11
+setNewNoticia	C:\ProyectoOb\controllers\newsCrudController.js	/^    setNewNoticia: function (req, res) {$/;"	function	line:15
+getAllNoticias	C:\ProyectoOb\controllers\newsCrudController.js	/^    getAllNoticias: function(req, res) {$/;"	function	line:39
+getNoticiaById	C:\ProyectoOb\controllers\newsCrudController.js	/^    getNoticiaById: function(req, res) {$/;"	function	line:70
+updateNoticiaById	C:\ProyectoOb\controllers\newsCrudController.js	/^    updateNoticiaById: function(req, res) {$/;"	function	line:85
+update	C:\ProyectoOb\controllers\newsCrudController.js	/^        var update = req.body;$/;"	variable	line:87
+removeNoticiaById	C:\ProyectoOb\controllers\newsCrudController.js	/^    removeNoticiaById: function(req, res) {$/;"	function	line:100

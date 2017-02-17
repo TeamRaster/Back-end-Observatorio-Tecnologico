@@ -17,17 +17,32 @@ block main
               th creator
               th comments
               th likes
+              th comentarios
           tbody
             each noti in news
               tr
-                td #{noti.category}
                 td #{noti.title}
                 td #{noti.image}
-                td #{noti.text}
                 td #{noti.category}
+                td #{noti.text}
                 td #{noti.creator}
                 td #{noti.comments}
                 td #{noti.likes}
+                td comentarios socket...
 
       else
         h2 No hay Noticias en la base de datos
+
+        //- el navegador ignorara el script(tipo desconocido ). est orenderiza templates de handlebars
+
+      div(id="noticiasCont")
+        script(id="newsTemplate" type="text/x-handlebars-template")
+        strong Noticias
+          //- Los datos seran compilados con handlebars
+          div(class="")
+            //- dobles llaves con json lo renderiza handlebars
+            a(href="#") link a la noticia  /ruta/{{id}}
+              //- titulo
+              h2 {{title}}
+            h3 {{text}}
+            h3 {{id}}
