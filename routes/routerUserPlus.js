@@ -21,9 +21,8 @@ router.get('/offers/:id/edit', viewsController.getViewOfferEdit)
 router.get('/demands/new', viewsController.getViewDemandNew)
 router.get('/demands/:id/edit', viewsController.getViewDemandEdit)
 
-// Rutas Directory Formularios
-// router.get('/directories/new', viewsController.getViewDemand)
-// router.get('/directories/:id/edit', viewsController.getViewDemandEdit)
+// Sala de chats
+router.get('/room', viewsController.getViewRoom)
 
 // Rutas Usuarios Formularios
 router.get('/users/:id/edit', viewsController.getViewUserEdit)

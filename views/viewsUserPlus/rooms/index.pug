@@ -1,0 +1,40 @@
+extends ../../layout/layoutIndex
+
+block title
+  title Sala de espera
+
+block main
+  .row.center-xs
+    h3 Sala de chats
+  .row.center-xs.container_messages.border
+    .col-xs-10
+      ul#comment-section
+        //#mensajes
+  //.row.center-xs
+  //  .col-xs-10.border
+  //    ul.comment-section
+  //      li.comment.user-comment
+  //        .info
+  //          a(href="#") Leo pio
+  //          span 4 hours ago
+  //        a(class="avatar" href="#")
+  //          img(src="https://scontent.xx.fbcdn.net/v/t1.0-1/c22.0.160.160/p160x160/15823315_1265943740139831_4933403424567032125_n.jpg?oh=a7b3c014699897535097a18d89a54c98&oe=5941EF89" width="35" height="35" alt="Profile Avatar" title="Anie Silverston")
+  //        p Suspendisse gravida sem?
+  //      li.comment.author-comment
+  //        .info
+  //          a(href="#") Jose Eder
+  //          span 4 hours ago
+  //        a(class="avatar" href="#")
+  //          img(src="https://scontent.xx.fbcdn.net/v/t1.0-1/p160x160/15241294_1186636554790659_6837415210864127904_n.jpg?oh=0c89f1349f173676b8bf13595d2b1705&oe=5946CC79" width="35" height="35" alt="Profile Avatar" title="Anie Silverston")
+  //        p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse gravida sem sit amet molestie portitor.
+  //      li.comment.user-comment
+  //        .info
+  //          a(href="#") Leo pio
+  //          span 4 hours ago
+  //        a(class="avatar" href="#")
+  //          img(src="https://scontent.xx.fbcdn.net/v/t1.0-1/c22.0.160.160/p160x160/15823315_1265943740139831_4933403424567032125_n.jpg?oh=a7b3c014699897535097a18d89a54c98&oe=5941EF89" width="35" height="35" alt="Profile Avatar" title="Anie Silverston")
+  //        p Suspendisse gravida sem?
+  .row.center-xs
+    .col-xs-8
+      form(onkeypress="if (event.keyCode == 13) return addMessages(this)")
+        input(type="text", id="text_message" placeholder="Mensaje")

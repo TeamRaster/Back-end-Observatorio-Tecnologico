@@ -7,7 +7,7 @@ const Schema = mongoose.Schema
 const CommentSchema = new Schema({
     creationComment: {
         type      : Date,
-        require   : Date.now
+        default   : Date.now
     },
     comments: {
         type      : String,

@@ -45,6 +45,11 @@ module.exports = {
     },
 
     // Formulario para nuevas demandas, y para editar
+    getViewRoom: (req, res) => {
+        res.render('viewsUserPlus/rooms/index')
+    },
+
+    // Formulario para nuevas demandas, y para editar
     getViewDemandNew: (req, res) => {
         res.render('viewsUserPlus/demands/new')
     },

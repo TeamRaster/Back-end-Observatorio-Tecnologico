@@ -11,6 +11,8 @@ const path = require('path')  // Junta todos los argumentos y normaliza la ruta 
 const mongoose = require('mongoose')  // Manejador de la base de datos para MongoDB
 const flash = require('connect-flash')  // Muestra mensajes de error que se pueden llegar a generar
 const RedisStore = require('connect-redis')(session)  // Permiten manejar una cantidad mayor de sessiones al mismo tiempo.
+const server = require('http').Server(app)
+const io = require('socket.io')(server)
 
 const routerUser = require('./routes/routerUser')
 const routerUserPlus = require('./routes/routerUserPlus')
@@ -55,6 +57,24 @@ mongoose.connect(config.db, (err, res) => {  // Conexion a la base de datos
   if (err) return console.log(`Error conexion base de datos [./index.js]: ${err}`)
 })
 
-app.listen(config.port, () => {
+server.listen(config.port, () => {
 //
+})
+
+// Socketio
+let onlineUsers = {}
+let messages = [{
+    id: 1,
+    text: 'Bienvenido a la sala de conversacion',
+    nickname: 'Servidor'
+}]
+
+// Usuarios que se conecten a la pagina
+io.sockets.on('connection', (socket) => {
+    console.log('Conexion de usuario detectado ' + socket.handshake.address)
+    socket.emit('messages', messages)
+    socket.on('addNewMessage', (data) => {
+        messages.push(data)
+        io.sockets.emit('messages', messages)
+    })
 })
