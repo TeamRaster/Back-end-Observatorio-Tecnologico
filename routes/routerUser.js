@@ -10,6 +10,7 @@ const usersCrudController = require('../controllers/usersCrudController')
 
 // Vistas =========================================================
 router.get('/', (req, res) => {
+    if (req.user) req.session.user = req.user
     res.render('index')
 })
 

@@ -4,73 +4,75 @@
 const express = require('express')
 const router = express.Router()
 
-const viewsController = require('../controllers/viewsController')
-const newsCrudController = require('../controllers/newsCrudController')
-const demandCrudController = require('../controllers/demandCrudController')
-const offerCrudController = require('../controllers/offerCrudController')
-const usersCrudController = require('../controllers/usersCrudController')
+const controllers = require('.././controllers')
+const authMiddleware = require('../middlewares/authMiddleware')
 
-// Vistas =======================================================
-router.get('/', viewsController.getViewIndexPlus)
+// Esta es la nueva validacion para proteger rutas =====================================================================
+router.all('/', authMiddleware.isLogged)
 
-// Rutas Ofertas Formularios
-router.get('/offers/new', viewsController.getViewOfferNew)
-router.get('/offers/:id/edit', viewsController.getViewOfferEdit)
-
-// Rutas Demandas Formularios
-router.get('/demands/new', viewsController.getViewDemandNew)
-router.get('/demands/:id/edit', viewsController.getViewDemandEdit)
-
-// Sala de chats
-router.get('/room', viewsController.getViewRoom)
-
-// Rutas Usuarios Formularios
-router.get('/users/:id/edit', viewsController.getViewUserEdit)
+// Rutas para realizar pruebas =========================================================================================
+router.get('/room', controllers.viewsController.getViewRoomIndex)  // Index
+router.get('/room/new', controllers.conversationController.getViewGroup)  // Crear un nuevo grupo
+router.post('/room/new', controllers.conversationController.setGroup)  // Crear un nuevo grupo
+router.get('/room/:id', controllers.conversationController.setMembers)  // Unirse al grupo
+router.get('/room/:id/chat', controllers.conversationController.getChat)  //
 
 
-// CRUD Ofertas =======================================================
+// Vistas ==============================================================================================================
+router.get('/', controllers.viewsController.getViewIndexP)
+
+
+// CRUD Ofertas ========================================================================================================
+router.get('/offers/new', controllers.viewsController.getViewOfferNew)
+router.get('/offers/:id/edit', controllers.viewsController.getViewOfferEdit)
+
 router.route('/offers/:id') // Crud a ofertas de manera individual
-    .get(offerCrudController.getOffer)
-    .put(offerCrudController.updateOffer)
-    .delete(offerCrudController.deleteOffer)
+    .get(controllers.offerCrudController.getOffer)
+    .put(controllers.offerCrudController.updateOffer)
+    .delete(controllers.offerCrudController.deleteOffer)
 
 router.route('/offers') // Crud a ofertas de manera grupal
-    .get(offerCrudController.getOffers)
-    .post(offerCrudController.setOffer)
+    .get(controllers.offerCrudController.getOffers)
+    .post(controllers.offerCrudController.setOffer)
 
 
-// CRUD Noticias =======================================================
+// CRUD Noticias =======================================================================================================
 router.route('/noticias/:id') // Crud a noticias de manera individual
-    .get(newsCrudController.getNoticiaById)
-    .put(newsCrudController.updateNoticiaById)
-    .delete(newsCrudController.removeNoticiaById)
+    .get(controllers.newsCrudController.getNoticiaById)
+    .put(controllers.newsCrudController.updateNoticiaById)
+    .delete(controllers.newsCrudController.removeNoticiaById)
 
 router.route('/noti') // Crud a noticias de manera grupal
-    .get(newsCrudController.getAllNoticias)
-     .post(newsCrudController.setNewNoticia)
+    .get(controllers.newsCrudController.getAllNoticias)
+     .post(controllers.newsCrudController.setNewNoticia)
 
 
-// CRUD Demandas =======================================================
+// CRUD Demandas =======================================================================================================
+router.get('/demands/new', controllers.viewsController.getViewDemandNew)
+router.get('/demands/:id/edit', controllers.viewsController.getViewDemandEdit)
+
 router.route('/demands/:id') // Crud a demandas de manera individual
-    .get(demandCrudController.getDemand)
-    .put(demandCrudController.updateDemand)
-    .delete(demandCrudController.deleteDemand)
+    .get(controllers.demandCrudController.getDemand)
+    .put(controllers.demandCrudController.updateDemand)
+    .delete(controllers.demandCrudController.deleteDemand)
 
 router.route('/demands') // Crud a demandas de manera grupal
-    .get(demandCrudController.getDemands)
-    .post(demandCrudController.setDemand)
+    .get(controllers.demandCrudController.getDemands)
+    .post(controllers.demandCrudController.setDemand)
 
 
-// CRUD Usuarios =======================================================
+// CRUD Usuarios =======================================================================================================
+router.get('/users/:id/edit', controllers.viewsController.getViewUserEdit)
+
 router.route('/users/:id') // Crud a users de manera individual
-    .get(usersCrudController.getUser)
-    .put(usersCrudController.updateUser)
-    .delete(usersCrudController.deleteUser)
+    .get(controllers.usersCrudController.getUser)
+    .put(controllers.usersCrudController.updateUser)
+    .delete(controllers.usersCrudController.deleteUser)
 
 router.route('/users') // Crud a users de manera grupal
-    .get(usersCrudController.getUsers)
-    .post(usersCrudController.setUser)
+    .get(controllers.usersCrudController.getUsers)
+    .post(controllers.usersCrudController.setUser)
 
 
-// Exportacion de las rutas =======================================================
+// Exportacion de las rutas ============================================================================================
 module.exports = router;

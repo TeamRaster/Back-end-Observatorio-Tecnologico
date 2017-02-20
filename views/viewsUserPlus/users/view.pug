@@ -1,7 +1,7 @@
 extends ../../layout/layoutIndex
 
 block title
-  title Users
+  title Usuario autenticado
 
 block main
   .row.center-xs
@@ -22,3 +22,6 @@ block main
             img(src="" + user.photo)
           else
             p Imagen no disponible
+      else
+        p No existe el usuario
+        p= user

@@ -1,0 +1,17 @@
+extends ../../layout/layoutIndex
+
+block title
+  title Test del chat
+
+block main
+  .row.center-xs
+    h4 Simulador de las funciones de un grupo, para testear el chat que se implementara
+  if (!group_id)
+    .row.center-xs
+      h5 Creacion de nuevos grupos
+    .row.center-xs
+      form(method="post" action="/app/room/new" enctype="multipart/form-data")
+        input(type="text", placeholder="Crea un nuevo grupo", name="group")
+        div
+          input(type="submit", class="btn", name="btn", id="btn", value="guardar")
+      #status_group

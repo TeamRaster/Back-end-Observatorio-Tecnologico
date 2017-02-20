@@ -23,7 +23,7 @@ module.exports = {
             }
             fs.rename(req.files.photo.path, "public/images/imagesUsers/" + user._id + "." + ext_)
             console.log('[Successful]: Usuario guardado')
-            res.redirect('/app/administrator/users')
+            res.redirect('/app')
         })
     },
 
@@ -99,6 +99,7 @@ module.exports = {
 
 // Sesiones ========================================================
     getNewSession: (req, res) => {
+        // req.session.user_id = req.user._id
         res.render('./viewsUserPlus/users/view', {user: req.user})
     },
     getDestroySession: (req, res) => {
