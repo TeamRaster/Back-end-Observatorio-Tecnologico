@@ -8,7 +8,7 @@ block main
     h4 Simulador de las funciones de un grupo, para testear el chat que se implementara
   if (!group_id)
     .row.center-xs
-      h5 Creacion de nuevos grupos
+      h5 Ingresa un id sin espacios para diferenciar el grupo
     .row.center-xs
       form(method="post" action="/app/room/new" enctype="multipart/form-data")
         input(type="text", placeholder="Crea un nuevo grupo", name="group")

@@ -1,6 +1,7 @@
 //'use strict'
 
 const controllers = require('./controllers')
+const models = require('./models')
 
 // Lógica de sockets IO
 module.exports = function(server, sessionMiddleware) {
@@ -38,7 +39,11 @@ module.exports = function(server, sessionMiddleware) {
 
         socket.on('addNewMessage', (data) => {
             console.log('addNewMessage: ', data)
-            // controllers.conversationController.
+            // models.modelConversation.conversation.push({
+            //     author  : data.nickname,
+            //     message : data.text,
+            //     date    : new Date
+            // })
             messages.push(data)  // Agrega mensajes al arreglo para despues hacer uso de ellos
             io.sockets.emit('messages', messages)  // Vuelve a emitir los mensajes almacenados, junto con los recientemente agregados
         })
