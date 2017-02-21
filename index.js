@@ -12,16 +12,16 @@ const mongoose = require('mongoose')  // Manejador de la base de datos para Mong
 const flash = require('connect-flash')  // Muestra mensajes de error que se pueden llegar a generar
 const RedisStore = require('connect-redis')(session)  // Permiten manejar una cantidad mayor de sessiones al mismo tiempo.
 const server = require('http').Server(app)
-const io = require('socket.io')(server)
+const logger = require('morgan')
 
 const realtimeSocket = require('./realtimeSocket')
 const routerUser = require('./routes/routerUser')
 const routerUserPlus = require('./routes/routerUserPlus')
 const routerAdministrator = require('./routes/routerAdministrator')
-const validateUsers = require('./middlewares/validateUsers')
+const validateUsers = require('./middlewares/authMiddleware')
 const config = require('./config/config.js')  // variables de configuracion (dbs, puertos, keytokens)
 
-
+// app.use(logger('dev'))
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(cookieParser())
@@ -29,7 +29,7 @@ app.use(express.static(path.join(__dirname, 'public')))  // Archivos estaticos, 
 app.set('view engine', 'pug')  // Motor de vistas
 
 if (app.get('env') === 'development') { //  TODO quitar en producción (Hace bonito el codigo fiente :v)
-  app.locals.pretty = true;
+  app.locals.pretty = true
 }
 
 app.use(methodOverride("_method"))  // Ayuda a que un formulario pueda enviar por metodo put, delete
@@ -41,6 +41,7 @@ const sessionMiddleware = session({  // Configuracion de las sesiones
     resave: false,
     saveUninitialized: false
 })
+
 realtimeSocket(server, sessionMiddleware)
 
 app.use(sessionMiddleware)
@@ -62,39 +63,22 @@ app.use(formidable({ keepExtensions: false }))  // Middleware que ayuda a subir 
 app.use('/admin', routerUserPlus)// temporal
 
 app.use('/', routerUser)  // Rutas que accesibles para todos
-app.use('/app', validateUsers.isLoggedIn, routerUserPlus)  // Rutas que accesibles para usuarios registrados y con sesion iniciada
-app.use('/app/administrator', validateUsers.isAdministrator, routerAdministrator)  // Rutas que accesibles para Administradores
+app.use('/app', routerUserPlus)  // Rutas que accesibles para usuarios registrados y con sesion iniciada
+app.use('/administrator', routerAdministrator)  // Rutas que accesibles para Administradores
 app.get("/", function(req, res){
     req.session // Session object in a normal request
-});
+})
 
 
 //app.use('/noticias', noticiasCrudController.setNewNoticia, routerUserPlus)
 
-//mongoose.Promise = global.Promise;  // Arregla warning promesas xD
+//mongoose.Promise = global.Promise  // Arregla warning promesas xD
 
 mongoose.connect(config.db, (err, res) => {  // Conexion a la base de datos
   if (err) return console.log(`Error conexion base de datos [./index.js]: ${err}`)
 })
 
+
 server.listen(config.port, () => {
 //
-})
-
-// Socketio
-let onlineUsers = {}
-let messages = [{
-    id: 1,
-    text: 'Bienvenido a la sala de conversacion',
-    nickname: 'Servidor'
-}]
-
-// Usuarios que se conecten a la pagina
-io.sockets.on('connection', (socket) => {
-    console.log('Conexion de usuario detectado ' + socket.handshake.address)
-    socket.emit('messages', messages)
-    socket.on('addNewMessage', (data) => {
-        messages.push(data)
-        io.sockets.emit('messages', messages)
-    })
 })

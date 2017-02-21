@@ -5,17 +5,14 @@ const Schema = mongoose.Schema
 
 
 const ConversationSchema = new Schema({
-    creationMessage: {
-        type      : [Date],
-        default   : Date.now
-    },
-    message: {
-        type      : [String],
-        maxlength : [150, "[Message]: Maximo 150 caracteres"],
-    },
-    author: {
-        type      : [String]
-    }
+    conversation : [{
+        author   : {
+            type : Schema.Types.ObjectId,
+            ref  : "User"
+        },
+        message  : String,
+        date     : Date
+    }]
 })
 
 module.exports = mongoose.model('Conversation', ConversationSchema)

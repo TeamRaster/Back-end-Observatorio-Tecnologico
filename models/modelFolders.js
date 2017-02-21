@@ -3,7 +3,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const FilesSchema = new Schema({
+const FoldersSchema = new Schema({
     name        : String,
     creationDate  : {
         type      : Date,
@@ -19,4 +19,4 @@ const FilesSchema = new Schema({
     }
 })
 
-module.exports = mongoose.model('Folder', FolsersSchema)
+module.exports = mongoose.model('Folder', FoldersSchema)
