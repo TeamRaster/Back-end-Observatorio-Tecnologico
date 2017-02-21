@@ -3,7 +3,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const FilesSchema = new Schema({
+const GroupsSchema = new Schema({
     name        : String,
     description   : String,
     creationDate  : {
@@ -13,7 +13,8 @@ const FilesSchema = new Schema({
     creator: {
         type      : Schema.Types.ObjectId,
         ref       : "User"
-    }
+    },
+/**/
 
 })
 

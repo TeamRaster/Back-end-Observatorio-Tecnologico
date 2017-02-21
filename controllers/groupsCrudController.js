@@ -6,11 +6,12 @@ const fs = require('fs')
 module.exports = {
     setGroup: (req, res) => {
         let ext_ = req.files.image.name.split(".").pop()
-        let newOffer = new Offer({
-            business      : req.fields.business,
-            ext           : ext_,
+        let newGroup = new Group({
+
+            name      : req.fields.name,
             description   : req.fields.description,
-            category      : req.fields.category,
+            ///creator      : 'id_creator',
+
             // contact       : 'id_contact', // todo usar id de cada equema para relacionarlo
             // creator       : 'id_creator'
         })
@@ -27,13 +28,13 @@ module.exports = {
     },
 
 
-    getOffers: (req, res) => {
+    getGroups: (req, res) => {
         Group.find({}, (err, storedGroups) => {
             if(err) {
                 console.log(`  Error al buscar todo grupo ${err}`)
                 res.redirect('/app/groups')
             }
-            res.render('./viewsUserPlus/groups/index', {offers: storedGroups})
+            res.render('./viewsUserPlus/groups/index', {groups: storedGroups})
         })
     },
 
@@ -41,7 +42,7 @@ module.exports = {
     getGroup: (req, res) => {
         Group.findById(req.params.id, (err, storedGroup) => {
             if(err) {
-                console.log(`getOfferd  Error al buscar  group ${err}`)
+                console.log(`getGroup   Error al buscar  group ${err}`)
                 res.redirect('/app/groups')
             }
             res.render('./viewsUserPlus/groups/view', {group: storedGroup})

@@ -6,6 +6,7 @@ const router = express.Router()
 
 const viewsController = require('../controllers/viewsController')
 const newsCrudController = require('../controllers/newsCrudController')
+const groupsCrudController = require('../controllers/groupsCrudController')
 const demandCrudController = require('../controllers/demandCrudController')
 const offerCrudController = require('../controllers/offerCrudController')
 const usersCrudController = require('../controllers/usersCrudController')
@@ -20,6 +21,14 @@ router.get('/offers/:id/edit', viewsController.getViewOfferEdit)
 // Rutas Demandas Formularios
 router.get('/demands/new', viewsController.getViewDemandNew)
 router.get('/demands/:id/edit', viewsController.getViewDemandEdit)
+
+// Rutas NOTICIAS Formularios
+router.get('/news/new', viewsController.getViewDemandNew)
+router.get('/noticias/:id/edit', viewsController.getViewNewEdit)
+
+// Rutas GRUPOS Formularios
+router.get('/groups/new', viewsController.getViewGroupNew)
+router.get('/groups/:id/edit', viewsController.getViewNewEdit)
 
 // Sala de chats
 router.get('/room', viewsController.getViewRoom)
@@ -59,6 +68,16 @@ router.route('/demands/:id') // Crud a demandas de manera individual
 router.route('/demands') // Crud a demandas de manera grupal
     .get(demandCrudController.getDemands)
     .post(demandCrudController.setDemand)
+
+// CRUD Grupos =======================================================
+/*router.route('/groups/:id') // Crud a demandas de manera individual
+    .get(demandCrudController.getDemand)
+    .put(demandCrudController.updateDemand)
+    .delete(demandCrudController.deleteDemand)
+*/
+router.route('/groups') // Crud a demandas de manera grupal
+    .get(groupsCrudController.getGroups)
+    .post(groupsCrudController.setGroup)
 
 
 // CRUD Usuarios =======================================================

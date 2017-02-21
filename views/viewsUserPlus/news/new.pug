@@ -1,0 +1,54 @@
+extends ../../layout/layoutIndex
+
+block title
+  title Noticia
+
+block main
+  .row.center-xs
+    .col-xs-10
+      if (news != "")
+        table.highlight
+          thead
+            tr
+              th id
+              th title
+              th image
+              th text
+              th category
+              th creator
+              th comments
+              th likes
+              th comentarios
+          tbody
+            tr #{noti._id}
+            tr #{noti.title}
+            tr #{noti.image}
+            tr #{noti.category}
+            tr #{noti.text}
+            tr #{noti.creator}
+            tr #{noti.comments}
+            tr #{noti.likes}
+            tr
+              form(method="POST" action="/admin/noticias/" + noti._id + "?_method=DELETE" enctype="multipart/form-data")
+                input.btn.margin-small(id="comment" value="comment" type="textarea", value="Escriba un comentario... ")
+                input.btn.margin-small(type="submit", value="Enviar")
+
+            tr(id="comentarios") comentarios socket...
+              script(id="commentsTemplate" type="text/x-handlebars-template")
+
+              td coment
+
+      else
+        h2 No hay Noticias en la base de datos
+
+      div(id="noticiasCont")
+        strong Comentarios
+      script(id="commentsTemplate" type="text/x-handlebars-template")
+          //- Los datos seran compilados con handlebars
+          div(class="")
+            //- dobles llaves con json lo renderiza handlebars
+            a(href="#") link a la noticia  /ruta/{{id}}
+              //- titulo
+              h2 {{title}}
+            h3 {{text}}
+            h3 {{id}}

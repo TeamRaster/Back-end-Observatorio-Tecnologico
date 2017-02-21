@@ -23,8 +23,10 @@ module.exports = function(server, sessionMiddleware){
         console.log('USERID Socket IO //' + Object.keys(socket.request.session) );
 
 
+
         if (socket.request.session['passport'] != undefined) {
         console.log('TIPO  //' + typeof socket.request.session['passport']['user'] );
+
         var target = socket.request.session['passport']['user'] ;
         console.log( "Objetossssss ---------------------------");
             for (var k in target){

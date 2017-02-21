@@ -2,6 +2,7 @@
 
 const Offer = require('../models/modelOffer')
 const Demand = require('../models/modelDemand')
+const New = require('../models/modelNews')
 const User = require('../models/modelUsers')
 const Source = require('../models/modelSource')
 
@@ -67,6 +68,44 @@ module.exports = {
         })
     },
 
+
+    // Formulario para nuevas Noticias, y para editar
+    getViewNewNew: (req, res) => {
+        res.render('viewsUserPlus/demands/new')
+    },
+
+    getViewNewEdit: (req, res) => {
+        New.findById(req.params.id,  (err, StoredNew) => {
+            if(err) {
+                console.log('=========================================================')
+                console.log('[viewsController/getViewDemandEdit]: Error al hacer la busqueda')
+                console.log('=========================================================')
+                res.redirect('/app/demands')
+            }
+
+            res.render('viewsUserPlus/news/update', {noti: StoredNew})
+        })
+    },
+
+    // Formulario para nuevos Grupos, y para editar
+    getViewGroupNew: (req, res) => {
+        res.render('viewsUserPlus/groups/new')
+    },
+
+    getViewGroupEdit: (req, res) => {
+        New.findById(req.params.id,  (err, StoredNew) => {
+            if(err) {
+                console.log('=========================================================')
+                console.log('[viewsController/getViewDemandEdit]: Error al hacer la busqueda')
+                console.log('=========================================================')
+                res.redirect('/app/demands')
+            }
+
+            res.render('viewsUserPlus/news/update', {noti: StoredNew})
+        })
+    },
+
+
     // Formulario para editar usuarios
     getViewUserNew: (req, res) => {
         res.render('viewsAdministrator/users/new')
@@ -126,6 +165,11 @@ module.exports = {
 
     getViewStatsId: (req, res) => {
         res.send('Tu puedes ver todos los stats(likes, dislikes) por cada noticia')
+    },
+
+    // Formulario para administrar Grupos, y para editar por id
+    getViewGroupId: (req, res) => {
+        res.send('Tu puedes ver todos los comentarios por cada noticia')
     },
 
 

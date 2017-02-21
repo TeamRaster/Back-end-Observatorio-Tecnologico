@@ -1,0 +1,34 @@
+extends ../../layout/layoutIndex
+
+block title
+  title Grupos
+
+block main
+  .row.center-xs
+    p Todos los grupos, puedes enviar solicitud
+  .row.center-xs
+    .col-xs-10
+      if (groups != "")
+        table.highlight.centered
+          thead
+            tr
+              th name
+              th image
+              th description
+              th creationDate
+              th creator (admin del grupo)
+              th(colspan="3") crud
+          tbody
+            each group in groups
+              tr
+                td #{group.business}
+                //- td #{group.image}
+                td #{group.description}
+                td #{group.category}
+                td: a.waves-effect.waves-light.btn.margin-small(href="/app/groups/" + group._id + "/edit") Edit
+                td: a.waves-effect.waves-light.btn.margin-small(href="/app/groups/" + group._id) View
+                td
+                  form(method="POST" action="/app/groups/" + group._id + "?_method=DELETE" enctype="multipart/form-data")
+                    input.btn.margin-small(type="submit", value="Delete")
+      else
+        h3 No hay grupos en la base de datos
