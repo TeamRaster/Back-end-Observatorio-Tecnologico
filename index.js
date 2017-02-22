@@ -18,7 +18,7 @@ const realtimeSocket = require('./realtimeSocket')
 const routerUser = require('./routes/routerUser')
 const routerUserPlus = require('./routes/routerUserPlus')
 const routerAdministrator = require('./routes/routerAdministrator')
-const validateUsers = require('./middlewares/authMiddleware')
+const authMiddleware = require('./middlewares/authMiddleware')
 const config = require('./config/config.js')  // variables de configuracion (dbs, puertos, keytokens)
 
 // app.use(logger('dev'))

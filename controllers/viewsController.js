@@ -82,7 +82,7 @@ module.exports = {
     },
     // Esto es solo para realizar pruebas
     getViewRoomIndex: (req, res) => {
-        // return res.render('viewsUserPlus/rooms/index', {user: req.session.user})
+        return res.send('getViewRoomIndex')
     },
 
 

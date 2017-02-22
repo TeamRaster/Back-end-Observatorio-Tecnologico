@@ -22,7 +22,7 @@ function localConfig(app, passport, config) {
     app.post('/auth/local', passport.authenticate('local', {
         successRedirect  : config.successRedirect,
         failureRedirect  : config.failureRedirect,
-        failureFlash     : true
+        failureFlash     : true,
     }))
 }
 

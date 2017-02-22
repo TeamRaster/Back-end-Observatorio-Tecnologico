@@ -2,6 +2,7 @@
 
 const passport = require('passport')
 const config = require('./configAuth')
+const models = require('../../models')
 
 function passportConfig(app) {
     passport.serializeUser((user, done) => {
@@ -10,6 +11,8 @@ function passportConfig(app) {
 
     passport.deserializeUser((obj, done) => {
         done(null, obj)
+        // models.modelUsers.findById(id, (err, user) => {
+        // })
     })
 
     app.use(passport.initialize())

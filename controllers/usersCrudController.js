@@ -104,6 +104,7 @@ module.exports = {
     },
     getDestroySession: (req, res) => {
         req.logout()
+        req.session.destroy()
         res.redirect('/')
     }
 }

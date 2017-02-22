@@ -1,11 +1,11 @@
 'use strict'
 
-const User = require('../models/modelUsers')
 
 module.exports = {
     isLogged: (req, res, next) => {
-        if (req.session.user) {
-            res.locals.user = req.session.user
+        if (req.isAuthenticated()) {
+            console.log('Esta autenticado')
+            // res.locals.user = req.session.user
             next()
         }
         else res.redirect('/accounts/signin')

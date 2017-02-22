@@ -8,70 +8,86 @@ const controllers = require('.././controllers')
 const authMiddleware = require('../middlewares/authMiddleware')
 
 // Esta es la nueva validacion para proteger rutas =====================================================================
-router.all('/', authMiddleware.isLogged)
+// router.all('/?', authMiddleware.isLogged)
 
 // Rutas para realizar pruebas =========================================================================================
-router.get('/room', controllers.viewsController.getViewRoomIndex)  // Index
-router.get('/room/new', controllers.conversationController.getViewGroup)  // Crear un nuevo grupo
-router.post('/room/new', controllers.conversationController.setGroup)  // Crear un nuevo grupo
-router.get('/room/:id', controllers.conversationController.setMembers)  // Unirse al grupo
-router.get('/room/:id/chat', controllers.conversationController.getChat)  //
+router.get('/room', [authMiddleware.isLogged, controllers.viewsController.getViewRoomIndex])  // Index
+router.get('/room/new', [authMiddleware.isLogged, controllers.conversationController.getViewGroup])  // Crear un nuevo grupo
+router.post('/room/new', [authMiddleware.isLogged, controllers.conversationController.setGroup])  // Crear un nuevo grupo
+router.get('/room/:id', [authMiddleware.isLogged, controllers.conversationController.setMembers])  // Unirse al grupo
+router.get('/room/:id/chat', [authMiddleware.isLogged, controllers.conversationController.getChat])
+
+router.post('/room/:id/chat', [authMiddleware.isLogged, controllers.conversationController.setMessage])  //
 
 
 // Vistas ==============================================================================================================
-router.get('/', controllers.viewsController.getViewIndexP)
+router.get('/', [authMiddleware.isLogged, controllers.viewsController.getViewIndexP])
+
+
+// Rutas Especiales para el chat  ======================================================================================
+// router.get('/message/new', [authMiddleware.isLogged, controllers.viewsController.getViewOfferNew])
+// router.get('/message/:id/edit', [authMiddleware.isLogged, controllers.viewsController.getViewOfferEdit])
+
+// router.route('/message/:id') // Crud a ofertas de manera individual
+//     .get([authMiddleware.isLogged, controllers.conversationController.getOffer])
+//     .put([authMiddleware.isLogged, controllers.conversationController.updateOffer])
+//     .delete([authMiddleware.isLogged, controllers.conversationController.deleteOffer])
+
+router.route('/message') // Crud a ofertas de manera grupal
+    // .get([authMiddleware.isLogged, controllers.conversationController.getOffers])
+    .post([authMiddleware.isLogged, controllers.conversationController.setMessage])
 
 
 // CRUD Ofertas ========================================================================================================
-router.get('/offers/new', controllers.viewsController.getViewOfferNew)
-router.get('/offers/:id/edit', controllers.viewsController.getViewOfferEdit)
+router.get('/offers/new', [authMiddleware.isLogged, controllers.viewsController.getViewOfferNew])
+router.get('/offers/:id/edit', [authMiddleware.isLogged, controllers.viewsController.getViewOfferEdit])
 
 router.route('/offers/:id') // Crud a ofertas de manera individual
-    .get(controllers.offerCrudController.getOffer)
-    .put(controllers.offerCrudController.updateOffer)
-    .delete(controllers.offerCrudController.deleteOffer)
+    .get([authMiddleware.isLogged, controllers.offerCrudController.getOffer])
+    .put([authMiddleware.isLogged, controllers.offerCrudController.updateOffer])
+    .delete([authMiddleware.isLogged, controllers.offerCrudController.deleteOffer])
 
 router.route('/offers') // Crud a ofertas de manera grupal
-    .get(controllers.offerCrudController.getOffers)
-    .post(controllers.offerCrudController.setOffer)
+    .get([authMiddleware.isLogged, controllers.offerCrudController.getOffers])
+    .post([authMiddleware.isLogged, controllers.offerCrudController.setOffer])
 
 
 // CRUD Noticias =======================================================================================================
 router.route('/noticias/:id') // Crud a noticias de manera individual
-    .get(controllers.newsCrudController.getNoticiaById)
-    .put(controllers.newsCrudController.updateNoticiaById)
-    .delete(controllers.newsCrudController.removeNoticiaById)
+    .get([authMiddleware.isLogged, controllers.newsCrudController.getNoticiaById])
+    .put([authMiddleware.isLogged, controllers.newsCrudController.updateNoticiaById])
+    .delete([authMiddleware.isLogged, controllers.newsCrudController.removeNoticiaById])
 
 router.route('/noti') // Crud a noticias de manera grupal
-    .get(controllers.newsCrudController.getAllNoticias)
-     .post(controllers.newsCrudController.setNewNoticia)
+    .get([authMiddleware.isLogged, controllers.newsCrudController.getAllNoticias])
+     .post([authMiddleware.isLogged, controllers.newsCrudController.setNewNoticia])
 
 
 // CRUD Demandas =======================================================================================================
-router.get('/demands/new', controllers.viewsController.getViewDemandNew)
-router.get('/demands/:id/edit', controllers.viewsController.getViewDemandEdit)
+router.get('/demands/new', [authMiddleware.isLogged, controllers.viewsController.getViewDemandNew])
+router.get('/demands/:id/edit', [authMiddleware.isLogged, controllers.viewsController.getViewDemandEdit])
 
 router.route('/demands/:id') // Crud a demandas de manera individual
-    .get(controllers.demandCrudController.getDemand)
-    .put(controllers.demandCrudController.updateDemand)
-    .delete(controllers.demandCrudController.deleteDemand)
+    .get([authMiddleware.isLogged, controllers.demandCrudController.getDemand])
+    .put([authMiddleware.isLogged, controllers.demandCrudController.updateDemand])
+    .delete([authMiddleware.isLogged, controllers.demandCrudController.deleteDemand])
 
 router.route('/demands') // Crud a demandas de manera grupal
-    .get(controllers.demandCrudController.getDemands)
-    .post(controllers.demandCrudController.setDemand)
+    .get([authMiddleware.isLogged, controllers.demandCrudController.getDemands])
+    .post([authMiddleware.isLogged, controllers.demandCrudController.setDemand])
 
 
 // CRUD Usuarios =======================================================================================================
-router.get('/users/:id/edit', controllers.viewsController.getViewUserEdit)
+router.get('/users/:id/edit', [authMiddleware.isLogged, controllers.viewsController.getViewUserEdit])
 
 router.route('/users/:id') // Crud a users de manera individual
-    .get(controllers.usersCrudController.getUser)
-    .put(controllers.usersCrudController.updateUser)
-    .delete(controllers.usersCrudController.deleteUser)
+    .get([authMiddleware.isLogged, controllers.usersCrudController.getUser])
+    .put([authMiddleware.isLogged, controllers.usersCrudController.updateUser])
+    .delete([authMiddleware.isLogged, controllers.usersCrudController.deleteUser])
 
 router.route('/users') // Crud a users de manera grupal
-    .get(controllers.usersCrudController.getUsers)
-    .post(controllers.usersCrudController.setUser)
+    .get([authMiddleware.isLogged, controllers.usersCrudController.getUsers])
+    .post([authMiddleware.isLogged, controllers.usersCrudController.setUser])
 
 
 // Exportacion de las rutas ============================================================================================
