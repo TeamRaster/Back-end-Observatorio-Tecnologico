@@ -1,0 +1,16 @@
+extends ../../layout/layoutIndex
+
+block title
+  title group
+
+block main
+  .row.center-xs
+    .col-xs-5
+      h3 Grupo
+  .row.center-xs
+    .col-xs-10
+      h5 Empresa: #{group.business}
+      h5 Descripcion: #{group.description}
+      h5 Categoria: #{group.category}
+      h5 Foto
+      img(src="/images/imagesOffers/" + group.image)

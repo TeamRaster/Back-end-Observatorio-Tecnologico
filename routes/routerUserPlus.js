@@ -19,6 +19,16 @@ router.get('/room/:id/chat', [authMiddleware.isLogged, controllers.conversationC
 
 router.post('/room/:id/chat', [authMiddleware.isLogged, controllers.conversationController.setMessage])  //
 
+// Rutas NOTICIAS Formularios
+router.get('/news/new', controllers.viewsController.getViewDemandNew)
+router.get('/noticias/:id/edit', controllers.viewsController.getViewNewEdit)
+
+// Rutas GRUPOS Formularios
+router.get('/groups/new', controllers.viewsController.getViewGroupNew)
+router.get('/groups/:id/edit', controllers.viewsController.getViewNewEdit)
+
+// Sala de chats
+router.get('/room', controllers.viewsController.getViewRoom)
 
 // Vistas ==============================================================================================================
 router.get('/', [authMiddleware.isLogged, controllers.viewsController.getViewIndexP])
@@ -36,7 +46,6 @@ router.get('/', [authMiddleware.isLogged, controllers.viewsController.getViewInd
 router.route('/message') // Crud a ofertas de manera grupal
     // .get([authMiddleware.isLogged, controllers.conversationController.getOffers])
     .post([authMiddleware.isLogged, controllers.conversationController.setMessage])
-
 
 // CRUD Ofertas ========================================================================================================
 router.get('/offers/new', [authMiddleware.isLogged, controllers.viewsController.getViewOfferNew])
@@ -76,6 +85,16 @@ router.route('/demands') // Crud a demandas de manera grupal
     .get([authMiddleware.isLogged, controllers.demandCrudController.getDemands])
     .post([authMiddleware.isLogged, controllers.demandCrudController.setDemand])
 
+
+// CRUD Grupos =======================================================
+/*router.route('/groups/:id') // Crud a demandas de manera individual
+    .get(demandCrudController.getDemand)
+    .put(demandCrudController.updateDemand)
+    .delete(demandCrudController.deleteDemand)
+*/
+router.route('/groups') // Crud a demandas de manera grupal
+    .get(controllers.groupsCrudController.getGroups)
+    .post(controllers.groupsCrudController.setGroup)
 
 // CRUD Usuarios =======================================================================================================
 router.get('/users/:id/edit', [authMiddleware.isLogged, controllers.viewsController.getViewUserEdit])

@@ -1,16 +1,15 @@
 extends ../../layout/layoutIndex
 
 block title
-  title Editar Noticia
+  title Nuevas Grupos
 
 block main
   .row.center-xs
     .col-xs-5
-      h3 Editar la Noticia #{id}
+      h3  Crear Grupo
   .row.center-xs
     .col-xs-5
-
-      form(method="POST" action="/admin/noti/" + id + "?_method=PUT" enctype="multipart/form-data")
+      form(method="POST" action="/app/noti" enctype="multipart/form-data")
         .input-field.col.s12
           label(for="title") Título:
           input(type="text", class="validate", name="title", id="business")
@@ -29,5 +28,3 @@ block main
               input(type="text", class="file-path validate")
         div
           input(type="submit", class="btn", name="btn", id="btn", value="Publicar")
-
-      form(method="POST" action="/app/no/" + id + "?_method=PUT" enctype="multipart/form-data")

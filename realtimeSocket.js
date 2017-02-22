@@ -26,6 +26,23 @@ module.exports = function(server, sessionMiddleware) {
     }
 
     io.on('connection', (socket) => {  // Detecta a los usuarios que se conecten a la pagina
+
+        console.log('USERID Socket IO //' + Object.keys(socket.request.session))
+
+        if (socket.request.session['passport'] != undefined) {
+            console.log('TIPO  //' + typeof socket.request.session['passport']['user'])
+            var target = socket.request.session['passport']['user']
+            console.log("Objetossssss ---------------------------")
+            for (var k in target) {
+                if (typeof target[k] !== 'function') {
+                    console.log("Key is " + k + ", value is" + target[k])
+                }
+            }
+        }
+
+        socket.request.session
+        console.log("sockett ")
+
         socket.on('chat', (data) => {
             console.log('Nuevo mensaje recibido en el servidor')
             console.log('realtime----------------')
@@ -33,9 +50,9 @@ module.exports = function(server, sessionMiddleware) {
             console.log(socket.request.session['passport']['user'])
             let req = JSON.parse(data)
             let res = JSON.stringify({
-                msg     : req.msg,
-                user    : socket.request.session['passport']['user']['username'],
-                type    : req.type,
+                msg: req.msg,
+                user: socket.request.session['passport']['user']['username'],
+                type: req.type,
                 // session : socket.request.session['passport']['user']['username']
             })
             console.log(res)
@@ -53,7 +70,7 @@ module.exports = function(server, sessionMiddleware) {
         //     pub.publish('chat', res)
         // })
 
-        sub.on('message', function(channel, message) {
+        sub.on('message', function (channel, message) {
             console.log('channel 60')
             console.log(channel)
             console.log('message 63')
@@ -61,23 +78,8 @@ module.exports = function(server, sessionMiddleware) {
             socket.emit(channel, message)
         })
 
+    }) // Cierre de la conexion
 
-
-
-    })
-        // if (socket.request.session['passport'] != undefined) {
-        //     console.log('TIPO  //' + typeof socket.request.session['passport']['user'] )
-        //     var target = socket.request.session['passport']['user']
-        //     console.log( "Objetossssss ---------------------------")
-        //     for (var k in target){
-        //         if (typeof target[k] !== 'function') {
-        //              console.log("Key is " + k + ", value is" + target[k])
-        //         }
-        //     }
-        // }
-        // socket.request.session
-        // console.log("sockett ")
-///        console.log('USERID Socket IO //' + socket.request.session.user_id )
 
 //callback para la suscripcion del canal 'message'
 //     client.on('message', function (channel, message) { // cada vez que lleue un mensaje al canal
@@ -98,7 +100,7 @@ module.exports = function(server, sessionMiddleware) {
 
 
 
-}
+} // Cierre de Exports
 
 
 

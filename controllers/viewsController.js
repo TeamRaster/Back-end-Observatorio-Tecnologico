@@ -1,6 +1,14 @@
 'use strict'
 
+<<<<<<< HEAD
+const Offer = require('../models/modelOffer')
+const Demand = require('../models/modelDemand')
+const New = require('../models/modelNews')
+const User = require('../models/modelUsers')
+const Source = require('../models/modelSource')
+=======
 const models = require('../models')
+>>>>>>> abf96eeed7fc8d943dce9bfacf3ae13c8752225d
 
 module.exports = {
 
@@ -64,6 +72,44 @@ module.exports = {
         })
     },
 
+
+    // Formulario para nuevas Noticias, y para editar
+    getViewNewNew: (req, res) => {
+        res.render('viewsUserPlus/demands/new')
+    },
+
+    getViewNewEdit: (req, res) => {
+        New.findById(req.params.id,  (err, StoredNew) => {
+            if(err) {
+                console.log('=========================================================')
+                console.log('[viewsController/getViewDemandEdit]: Error al hacer la busqueda')
+                console.log('=========================================================')
+                res.redirect('/app/demands')
+            }
+
+            res.render('viewsUserPlus/news/update', {noti: StoredNew})
+        })
+    },
+
+    // Formulario para nuevos Grupos, y para editar
+    getViewGroupNew: (req, res) => {
+        res.render('viewsUserPlus/groups/new')
+    },
+
+    getViewGroupEdit: (req, res) => {
+        New.findById(req.params.id,  (err, StoredNew) => {
+            if(err) {
+                console.log('=========================================================')
+                console.log('[viewsController/getViewDemandEdit]: Error al hacer la busqueda')
+                console.log('=========================================================')
+                res.redirect('/app/demands')
+            }
+
+            res.render('viewsUserPlus/news/update', {noti: StoredNew})
+        })
+    },
+
+
     // Formulario para editar usuarios
     getViewUserNew: (req, res) => {
         return res.render('viewsAdministrator/users/new')
@@ -109,6 +155,32 @@ module.exports = {
     },
 
 
+<<<<<<< HEAD
+    // Formulario para administrar archivos, y para editar por id
+    getViewFileAdmin: (req, res) => {
+        res.send('Tu puedes ver los archivos publicados')
+    },
+
+    getViewFileEditAdmin: (req, res) => {
+        res.send('Tu puedes eliminar archivos, aunque esten dentro de un grupo')
+    },
+
+
+    // Formulario para administrar commentarios, y para editar por id
+    getViewCommentId: (req, res) => {
+        res.send('Tu puedes ver todos los comentarios por cada noticia')
+    },
+
+    getViewStatsId: (req, res) => {
+        res.send('Tu puedes ver todos los stats(likes, dislikes) por cada noticia')
+    },
+
+    // Formulario para administrar Grupos, y para editar por id
+    getViewGroupId: (req, res) => {
+        res.send('Tu puedes ver todos los comentarios por cada noticia')
+    },
+
+=======
     // // Formulario para administrar archivos, y para editar por id
     // getViewFileAdmin: (req, res) => {
     //     res.send('Tu puedes ver los archivos publicados')
@@ -127,5 +199,6 @@ module.exports = {
     // getViewStatsId: (req, res) => {
     //     res.send('Tu puedes ver todos los stats(likes, dislikes) por cada noticia')
     // },
+>>>>>>> abf96eeed7fc8d943dce9bfacf3ae13c8752225d
 
 }
