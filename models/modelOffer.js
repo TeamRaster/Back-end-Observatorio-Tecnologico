@@ -2,6 +2,7 @@
 
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
+const moment = require('moment')
 
 const OfferSchema = new Schema({
     business      : {
@@ -20,18 +21,23 @@ const OfferSchema = new Schema({
         type      : String
     },
     category      : [String],
-    creationOffer : {
-        type      : Date,
-        require   : Date.now
+    creationOffer : String,
+    postedBy: {
+        type      : Schema.Types.ObjectId,
+        ref       : "User"
     },
-    // contact: {
-    //     type      : Schema.Types.ObjectId,
-    //     ref       : "Contact"
-    // },
-    // creator: {
-    //     type      : Schema.Types.ObjectId,
-    //     ref       : "User"
-    // }
+    comments: [{
+        postedBy  : {
+            type  : Schema.Types.ObjectId,
+            ref   : 'User'
+        },
+        comment   : String,
+        date      : String
+    }],
+    stats: {
+        votes: Number,
+        favs:  Number
+    }
 })
 
 OfferSchema.pre('save', function(next) {

@@ -23,7 +23,6 @@ const NewsSchema = new Schema({
         ref       : "User"
     },
     comments: [{
-<<<<<<< HEAD
         type      : Schema.Types.ObjectId,
         ref       : "Comment"
     }],
@@ -31,19 +30,6 @@ const NewsSchema = new Schema({
         type      : Schema.Types.ObjectId,
         ref       : "Stats"
     }]
-=======
-        postedBy  : {
-            type  : Schema.Types.ObjectId,
-            ref   : 'User'
-        },
-        comment   : String,
-        date      : Date
-    }],
-    likes: {
-        votes     : Number,
-        favs      : Number
-    }
->>>>>>> abf96eeed7fc8d943dce9bfacf3ae13c8752225d
 })
 
 

@@ -9,7 +9,7 @@ block main
       h3 Sources Information
   .row.center-xs
     .col-xs-5
-      form(method="POST" action="/app/administrator/sources/" + source._id + "?_method=PUT" enctype="multipart/form-data")
+      form(method="POST" action="/administrator/sources/" + source._id + "?_method=PUT" enctype="multipart/form-data")
         .input-field.col.s12
           label(for="title") Titulo:
           input(type="text", class="validate", name="title", id="title" value="" + source.title)

@@ -10,17 +10,25 @@ const usersCrudController = require('../controllers/usersCrudController')
 
 // Vistas =========================================================
 router.get('/', (req, res) => {
-    // if (req.user) req.session.user = req.user
-    res.render('index')
+    // console.log(req.user)
+    // console.log('================================================')
+    if (req.user) req.session.user = req.user
+    return res.render('index')
 })
 
 // Resumen de lo que se muestra al usuario normal
-
 router.get('/offers', offerCrudController.getOffers)
 router.get('/demands', demandCrudController.getDemands)
 
-router.get('/accounts/signin', viewsController.getViewSingin)
-router.get('/accounts/signup', viewsController.getViewSingup)
+// Formularios Registrar e Iniciar sesion
+router.get('/accounts/signin', (req, res) => {
+    let error_message = req.flash('error')[0]
+    res.locals.error_message = error_message
+    return res.render('signin', {error: error_message})
+})
+router.get('/accounts/signup', (req, res) => {
+    return res.render('signup')
+})
 
 // Sesiones ========================================================
 router.get('/accounts/login', usersCrudController.getNewSession)

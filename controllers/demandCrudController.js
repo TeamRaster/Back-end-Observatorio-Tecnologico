@@ -98,4 +98,21 @@ module.exports = {
             res.redirect('/app/demands')
         })
     },
+
+    getViewDemandNew: (req, res) => {
+        return res.render('viewsUserPlus/demands/new')
+    },
+
+    getViewDemandEdit: (req, res) => {
+        Demand.findById(req.params.id,  (err, StoredDemand) => {
+            if(err) {
+                console.log('=========================================================')
+                console.log('[viewsController/getViewDemandEdit]: Error al hacer la busqueda')
+                console.log('=========================================================')
+                res.redirect('/app/demands')
+            }
+
+            return res.render('viewsUserPlus/demands/update', {demand: StoredDemand})
+        })
+    },
 }

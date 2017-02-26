@@ -2,6 +2,7 @@
 
 const Source = require('../models/modelSource')
 const fs = require('fs')
+const redirect = '/administrator/sources'
 
 module.exports = {
     setSource: (req, res) => {
@@ -19,13 +20,13 @@ module.exports = {
                     console.log('=========================================================')
                     console.log(`[SourceCrud/set]: Error datos no almacenados ${err}`)
                     console.log('=========================================================')
-                    res.redirect('/app/administrator/sources')
+                    res.redirect(redirect)
                 }
             })
 
             fs.rename(req.files.image.path, "public/images/imagesSources/" + source._id + "." + ext_)
             console.log('[Successful]: Datos almacenados')
-            res.redirect('/app/administrator/sources')
+            res.redirect(redirect)
         })
     },
 
@@ -36,7 +37,7 @@ module.exports = {
                 console.log('=========================================================')
                 console.log(`[SourceCrud/getAll]: Error al buscar los datos ${err}`)
                 console.log('=========================================================')
-                res.redirect('/app/administrator/sources')
+                res.redirect('/administrator/sources')
             }
             res.render('./viewsAdministrator/sources/index', {sources: storedSources})
         })
@@ -48,7 +49,7 @@ module.exports = {
                 console.log('=========================================================')
                 console.log(`[SourceCrud/getAll]: Error al buscar los datos ${err}`)
                 console.log('=========================================================')
-                res.redirect('/app/administrator/sources')
+                res.redirect(redirect)
             }
             res.render('./viewsAdministrator/sources/index', {sources: storedSources})
         })
@@ -60,7 +61,7 @@ module.exports = {
                 console.log('=========================================================')
                 console.log(`[SourceCrud/get]: Error al recuperar el dato ${err}`)
                 console.log('=========================================================')
-                res.redirect('/app/administrator/sources')
+                res.redirect(redirect)
             }
             res.render('./viewsAdministrator/sources/view', {source: storedSource})
         })
@@ -73,7 +74,7 @@ module.exports = {
                 console.log('=========================================================')
                 console.log(`[SourceCrud/update]: Error al recuperar el dato ${err}`)
                 console.log('=========================================================')
-                res.redirect('/app/administrator/sources')
+                res.redirect(redirect)
             }
 
             storedSource.title = req.fields.title
@@ -90,9 +91,9 @@ module.exports = {
                     console.log('=========================================================')
                     console.log(`[SourceCrud/update]: Error al actualizar los datos ${err}`)
                     console.log('=========================================================')
-                    res.redirect('/app/administrator/sources')
+                    res.redirect(redirect)
                 }
-                res.redirect('/app/administrator/sources')
+                res.redirect(redirect)
             })
         })
     },
@@ -104,10 +105,26 @@ module.exports = {
                 console.log('=========================================================')
                 console.log(`[SourceCrud/delete]: Error al eliminar los datos ${err}`)
                 console.log('=========================================================')
-                res.redirect('/app/administrator/sources')
+                res.redirect(redirect)
             }
             fs.unlink("public/images/imagesSources/" + storedSource.image)
-            res.redirect('/app/administrator/sources')
+            res.redirect(redirect)
+        })
+    },
+
+    getViewSourceNew: (req, res) => {
+        return res.render('viewsAdministrator/sources/new')
+    },
+
+    getViewSourceEdit: (req, res) => {
+        Source.findById(req.params.id, (err, storedSource) => {
+            if (err) {
+                console.log('=========================================================')
+                console.log('[viewsController/getVieSourceEdit]: Error al hacer la busqueda')
+                console.log('=========================================================')
+                res.redirect(redirect)
+            }
+            return res.render('viewsAdministrator/sources/update', {source: storedSource})
         })
     },
 }

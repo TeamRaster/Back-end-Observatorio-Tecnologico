@@ -11,15 +11,17 @@ const authMiddleware = require('../middlewares/authMiddleware')
 // router.all('/:route', authMiddleware.isAdministrator)
 
 // Vistas ==============================================================================================================
-router.get('/', controllers.viewsController.getViewIndexA)
+router.get('/', (req, res) => {
+    res.send('Pagina principal del administrador')
+})
 
 // Rutas Usuarios Formularios solo para administradores
 router.get('/users', controllers.usersCrudController.getUsers)
-router.get('/users/new', controllers.viewsController.getViewUserNew)
+router.get('/users/new', controllers.usersCrudController.getViewUserNew)
 
 // Fuentes de informacion ==============================================================================================
-router.get('/sources/:id/edit', controllers.viewsController.getViewSourceEdit)
-router.get('/sources/new', controllers.viewsController.getViewSourceNew)
+router.get('/sources/:id/edit', controllers.sourceCrudController.getViewSourceEdit)
+router.get('/sources/new', controllers.sourceCrudController.getViewSourceNew)
 router.get('/sources/:type/all', controllers.sourceCrudController.getall)
 
 router.route('/sources/:id')

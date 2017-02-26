@@ -10,8 +10,7 @@ sub.subscribe('chat')
 
 let onlineUsers = {}
 
-module.exports = function(server, sessionMiddleware) {
-    const io = require('socket.io')(server) // server-> instancia de http  (no express)
+module.exports = function(io, sessionMiddleware) {
     // const client = redis.createClient()
     // client.subscribe('images') // suscripcion al nombre del canal (viene de  ./newsCrudController )
 
@@ -27,21 +26,21 @@ module.exports = function(server, sessionMiddleware) {
 
     io.on('connection', (socket) => {  // Detecta a los usuarios que se conecten a la pagina
 
-        console.log('USERID Socket IO //' + Object.keys(socket.request.session))
+        // console.log('USERID Socket IO //' + Object.keys(socket.request.session))
 
         if (socket.request.session['passport'] != undefined) {
-            console.log('TIPO  //' + typeof socket.request.session['passport']['user'])
+            // console.log('TIPO  //' + typeof socket.request.session['passport']['user'])
             var target = socket.request.session['passport']['user']
-            console.log("Objetossssss ---------------------------")
-            for (var k in target) {
-                if (typeof target[k] !== 'function') {
-                    console.log("Key is " + k + ", value is" + target[k])
-                }
-            }
+            // console.log("Objetossssss ---------------------------")
+            // for (var k in target) {
+            //     if (typeof target[k] !== 'function') {
+            //         console.log("Key is " + k + ", value is" + target[k])
+            //     }
+            // }
         }
 
         socket.request.session
-        console.log("sockett ")
+        // console.log("sockett ")
 
         socket.on('chat', (data) => {
             console.log('Nuevo mensaje recibido en el servidor')

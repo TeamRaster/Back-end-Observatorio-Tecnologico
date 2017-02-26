@@ -11,7 +11,9 @@ const authMiddleware = require('../middlewares/authMiddleware')
 // router.all('/?', authMiddleware.isLogged)
 
 // Rutas para realizar pruebas =========================================================================================
-router.get('/room', [authMiddleware.isLogged, controllers.viewsController.getViewRoomIndex])  // Index
+router.get('/room', [authMiddleware.isLogged, (req, res) => {
+    return res.send('getViewRoomIndex')
+}])  // Index
 router.get('/room/new', [authMiddleware.isLogged, controllers.conversationController.getViewGroup])  // Crear un nuevo grupo
 router.post('/room/new', [authMiddleware.isLogged, controllers.conversationController.setGroup])  // Crear un nuevo grupo
 router.get('/room/:id', [authMiddleware.isLogged, controllers.conversationController.setMembers])  // Unirse al grupo
@@ -20,7 +22,7 @@ router.get('/room/:id/chat', [authMiddleware.isLogged, controllers.conversationC
 router.post('/room/:id/chat', [authMiddleware.isLogged, controllers.conversationController.setMessage])  //
 
 // Rutas NOTICIAS Formularios
-router.get('/news/new', controllers.viewsController.getViewDemandNew)
+// router.get('/news/new', controllers.viewsController.getViewDemandNew)
 router.get('/noticias/:id/edit', controllers.viewsController.getViewNewEdit)
 
 // Rutas GRUPOS Formularios
@@ -28,10 +30,14 @@ router.get('/groups/new', controllers.viewsController.getViewGroupNew)
 router.get('/groups/:id/edit', controllers.viewsController.getViewNewEdit)
 
 // Sala de chats
-router.get('/room', controllers.viewsController.getViewRoom)
+router.get('/room', (req, res) => {
+    return res.render('viewsUserPlus/rooms/index')
+})
 
 // Vistas ==============================================================================================================
-router.get('/', [authMiddleware.isLogged, controllers.viewsController.getViewIndexP])
+router.get('/', [authMiddleware.isLogged, (req, res) => {
+    res.send('Pagina del usuario con inicio de sesion')
+}])
 
 
 // Rutas Especiales para el chat  ======================================================================================
@@ -48,8 +54,9 @@ router.route('/message') // Crud a ofertas de manera grupal
     .post([authMiddleware.isLogged, controllers.conversationController.setMessage])
 
 // CRUD Ofertas ========================================================================================================
-router.get('/offers/new', [authMiddleware.isLogged, controllers.viewsController.getViewOfferNew])
-router.get('/offers/:id/edit', [authMiddleware.isLogged, controllers.viewsController.getViewOfferEdit])
+router.get('/offers/new', [authMiddleware.isLogged, controllers.offerCrudController.getViewOfferNew])
+router.get('/offers/:id/edit', [authMiddleware.isLogged, controllers.offerCrudController.getViewOfferEdit])
+router.post('/offers/:id/comments', [authMiddleware.isLogged, controllers.offerCrudController.setComment])
 
 router.route('/offers/:id') // Crud a ofertas de manera individual
     .get([authMiddleware.isLogged, controllers.offerCrudController.getOffer])
@@ -73,8 +80,8 @@ router.route('/noti') // Crud a noticias de manera grupal
 
 
 // CRUD Demandas =======================================================================================================
-router.get('/demands/new', [authMiddleware.isLogged, controllers.viewsController.getViewDemandNew])
-router.get('/demands/:id/edit', [authMiddleware.isLogged, controllers.viewsController.getViewDemandEdit])
+router.get('/demands/new', [authMiddleware.isLogged, controllers.demandCrudController.getViewDemandNew])
+router.get('/demands/:id/edit', [authMiddleware.isLogged, controllers.demandCrudController.getViewDemandEdit])
 
 router.route('/demands/:id') // Crud a demandas de manera individual
     .get([authMiddleware.isLogged, controllers.demandCrudController.getDemand])
@@ -97,7 +104,7 @@ router.route('/groups') // Crud a demandas de manera grupal
     .post(controllers.groupsCrudController.setGroup)
 
 // CRUD Usuarios =======================================================================================================
-router.get('/users/:id/edit', [authMiddleware.isLogged, controllers.viewsController.getViewUserEdit])
+router.get('/users/:id/edit', [authMiddleware.isLogged, controllers.usersCrudController.getViewUserEdit])
 
 router.route('/users/:id') // Crud a users de manera individual
     .get([authMiddleware.isLogged, controllers.usersCrudController.getUser])

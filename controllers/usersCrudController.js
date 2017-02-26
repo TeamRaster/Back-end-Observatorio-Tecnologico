@@ -96,10 +96,24 @@ module.exports = {
         })
     },
 
+    getViewUserNew: (req, res) => {
+        return res.render('viewsAdministrator/users/new')
+    },
+    getViewUserEdit: (req, res) => {
+        User.findById(req.params.id,  (err, storedUser) => {
+            if(err) {
+                console.log('=========================================================')
+                console.log('[viewsController/getViewUserEdit]: Error al hacer la busqueda')
+                console.log('=========================================================')
+                res.redirect('/app/users')
+            }
+
+            return res.render('viewsUserPlus/users/update', {user: storedUser})
+        })
+    },
 
 // Sesiones ========================================================
     getNewSession: (req, res) => {
-        // req.session.user_id = req.user._id
         res.render('./viewsUserPlus/users/view', {user: req.user})
     },
     getDestroySession: (req, res) => {

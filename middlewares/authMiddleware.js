@@ -3,8 +3,7 @@
 
 module.exports = {
     isLogged: (req, res, next) => {
-        if (req.isAuthenticated()) {
-            console.log('Esta autenticado')
+        if (req.session.user) {
             // res.locals.user = req.session.user
             next()
         }
