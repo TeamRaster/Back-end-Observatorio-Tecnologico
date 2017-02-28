@@ -92,8 +92,81 @@ $(function () {
         })
     }
 
-    console.log('Inicializar initSocketIO')
-    initSocketIO()
+
+    function like() {
+        let btnLike = $('#like')
+        let id = $(location).attr('href').split('/')[5]
+        btnLike.click(function () {
+
+
+
+            if(btnLike.hasClass('active')) {
+                console.log(id)
+                $.post('/app/offers/' + id + '/like?_method=delete').done(function () {
+                    console.log('Like eliminado')
+                }).fail(function () {
+                    console.log('Like error')
+                })
+                btnLike.removeClass('active')
+            } else {
+                $.post('/app/offers/' + id + '/like', {hola: "sdasdadadsasds"}).done(function () {
+                    console.log('Like agregado')
+                }).fail(function () {
+                    console.log('Like error')
+                })
+                btnLike.addClass('active')
+            }
+        })
+    }
+
+    function commentInit() {
+        $('#comment_form').submit(function (event) {
+            event.preventDefault()
+
+            let comment_section = $('#comment_section'),
+                new_comment = $('#comment_text'),
+                date = moment().format('HH:mm'),
+                id = $(location).attr('href').split('/')[5]
+
+            let newElement = $(
+                '<div class="row margin-small">' +
+                    '<p>' +
+                        '<span> ' +
+                            '<b> Eder </b>' +
+                        '</span>' +
+                        '<span> ' +
+                            new_comment.val() +
+                        '</span>' +
+                        '<span> ' +
+                            '<em>' + date + '</em>' +
+                        '</span>' +
+                    '</p>' +
+                '</div>')
+
+            $.post('/app/offers/' + id + '/comments', {
+                comment : new_comment.val(),
+                date    : date
+            }).done(function () {
+                console.log('Comentario enviado por post')
+            }).fail(function () {
+                console.log('Comentario NO fue enviado por post')
+            })
+
+            comment_section.append(newElement)
+            new_comment.val('')
+        })
+    }
+
+    commentInit()
+
+    // like()
+
+
+
+
+
+    // console.log('Inicializar initSocketIO')
+    // initSocketIO()
 
     // Guardar mensajes
     // $.post('/user', {
@@ -112,75 +185,3 @@ $(function () {
 
 
 
-
-
-
-
-
-
-    // const username = document.getElementById('username').value
-    //
-    // // Obtener el texto de cada mensaje, al presionar la tecla de 'Enter'
-    // document.getElementById('text_message').addEventListener("keypress", (e) => {
-    //     if (e.keyCode == 13) {
-    //         console.log('Click en el input')
-    //         addMessages()
-    //     }
-    // })
-    //
-    // socket.on('messages', function (data) {
-    //     console.log('storedMessages client', data)
-    //     render(data)
-    // })
-    //
-    // function render(data) {
-    //     let html = data.map(function (message, index) {
-    //         console.log('Renderizado de los datos')
-    //         console.log(message.nickname)
-    //         if (message.nickname === username) {
-    //             return (`
-    //                 <li class="comment author-comment">
-    //                     <div class="info">
-    //                         <a href="#">${message.nickname}</a>
-    //                         <span>4 hours ago</span>
-    //                     </div>
-    //                     <a class="avatar" href="#">
-    //                         <img src="/images/imagesUsers/user1.jpg" width="35" alt="Profile Avatar" title="Anie Silverston" />
-    //                     </a>
-    //                     <p>${message.text}</p>
-    //                 </li>
-    //             `)
-    //         } else {
-    //             return (`
-    //                 <li class="comment user-comment">
-    //                     <div class="info">
-    //                         <a href="#">${message.nickname}</a>
-    //                         <span>4 hours ago</span>
-    //                     </div>
-    //                     <a class="avatar" href="#">
-    //                         <img src="/images/imagesUsers/user1.jpg" width="35" alt="Profile Avatar" title="Anie Silverston" />
-    //                     </a>
-    //                     <p>${message.text}</p>
-    //                 </li>
-    //             `)
-    //         }
-    //     }).join(' ')
-    //     let lista = document.getElementById('comment-section')
-    //     lista.innerHTML = html
-    // }
-    //
-    // function addMessages(e) {
-    //     let text_ = document.getElementById('text_message')
-    //     console.log('Texto que se va a enviar ', text_)
-    //     let message = {
-    //         nickname: (username != "") ? username : 'Invitado',
-    //         text: text_.value
-    //     }
-    //     text_.value = ""
-    //     socket.emit('newMessage', message)
-    //     return false
-    // }
-    //
-    // function sendForm() {
-    //     // document.formMessage.submit()
-    // }

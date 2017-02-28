@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 var socket = io() // libreria socket para conectar con servidor socket
 
 socket.on('new notices', function(data){
@@ -24,7 +23,6 @@ socket.on('new notices', function(data){
     //console.log(container + templateScript(data))
 
 })
-=======
 // 'use strict'
 //
 // var socket = io() // libreria socket para conectar con servidor socket
@@ -52,4 +50,3 @@ socket.on('new notices', function(data){
 //
 //
 // })
->>>>>>> abf96eeed7fc8d943dce9bfacf3ae13c8752225d

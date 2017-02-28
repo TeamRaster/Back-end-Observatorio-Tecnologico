@@ -32,11 +32,33 @@ const OfferSchema = new Schema({
             ref   : 'User'
         },
         comment   : String,
-        date      : String
+        date      : String,
+        answer: [{
+            postedBy : {
+                type : Schema.Types.ObjectId,
+                ref  : 'User'
+            },
+            comment  : String,
+            date     : String
+        }],
     }],
+    numComments : {
+        type    : Number,
+        default : 0
+    },
     stats: {
-        votes: Number,
-        favs:  Number
+        vote: {
+            type : String,
+            enum : ['like', 'dislike']
+        },
+        likes : {
+            type    : Number,
+            default : 0
+        },
+        dislikes : {
+            type    : Number,
+            default : 0
+        },
     }
 })
 

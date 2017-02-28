@@ -1,27 +1,27 @@
 'use strict'
 
-const config = require('./config/config.js')  // variables de configuracion (dbs, puertos, keytokens)
-const routerUser = require('./routes/routerUser')
-const routerUserPlus = require('./routes/routerUserPlus')
-const routerAdministrator = require('./routes/routerAdministrator')
-const authMiddleware = require('./middlewares/authMiddleware')
-const realtimeSocket = require('./realtimeSocket')
-const moment = require('moment')
+const config              = require('./config/config.js'),  // variables de configuracion (dbs, puertos, keytokens),
+      routerUser          = require('./routes/routerUser'),
+      routerUserPlus      = require('./routes/routerUserPlus'),
+      routerAdministrator = require('./routes/routerAdministrator'),
+      authMiddleware      = require('./middlewares/authMiddleware'),
+      realtimeSocket      = require('./realtimeSocket')
+let maxAge_ = 60000 * 60 * 24 // 60Seg(1Minuto) * 60Min(1Hora) * 24H(1Dia)
 
-const express = require('express')
-const app = express()  // Servidor de Express
-const session = require('express-session')  // Sesiones de Express
-const formidable = require('express-formidable')   // Middleware que ayuda a subir archivos al servidor
-const methodOverride = require('method-override')  // Ayuda a que un formulario pueda enviar por metodo put, delete
-const bodyParser = require('body-parser')  // Devuelve un json para hacer uso de los parametros del documento
-const cookieParser = require('cookie-parser')
-const path = require('path')  // Junta todos los argumentos y normaliza la ruta resultante.
-const mongoose = require('mongoose')  // Manejador de la base de datos para MongoDB
-const flash = require('connect-flash')  // Muestra mensajes de error que se pueden llegar a generar
-const RedisStore = require('connect-redis')(session)  // Permiten manejar una cantidad mayor de sessiones al mismo tiempo.
-const server = require('http').createServer(app)
-const io = require('socket.io')(server)
-const logger = require('morgan')
+const express        = require('express'),
+      app            = express(),  // Servidor de Express
+      session        = require('express-session'),  // Sesiones de Express
+      formidable     = require('express-formidable'),   // Middleware que ayuda a subir archivos al servidor
+      methodOverride = require('method-override'),  // Ayuda a que un formulario pueda enviar por metodo put, delete
+      bodyParser     = require('body-parser'),  // Devuelve un json para hacer uso de los parametros del documento
+      cookieParser   = require('cookie-parser'),
+      path           = require('path'),  // Junta todos los argumentos y normaliza la ruta resultante.
+      mongoose       = require('mongoose'),  // Manejador de la base de datos para MongoDB
+      flash          = require('connect-flash'),  // Muestra mensajes de error que se pueden llegar a generar
+      RedisStore     = require('connect-redis')(session),  // Permiten manejar una cantidad mayor de sessiones al mismo tiempo.
+      server         = require('http').createServer(app),
+      io             = require('socket.io')(server),
+      logger         = require('morgan')
 
 // app.use(logger('dev'))
 if (app.get('env') === 'development') { //  TODO quitar en producción (Hace bonito el codigo fiente :v)
@@ -30,7 +30,7 @@ if (app.get('env') === 'development') { //  TODO quitar en producción (Hace bon
 
 const sessionMiddleware = session({  // Configuracion de las sesiones
     store: new RedisStore({ }), // poner puerto y contraseña para produccion
-    cookie: { maxAge: 60000 },
+    cookie: { maxAge: maxAge_ },
     secret: config.SECRET_TOKEN,
     resave: false,
     saveUninitialized: true
@@ -61,7 +61,5 @@ app.use('/administrator', routerAdministrator)  // Rutas que accesibles para Adm
 mongoose.connect(config.db, (err, res) => {  // Conexion a la base de datos
   if (err) return console.log(`Error conexion base de datos [./index.js]: ${err}`)
 })
-
-console.log(moment().format('MMMM Do YYYY, h:mm a'))
 
 server.listen(config.port)

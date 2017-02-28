@@ -38,7 +38,7 @@ module.exports = {
                 console.log('=========================================================')
                 return res.redirect('/app/offers')
             }
-            res.render('./viewsUserPlus/offers/index', {offers: storedOffers})
+            return res.render('./viewsUserPlus/offers/index', {offers: storedOffers})
         })
     },
 
@@ -62,7 +62,7 @@ module.exports = {
                 console.log('=========================================================')
                 return res.redirect('/app/offers')
             }
-            res.render('./viewsUserPlus/offers/view', {offer: storedOffer})
+            return res.render('./viewsUserPlus/offers/view', {offer: storedOffer})
         })
     },
 
@@ -128,6 +128,7 @@ module.exports = {
     },
 
     setComment: (req, res) => {
+        console.log('Entro el setComment')
         Offer.findById(req.params.id,  (err, storedOffer) => {
             if(err) {
                 console.log('=========================================================')
@@ -135,11 +136,39 @@ module.exports = {
                 console.log('=========================================================')
                 return res.redirect('/app/offers')
             }
+            console.log('req.body')
+            console.log(req.body)
             storedOffer.comments.push({
                 postedBy : req.session.user._id,
-                comment  : req.fields.comment,
-                date     : moment().format('MMMM Do YYYY, h:mm a')
+                comment  : req.body.comment,
+                date     : req.body.date
             })
+            storedOffer.stats.comments = storedOffer.stats.comments + 1
+            storedOffer.save(err => {
+                if (err) {
+                    console.log('=========================================================')
+                    console.log(`[OfferCrud/update]: Error al actualizar los datos ${err}`)
+                    console.log('=========================================================')
+                    return res.redirect('/app/offers')
+                }
+                console.log('Comentario almaceando en el crud')
+                return res.redirect('/app/offers/' + storedOffer._id)
+            })
+        })
+    },
+
+    setLike: (req, res) => {
+        Offer.findById(req.params.id,  (err, storedOffer) => {
+            if(err) {
+                console.log('=========================================================')
+                console.log('[OffersController/setComment]: Error al hacer la busqueda')
+                console.log('=========================================================')
+                return res.redirect('/app/offers')
+            }
+            if (storedOffer.stats.likes)
+            storedOffer.stats.likes = storedOffer.stats.likes + 1
+            console.log('Setlike')
+            console.log(req.body)
             storedOffer.save(err => {
                 if (err) {
                     console.log('=========================================================')
@@ -151,4 +180,32 @@ module.exports = {
             })
         })
     },
+
+    deleteLike: (req, res) => {
+        Offer.findById(req.params.id,  (err, storedOffer) => {
+            if(err) {
+                console.log('=========================================================')
+                console.log('[OffersController/setComment]: Error al hacer la busqueda')
+                console.log('=========================================================')
+                return res.redirect('/app/offers')
+            }
+            storedOffer.stats.likes = storedOffer.stats.likes - 1
+            console.log('deleteLike')
+            console.log(storedOffer.stats.likes)
+            console.log(req.params)
+            storedOffer.save(err => {
+                if (err) {
+                    console.log('=========================================================')
+                    console.log(`[OfferCrud/update]: Error al actualizar los datos ${err}`)
+                    console.log('=========================================================')
+                    return res.redirect('/app/offers')
+                }
+                return res.redirect('/app/offers/' + storedOffer._id)
+            })
+        })
+    },
+
+    setdislike: (req, res) => {},
+
+    deleteDislike: (req, res) => {},
 }

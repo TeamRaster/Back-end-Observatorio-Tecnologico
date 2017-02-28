@@ -57,6 +57,8 @@ router.route('/message') // Crud a ofertas de manera grupal
 router.get('/offers/new', [authMiddleware.isLogged, controllers.offerCrudController.getViewOfferNew])
 router.get('/offers/:id/edit', [authMiddleware.isLogged, controllers.offerCrudController.getViewOfferEdit])
 router.post('/offers/:id/comments', [authMiddleware.isLogged, controllers.offerCrudController.setComment])
+router.post('/offers/:id/like', [authMiddleware.isLogged, controllers.offerCrudController.setLike])
+router.delete('/offers/:id/like', [authMiddleware.isLogged, controllers.offerCrudController.deleteLike])
 
 router.route('/offers/:id') // Crud a ofertas de manera individual
     .get([authMiddleware.isLogged, controllers.offerCrudController.getOffer])
