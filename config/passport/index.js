@@ -2,17 +2,24 @@
 
 const passport = require('passport')
 const config = require('./configAuth')
-const models = require('../../models')
 
 function passportConfig(app) {
+    const User = app.models.modelUsers
+
     passport.serializeUser((user, done) => {
-        done(null, user)
+        console.log('SerializeUser')
+        done(null, user.id)
+        // done(null, user)
     })
 
-    passport.deserializeUser((obj, done) => {
-        done(null, obj)
-        // models.modelUsers.findById(id, (err, user) => {
-        // })
+    // passport.deserializeUser((obj, done) => {
+    //     done(null, obj)
+    // })
+    passport.deserializeUser((id, done) => {
+        User.findById(id, (err, user) => {
+            console.log('deserializeUser \n')
+            done(err, user)
+        })
     })
 
     app.use(passport.initialize())

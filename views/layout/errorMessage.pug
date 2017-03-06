@@ -1,0 +1,8 @@
+.row.center-xs
+  .col-xs-8
+    if (err)
+      .message.err: span= err
+    else if(info)
+      .message.info:  span= info
+    else if (success)
+      .message.success: span= success

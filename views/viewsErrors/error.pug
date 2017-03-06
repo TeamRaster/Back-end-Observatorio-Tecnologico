@@ -1,0 +1,12 @@
+extends .././layout/layoutIndex
+
+block title
+  title Error 404
+
+block main
+  .row.center-xs.top-space
+    .col-xs-8
+      .main__404
+        img(src="/images/err/404.png")
+        h5.erro_msg= err
+        a(href="/" class="top-space btn grey darken-3") Regresar al inicio

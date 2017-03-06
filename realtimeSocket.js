@@ -1,8 +1,5 @@
 'use strict'
 
-const controllers = require('./controllers')
-const models = require('./models')
-
 const redis = require('redis')
 var sub = redis.createClient()
 var pub = redis.createClient()

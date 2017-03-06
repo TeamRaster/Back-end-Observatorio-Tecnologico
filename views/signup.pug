@@ -7,9 +7,10 @@ block main
   .row.center-xs
     .col-xs-8
       h3 Registrate
+  include ./layout/errorMessage
   .row.center-xs
     .col-xs-5
-      form(method="POST" action="/accounts/local/user" enctype="multipart/form-data")
+      form(method="POST" action="/users" enctype="multipart/form-data")
         .input-field.col.s12
           label(for="username") Nombre de Usuario:
           input(type="text", class="validate", name="username", id="username" data-length="50" autofocus required)
@@ -27,4 +28,6 @@ block main
             .file-path-wrapper
               input(type="text" class="file-path validate")
         div
-          input(type="submit", class="btn", name="btn", id="btn", value="Sign up")
+          input(type="submit", class="btn grey darken-4", name="btn", id="btn", value="Sign up")
+        div.top-space
+          a(href="/accounts/signin" class="waves-effect waves-teal btn-flat") Ya tengo cuenta
