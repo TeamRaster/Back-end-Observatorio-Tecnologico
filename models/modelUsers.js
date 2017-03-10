@@ -18,39 +18,45 @@ module.exports = (app) => {
 
 
     const UsersSchema = new Schema({
-        providerId        : {
-            type          : String,
-            unique        : true
-        },
         username          : {
             type          : String,
             minlength     : [1, "[Username]: Minimo 1 caracteres"],
             maxlength     : [50, "[Username]: Maximo 50 caracteres"],
             trim          : true
         },
-        email             : {
-            type          : String,
-            default       : 'Aun no disponible',
-            lowercase     : true,
-            trim          : true,
-            unique        : true
-        },
-        password          : {
-            type          : String,
-            minlength     : [8, "[Password]: Minimo 8 caracteres"],
-            trim          : true
-        },
         photo: {
             type          : String,
             default       : 'Imagen no disponible'
         },
-        ext               : String,
+        path              : String,
         provider: {
             type          : String,
             default       : 'Local'
         },
         administrator     : Boolean,
+        creationDate: {
+            hour: {
+                type      : String,
+                default   : '00:00'
+            },
+            date: {
+                type      : String,
+                default   : '00/00/0000'
+            },
+        },
+        updateDate: {
+            hour: {
+                type      : String,
+                default   : '00:00'
+            },
+            date: {
+                type      : String,
+                default   : '00/00/0000'
+            },
+        },
+
         history           : [StatsSchema],
+
         contactInformation: {
             phone: {
                 type      : String,
@@ -77,62 +83,53 @@ module.exports = (app) => {
                 lowercase : true,
             },
         },
-        creationDate: {
-            hour: {
+
+        local: {
+            email: {
                 type      : String,
-                default   : '00:00'
+                lowercase : true,
+                trim      : true,
+                unique    : true
             },
-            date: {
+            password: {
                 type      : String,
-                default   : '00/00/0000'
+                minlength : [8, "[Password]: Minimo 8 caracteres"],
+                trim      : true
             },
         },
-        updateDate: {
-            hour: {
-                type      : String,
-                default   : '00:00'
-            },
-            date: {
-                type      : String,
-                default   : '00/00/0000'
-            },
+        facebook: {
+            id            : String,
+            token         : String,
+            email         : String,
+            name          : String
+        },
+        twitter: {
+            id            : String,
+            token         : String,
+            displayName   : String,
+            username      : String
+        },
+        linkedin: {
+            id            : String,
+            token         : String,
+            displayName   : String,
+            username      : String
         },
     })
 
     UsersSchema.pre('save', function (next) {
         let user = this
-        user.photo = user.id + '.' + user.ext
-        user.providerId = user.id
-        console.log(`Correo guardado: ${user.email}`)
-        console.log(`Contraseña guardada: ${user.password}`)
-        if (user.isModified('password')) {  // Crea un hash solo si el usuario ha modificado el campo password
-            this.hashPassword(user.password, function (err, hash) {  // Llamada al metodo personalizado
-                if (err) return next(err)
-                user.password = hash
-                next()
-            })
-        } else {
-            next()
-        }
+        console.log(`\n[modelUser.pre(save)]: Correo guardado => ${user.local.email}`)
+        console.log(`[modelUser.pre(save)]: Contraseña guardada => ${user.local.password}`)
+        next()
     })
 
-    UsersSchema.methods.hashPassword = function (candidatePassword, cb) {
-        bcrypt.genSalt(11, function (err, salt) {
-            if (err) return cb(err)
-            bcrypt.hash(candidatePassword, salt, null, function (err, hash) {
-                if (err) return cb(err)
-                return cb(null, hash)
-            })
-        })
+    UsersSchema.methods.hashPassword = function (password) {
+        return bcrypt.hashSync(password, bcrypt.genSaltSync(11), null)
     }
 
-    UsersSchema.methods.comparePassword = function (candidatePassword, hashedPassword, cb) {
-        bcrypt.compare(candidatePassword, hashedPassword, function (err, isMatch) {
-            if (err)
-                return cb(err)
-            else
-                return cb(null, isMatch)
-        })
+    UsersSchema.methods.comparePassword = function (password, storedPassword) {
+        return bcrypt.compareSync(password, storedPassword)
     }
 
     return mongoose.model('User', UsersSchema)

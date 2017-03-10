@@ -10,23 +10,13 @@ block main
   include ./layout/errorMessage
   .row.center-xs
     .col-xs-5
-      form(method="POST" action="/users" enctype="multipart/form-data")
-        .input-field.col.s12
-          label(for="username") Nombre de Usuario:
-          input(type="text", class="validate", name="username", id="username" data-length="50" autofocus required)
+      form(method="POST" action="/accounts/signup")
         .input-field.col.s12
           label(for="email") Correo:
           input(type="email", class="validate", name="email", id="email" data-length="60" required)
         .input-field.col.s12
           label(for="password") Contraseña:
           input(type="password", class="validate", name="password", id="password" placeholder="minimo 8 caracteres" data-length="16" required)
-        .input-field.col.s12
-          .file-field.input-field
-            .btn
-              span Imagen
-              input(type="file" name="photo" id="photo" required)
-            .file-path-wrapper
-              input(type="text" class="file-path validate")
         div
           input(type="submit", class="btn grey darken-4", name="btn", id="btn", value="Sign up")
         div.top-space

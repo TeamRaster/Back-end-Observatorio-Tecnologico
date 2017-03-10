@@ -1,7 +1,7 @@
 'use strict'
 
 const fs = require('fs')  // Modulo para el manejo de archivos, crear, mover, eliminar, renombrar etc
-const moment = require('moment')  // Modulo para el manejo de el tiempo por formato configurable format('MMMM Do YYYY')
+    , moment = require('moment')  // Modulo para el tiempo
 
 module.exports = (app) => {
     const User = app.models.modelUsers  // Manda a llamar el modelo de Usuarios
@@ -9,148 +9,155 @@ module.exports = (app) => {
 
 // Registro del usuario ================================================================================================
     this.setUser = (req, res) => {  // Funcion para agregar un usuario
-        let ext_ = req.files.photo.name.split(".").pop()  // Extension del archivo
-        let user = new User({
-            username      : req.fields.username,
-            email         : req.fields.email,
-            password      : req.fields.password,
-            administrator : req.fields.options === "true" ? true : false,
-            ext           : ext_,
-        })
+        console.log(`\n[ControllerUsers.setUser]: ${JSON.stringify(req.body)}`)
+        console.log(`\n[ControllerUsers.setUser]: ${JSON.stringify(req.file)}`)
+        let user = new User()
+            user.username       = req.body.username,
+            user.local.email    = req.body.email,
+            user.local.password = req.body.password,
+            user.administrator  = req.body.options === "true" ? true : false,
+            user.photo          = req.file.filename,
+            user.path           = req.file.destination,
 
         user.creationDate.hour = moment().format('LT')  // Ingresa el formato de la hora
         user.creationDate.date = moment().format('L')  // Ingresa el formato de la fecha
 
         user.save( err => {  // Guardar el nuevo usuario creado
-            if (err) {
-                console.log(`[ControllerUser.setUser]: Ups! parece que hubo un error => ${err}`)
+            if (!err) {
+                console.log('\n[ControllerUser.setUser]: Usuario guardado con exito')
+                req.flash('info', '[Servidor]: Los datos se han guardado con exito')
+                return
+            } else {
+                console.log(`\n[ControllerUser.setUser]: Ups! parece que hubo un error => ${err}`)
                 req.flash('err', '[Servidor]: Ups! parece que hubo un error')  // Mensaje de error
-                return res.redirect('/accounts/signup')
-            }
-            fs.rename(req.files.photo.path, "public/images/imagesUsers/" + user._id + "." + ext_)  // Mueve y renombra el archivo
-            console.log('[Servidor]: Usuario guardado con exito')
-            req.flash('info', '[Servidor]: Los datos se han guardado con exito')
-            return res.redirect(redirect)  // todo Modificar en produccion
-        })
-    }
-
-
-    this.getUsers = (req, res) => {  // Funcion para obtener los usuarios
-        res.locals.user = req.session.user
-        User.find({}, (err, storedUsers) => {  // Deveulve todos los datos de la tabla usuarios
-            if(err) {
-                req.flash('err', '[Servidor]: Ups! parece que hubo un error en la base datos, codigo: GUS.CU')  // Guarda un error
-                res.redirect(redirect)  // Redirecciona y muestra el error
                 return
             }
-            // Renderiza los posibles mensajes que le puede llegar a la vista
-            res.render('./viewsAdministrator/users/index', {
-                users  : storedUsers,
-                err    : req.flash('err'),
-                info   : req.flash('info'),
-                success: req.flash('success')
-            })
+
+            if (res.locals.user.administrator)
+                res.redirect('/users/new')
+            else
+                res.redirect('/accounts/signup')
         })
     }
-
 
     this.getUser = (req, res) => {  // Funcion para obtener un usuario
         // La busqueda del usuario es por un middleware en la ruta
-        res.render('./viewsUserPlus/users/view')
+        res.render('./viewsUserPlus/users/view', {
+            err     : req.flash('err'),
+            info    : req.flash('info'),
+            success : req.flash('success')
+        })
     }
 
+    this.getUsers = (req, res) => {  // Funcion para obtener los usuarios
+        User.find({}, (err, storedUsers) => {  // Devuelve todos los datos de la tabla usuarios
+            if (!err) {
+                // Renderiza los posibles mensajes que le puede llegar a la vista
+                res.render('./viewsAdministrator/users/index', {
+                    users   : storedUsers,
+                    err     : req.flash('err'),
+                    info    : req.flash('info'),
+                    success : req.flash('success')
+                })
+            } else {
+                console.log(`\n[ControllerUser.getUsers]: Ups! parece que hubo un error => ${err}`)
+                req.flash('err', '[Servidor]: Ups! parece que hubo un error en la base datos, codigo: GUS.CU')  // Guarda un error
+                res.redirect(redirect)  // Redirecciona y muestra el error
+            }
+        })
+    }
 
     this.updateUser = (req, res) => {  // Funcion para actualizar un usuario
-        res.locals.user.username  = req.fields.username
-        res.locals.user.email     = req.fields.email
-        if(req.fields.password != "") {
-            res.locals.user.password  = req.fields.password  // Actualizacion solo si escribio una nueva contraseña
-        } else if (req.files.photo.name != "") {  // Actualizacion de foto de perfil solo si coloca una nueva
-            fs.unlink("public/images/imagesUsers/" + res.locals.user.photo)  // Elimina el archivo anterior
-            fs.rename(req.files.photo.path, "public/images/imagesUsers/" + res.locals.user.photo)  // Renombra el archivo nuevo y lo almacena
+        res.locals.storedUser.username  = req.body.username
+        res.locals.storedUser.email     = req.body.email
+        if(req.body.password != "") {
+            res.locals.storedUser.password  = req.body.password  // Actualizacion solo si escribio una nueva contraseña
+        } else if (req.file != "" && req.file != undefined) {  // Actualizacion de foto de perfil solo si coloca una nueva
+            console.log(`\n[ControllerUser.updateUser]: req.file: ${req.file}`)
+            fs.unlink(req.file.path)  // Elimina el archivo anterior
+            res.locals.storedUser.photo = req.file.filename
         }
         // Actuliza la informacion de contacto para hacer ofertas y demandas
-        res.locals.user.contactInformation.phone     = req.fields.phone
-        res.locals.user.contactInformation.address   = req.fields.address
-        res.locals.user.contactInformation.facebook  = req.fields.facebook
-        res.locals.user.contactInformation.twitter   = req.fields.twitter
-        res.locals.user.contactInformation.linkedin  = req.fields.linkedin
+        res.locals.storedUser.contactInformation.phone     = req.body.phone
+        res.locals.storedUser.contactInformation.address   = req.body.address
+        res.locals.storedUser.contactInformation.facebook  = req.body.facebook
+        res.locals.storedUser.contactInformation.twitter   = req.body.twitter
+        res.locals.storedUser.contactInformation.linkedin  = req.body.linkedin
+        // Registra hora y fecha de la ultima actualizacion
+        res.locals.storedUser.updateDate.hour = moment().format('LT')
+        res.locals.storedUser.updateDate.date = moment().format('L')
+        // Guarda los cambios actualizados
+        res.locals.storedUser.save(err => {
+            if (err) {
+                console.log(`\n[ControllerUser.updateUser]: Ups! parece que hubo un error => ${err}`)  // Guarda un mensaje de error solo si existe
+                req.flash('err', '[Servidor]: Ups! parece que hubo un error, codigo: UU.CU')  // Guarda un mensaje de error solo si existe
+                return
+            }
+            res.redirect('/users')
+        })
+    }
+
+    this.deleteUser = (req, res) => {  // Funcion para eliminar a un usuario
+        User.findOneAndRemove({_id: req.params.id}, (err, storedUser) => {
+            if (!err) {
+                // Si encuentra la imagen, la borra, y asi evita un error si no existe o esta dañada
+                fs.stat('public/images/imagesUsers/' + storedUser.photo, (err, stats) => {
+                    if (err) {
+                        console.log(`\n[ControllerUsers.deleteUser]: Ups. parece que hubo un error ${err}`)
+                        req.flash('info', 'No fue posible eliminar el archivo fotografia')
+                        return
+                    } else if(stats.isFile()) {
+                        console.log(`\n[ControllerUsers.deleteUser]: stats => ${JSON.stringify(stats)}`)
+                        fs.unlink("public/images/imagesUsers/" + storedUser.photo)  // Elimina los datos creados con el usuario
+                    }
+                })
+            } else {
+                req.flash('err', '[Servidor]: Ups! parece que hubo un error, codigo: DU.CU')  // Guarda un mensaje de error
+                return
+            }
+
+            if (!res.locals.user.administrator) {  // Si el usuario logeado actualmente no es administrador, cierra sesion
+                res.redirect('/accounts/logout')
+            } else {
+                res.redirect(redirect)
+            }
+        })
+    }
+
+// Contacto(Completar el registro del usuario) =========================================================================
+    this.setContact = (req, res) => {  // Funcion para agregar los datos de contacto
+        res.locals.user.contactInformation.phone     = req.body.phone
+        res.locals.user.contactInformation.address   = req.body.address
+        res.locals.user.contactInformation.facebook  = req.body.facebook
+        res.locals.user.contactInformation.twitter   = req.body.twitter
+        res.locals.user.contactInformation.linkedin  = req.body.linkedin
         // Registra hora y fecha de la ultima actualizacion
         res.locals.user.updateDate.hour = moment().format('LT')
         res.locals.user.updateDate.date = moment().format('L')
         // Guarda los cambios actualizados
         res.locals.user.save(err => {
             if (err) {
-                console.log(`[ControllerUser.updateUser]: Ups! parece que hubo un error => ${err}`)  // Guarda un mensaje de error solo si existe
-                req.flash('err', '[Servidor]: Ups! parece que hubo un error, codigo: UU.CU')  // Guarda un mensaje de error solo si existe
+                console.log(`\n[ControllerUser.setContact]: Ups! parece que hubo un error => ${err}`)  // Guarda un mensaje de error solo si existe
+                req.flash('err', '[Servidor]: Ups! parece que hubo un error, codigo: SC.CU')  // Guarda un mensaje de error solo si existe
+                return
             }
             res.redirect('/users')
         })
     }
 
-
-    this.deleteUser = (req, res) => {  // Funcion para eliminar a un usuario
-        User.findOneAndRemove({_id: req.params.id}, (err, storedUser) => {
-            if (err) {
-                req.flash('err', '[Servidor]: Ups! parece que hubo un error, codigo: DU.CU')  // Guarda un mensaje de error
-                res.redirect(redirect)
-                return
-            }
-            // Si encuentra la imagen, la borra, y asi evita un error si no existe o esta dañada
-            fs.stat('public/images/imagesUsers/' + storedUser.photo, (err, stats) => {
-                if (err) {
-                    req.flash('info', 'No fue posible eliminar el archivo fotografia')
-                    throw err
-                } else if(stats.isFile()) {
-                    console.log(`stats: ${JSON.stringify(stats)}`)
-                    fs.unlink("public/images/imagesUsers/" + storedUser.photo)  // Elimina los datos creados con el usuario
-                }
-            })
-            res.redirect(redirect)
-        })
-    }
-
-// Contacto(Completar el registro del usuario) =========================================================================
-    this.setContact = (req, res) => {  // Funcion para agregar los datos de contacto
-        // User.findById(req.params.id, (err, storedUser) => {
-        //     if(err) {
-        //         req.flash('err', '[Servidor]: Ups! parece que hubo un error, codigo: SC.CU')  // Guarda un mensaje de error solo si existe
-        //         res.redirect(redirect)
-        //         return
-        //     }
-        //     storedUser.contactInformation.phone     = req.fields.phone
-        //     storedUser.contactInformation.address   = req.fields.address
-        //     storedUser.contactInformation.facebook  = req.fields.facebook
-        //     storedUser.contactInformation.twitter   = req.fields.twitter
-        //     storedUser.contactInformation.linkedin  = req.fields.linkedin
-        //     storedUser.save(err => {
-        //         if (err) {
-        //             req.flash('err', '[Servidor]: Ups! parece que hubo un error, codigo: SC.CU')  // Guarda un mensaje de error solo si existe
-        //         }
-        //         res.redirect(redirect)
-        //     })
-        // })
-    }
-
 // Contacto(Completar el registro del usuario) =========================================================================
     this.setScore = (req, res, data) => {  // Establece una nueva puntuacion a una publicacion
-        User.findById(req.params.id, (err, storedUser) => {
-            if(err) {
-                req.flash('error', `[controllerUser/setScore]: Error al encontrar al usuario por id ${err}`)  // Guarda un mensaje de error solo si existe
-                res.redirect(redirect)
+        res.locals.storedUser.history.dataUser.push({
+            // publications : ,
+            // type         : ,
+        })
+        res.locals.storedUser.save(err => {
+            if (err) {
+                console.log(`\n[ControllerUser.setScore]: Ups! parece que hubo un error => ${err}`)  // Guarda un mensaje de error solo si existe
+                req.flash('err', '[Servidor]: Ups! parece que hubo un error, codigo: SS.CU')  // Guarda un mensaje de error solo si existe
+                return
             }
-
-            storedUser.contactInformation.dataUser.push({  // Guarda los valores de la puntuacion y la publicacion a la que se califico
-                publications : data.publications,
-                type         : data.type,
-            })
-
-            storedUser.save(err => {
-                if (err) {
-                    req.flash('error', `[controllerUser/setScore]: Error al guardar el usuario ${err}`)  // Guarda un mensaje de error solo si existe
-                }
-                res.redirect(redirect)
-            })
+            res.redirect('/users')
         })
     }
 
@@ -161,33 +168,32 @@ module.exports = (app) => {
 
 
     this.updateScore = (req, res, data) => {  // Actualiza la puntuacion realizada a una publicacion
-        User.findById(req.params.id, (err, storedUser) => {
-            if(err) {
-                req.flash('error', `[controllerUser/updateScore]: Error al encontrar al usuario por id ${err}`)  // Guarda un mensaje de error solo si existe
-                res.redirect(redirect)
-            }
 
-            storedUser.contactInformation.dataUser.push({  // Guarda los valores de la puntuacion y la publicacion a la que se califico
-                type : data.type,
-            })
-
-            storedUser.save(err => {
-                if (err) {
-                    req.flash('error', `[controllerUser/updateScore]: Error al guardar el usuario ${err}`)  // Guarda un mensaje de error solo si existe
-                }
-                res.redirect(redirect)
-            })
-        })
     }
 
 // Formularios para hacer las imagenes =================================================================================
     this.getViewUserNew = (req, res) => {  // Pagina para agregar un nuevo usuario
-        return res.render('viewsAdministrator/users/new')
+        return res.render('viewsAdministrator/users/new', {
+            err: req.flash('err'),
+            info: req.flash('info'),
+            success: req.flash('success')
+        })
     }
 
-
     this.getViewUserEdit = (req, res) => {  // Pagina para editar un usuario
-        res.render('viewsUserPlus/users/update')
+        res.render('viewsUserPlus/users/update', {
+            err: req.flash('err'),
+            info: req.flash('info'),
+            success: req.flash('success')
+        })
+    }
+
+    this.getViewUsercontact = (req, res) => {  // Pagina para editar un usuario
+        res.render('viewsUserPlus/users/newContact', {
+            err: req.flash('err'),
+            info: req.flash('info'),
+            success: req.flash('success')
+        })
     }
 
 

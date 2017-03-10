@@ -18,7 +18,7 @@ module.exports = (app) => {
             }
             // Esto es porque en ocaciones se realiza la peticion 2 veces y a la segunda el valor es nulo
             if (storedUser != null) {  // Si el valor obtenido no es nulo
-                res.locals.user = storedUser  // Guarda el usuario en la variable local
+                res.locals.storedUser = storedUser  // Guarda el usuario en la variable local
                 next()  // Ejecuta la proxima funcion
             } else {
                 req.flash('err', 'No se han encontrado resultados')  // Guarda un mensaje de error

@@ -9,39 +9,39 @@ block main
       h3 Users
   .row.center-xs
     .col-xs-10.start-xs
-      if(user)
+      if(ustoredUserser)
         h5
           span: b Correo:
-          span= " " + user.email
+          span= " " + storedUser.email
         h5
           span: b Nombre:
-          span= " " + user.username
+          span= " " + storedUser.username
         h5
           span: b Proveedor:
-          span= " " + user.provider
+          span= " " + storedUser.provider
         h5
           span: b ProveedorID:
-          span= " " + user.providerId
+          span= " " + storedUser.providerId
         h5
           span: b Adminisitrador:
-          span= " " + user.administrator
+          span= " " + storedUser.administrator
         h5
           span: b Fecha de Registro:
-          span= " " + user.creationDate.hour + ' ' + user.creationDate.date
+          span= " " + storedUser.creationDate.hour + ' ' + storedUser.creationDate.date
         h5
           span: b Datos de Contacto:
-          span= " " + user.contactInformation
+          span= " " + storedUser.contactInformation
         h5
           span: b Ultima Modificacion:
-          span= " " + user.updateDate.hour + ' ' + user.updateDate.date
+          span= " " + storedUser.updateDate.hour + ' ' + storedUser.updateDate.date
         h5
           span: b Historial de Actividad:
-          span= " " + user.history
+          span= " " + storedUser.history
         h5
           span: b Foto de Perfil
         br
-        if(user.photo)
-          img(src="/images/imagesUsers/" + user.photo width="300")
+        if(storedUser.photo)
+          img(src="/images/imagesUsers/" + storedUser.photo width="300")
         else
           p Imagen no disponible
       else

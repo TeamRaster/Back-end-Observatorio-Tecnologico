@@ -17,7 +17,7 @@ block main
       a(href="/auth/linkedin" class="btn light-blue darken-3") Linkedin
   .row.center-xs
     .col-xs-5
-      form(method="POST" action="/auth/local")
+      form(method="POST" action="/accounts/signin")
         .input-field.col.s12
           label(for="email") Correo Electronico:
           input(type="email", class="validate", name="email", id="email" autofocus)
