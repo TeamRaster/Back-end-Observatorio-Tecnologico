@@ -72,7 +72,7 @@ module.exports = (app) => {
     app.post('/accounts/signup', passport.authenticate('local-signup', {  // URL de callback
         successRedirect : '/',  // Redirecciona si el proceso es exitoso
         failureRedirect : '/accounts/signup',  // Redirecciona si el proceso falla
-        failureFlash : true  // Permite enviar mensajes Flash
+        failureFlash    : true  // Permite enviar mensajes Flash
     }))
 
 // Facebook ************************************************************************************************************
@@ -80,9 +80,9 @@ module.exports = (app) => {
         scope : 'email'
     }))
     app.get('/auth/facebook/callback', passport.authenticate('facebook', {  // URL de callback
-        successRedirect  : '/',  // Redirecciona si el proceso es exitoso
-        failureRedirect  : '/accounts/signin',  // Redirecciona si el proceso falla
-        failureFlash : true  // Permite enviar mensajes Flash
+        successRedirect : '/',  // Redirecciona si el proceso es exitoso
+        failureRedirect : '/accounts/signin',  // Redirecciona si el proceso falla
+        failureFlash    : true  // Permite enviar mensajes Flash
     }))
 
 // Twitter *************************************************************************************************************
@@ -90,19 +90,17 @@ module.exports = (app) => {
         scope : 'email'
     }))
     app.get('/auth/twitter/callback', passport.authenticate('twitter', {  // URL de callback
-        successRedirect  : '/',  // Redirecciona si el proceso es exitoso
-        failureRedirect  : '/accounts/signin',  // Redirecciona si el proceso falla
-        failureFlash : true  // Permite enviar mensajes Flash
+        successRedirect : '/',  // Redirecciona si el proceso es exitoso
+        failureRedirect : '/accounts/signin',  // Redirecciona si el proceso falla
+        failureFlash    : true  // Permite enviar mensajes Flash
     }))
 
 // Linkedin ************************************************************************************************************
-    app.get('/auth/linkedin', passport.authenticate('linkedin', {
-        scope : 'email'
-    }))
+    app.get('/auth/linkedin', passport.authenticate('linkedin'))
     app.get('/auth/linkedin/callback', passport.authenticate('linkedin', {  // URL de callback
-        successRedirect  : '/',  // Redirecciona si el proceso es exitoso
-        failureRedirect  : '/accounts/signin',  // Redirecciona si el proceso falla
-        failureFlash : true  // Permite enviar mensajes Flash
+        successRedirect : '/',  // Redirecciona si el proceso es exitoso
+        failureRedirect : '/accounts/signin',  // Redirecciona si el proceso falla
+        failureFlash    : true  // Permite enviar mensajes Flash
     }))
 // =====================================================================================================================
 // AUTORIZACION(ENLAZAR REDES SOCIALES) ================================================================================

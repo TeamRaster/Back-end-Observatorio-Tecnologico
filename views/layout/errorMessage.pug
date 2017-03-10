@@ -2,7 +2,7 @@
   .col-xs-8
     if (err)
       .message.err: span= err
-    else if(info)
+    if(info)
       .message.info:  span= info
-    else if (success)
+    if (success)
       .message.success: span= success

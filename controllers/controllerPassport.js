@@ -128,7 +128,7 @@ module.exports = (app) => {
     passport.use(new FacebookStrategy(FBStrategy,
     (req, accessToken, refreshToken, profile, done) => {
         process.nextTick(() => {
-            console.log(`\n[Controller.Facebook]: Perfil que llega: ${JSON.stringify(profile)}`)
+            console.log(`\n[controllerPassport.Facebook]: Perfil que llega: ${JSON.stringify(profile)}`)
             if (!req.user) {  // Verifica si el usuario no esta logeado de manera local
                 User.findOne({ 'facebook.id' : profile.id}, (err, user) => {
                     if (err)
@@ -183,7 +183,7 @@ module.exports = (app) => {
     passport.use(new TwitterStrategy(TTStrategy,
     (req, token, tokenSecret, profile, done) => {
         process.nextTick(() => {
-            console.log(`\n[Controller.Twitter]: Perfil que llega: ${JSON.stringify(profile)}`)
+            console.log(`\n[controllerPassport.Twitter]: Perfil que llega: \n${JSON.stringify(profile)}`)
             if (!req.user) {
                 User.findOne({ 'twitter.id' : profile.id }, (err, user) => {
                     if (err)
@@ -235,54 +235,81 @@ module.exports = (app) => {
 
     passport.use(new LinkedinStrategy(LKStrategy,
     (req, token, tokenSecret, profile, done) => {
-        // process.nextTick(() => {
-        //     console.log(`\n[Controller.Linkedin]: Perfil que llega: ${JSON.stringify(profile)}`)
-        //     if (!req.user) {  // Si no hay sesion iniciada
-        //         User.findOne({ 'twitter.id' : profile.id }, (err, user) => {
-        //             if (err)
-        //                 return done(err)
-        //             if (user) {
-        //                 if (!user.linkedin.token) {  // Pero no hay token, posiblemente se borro
-        //                     user.linkedin.id          = profile.id
-        //                     user.linkedin.token       = token
-        //                     user.linkedin.username    = profile._json.firstName + ' ' + profile._json.lastName
-        //                     user.linkedin.displayName = profile.displayName
-        //
-        //                     user.save(err => {
-        //                         if (err)
-        //                             return done(err)
-        //                         return done(null, user)
-        //                     })
-        //                 }
-        //                 return done(null, user)
-        //             }
-        //             else {
-        //                 let newUser = new User()
-        //                 newUser.linkedin.id          = profile.id
-        //                 newUser.linkedin.token       = token
-        //                 newUser.linkedin.username    = profile._json.firstName + ' ' + profile._json.lastName
-        //                 newUser.linkedin.displayName = profile.displayName
-        //
-        //                 newUser.save(err => {
-        //                     if (err)
-        //                         return done(err)
-        //                     return done(null, newUser)
-        //                 })
-        //             }
-        //         })
-        //     } else {  // si ya hay sesion iniciada, vinculamos
-        //         let user = req.user
-        //         user.linkedin.id          = profile.id
-        //         user.linkedin.token       = token
-        //         user.linkedin.username    = profile._json.firstName + ' ' + profile._json.lastName
-        //         user.linkedin.displayName = profile.displayName
-        //
-        //         user.save(err => {
-        //             if (err)
-        //                 return done(err)
-        //             return done(null, user)
-        //         })
-        //     }
-        // })
+        process.nextTick(() => {
+            console.log(`\n[controllerPassport.Linkedin]: Perfil que llega: ${JSON.stringify(profile)}`)
+            if (!req.user) {  // Si no hay sesion iniciada
+                User.findOne({ 'linkedin.id' : profile.id }, (err, user) => {
+                    if (err)
+                        return done(err)  // Si hay errores, retorna el error
+                    if (user) {  // Si hay registros pero no estan completos, por ejemplo, tiene el token pero si el id
+                        if (!user.linkedin.token) {  // Se completan los datos faltantes
+                            user.linkedin.token = token
+                            user.username       = profile.displayName
+                            user.local.email    = (profile.emails) ? profile.emails[0].value.toLowerCase() : ''
+                            user.save(err => {
+                                if (err)
+                                    return done(err)
+                                return done(null, user)
+                            })
+                        }
+                        return done(null, user)
+                    } else {  // Creacion de un nuevo usuario desde 0
+                        let newUser = new User()
+                        newUser.linkedin.id    = profile.id
+                        newUser.linkedin.token = token
+                        newUser.username       = profile.displayName
+                        newUser.local.email    = (profile.emails) ? profile.emails[0].value.toLowerCase() : ''
+                        newUser.save(err => {
+                            if (err)
+                                return done(err)
+                            // req.flash('info', 'Es necesario comletar tu perfil')
+                            // req.flash('success', 'Te has registrado por la opcion de linkedin')
+                            return done(null, newUser)
+                        })
+                    }
+                })
+            } else {  // si ya hay sesion iniciada, vinculamos
+                let user = req.user
+                user.linkedin.id    = profile.id
+                user.linkedin.token = token
+                user.username       = profile.displayName
+                user.local.email    = (profile.emails) ? profile.emails[0].value.toLowerCase() : ''
+
+                user.save(err => {
+                    if (err)
+                        return done(err)
+                    return done(null, user)
+                })
+            }
+        })
     }))
+
+    // passport.use(new LinkedinStrategy({
+    //     consumerKey       : '783fppjbf6tat1',
+    //     consumerSecret    : '1VLNma3f31aOZPHm',
+    //     callbackURL 	  : 'http://localhost:3000/auth/linkedin/callback',
+    //     profileFields     : ['id', 'first-name', 'last-name', 'email-address', 'headline'],
+    //     passReqToCallback : true
+    //
+    // }, (token, tokenSecret, profile, done) => {
+    //     process.nextTick(() => {
+    //         console.log(profile)
+    //         User.findOne({ providerId : profile.id }, (err, user) => {
+    //             if (err) return done(err)
+    //             if (user) return done(null, user)
+    //             else {
+    //                 let username = profile._json.firstName + ' ' + profile._json.lastName
+    //                 let newUser = new User()
+    //                 newUser.providerId  = profile.id
+    //                 newUser.username    = username
+    //                 newUser.provider    = 'Linkedin'
+    //
+    //                 newUser.save((err) => {
+    //                     if (err) throw err
+    //                     return done(null, newUser)
+    //                 })
+    //             }
+    //         })
+    //     })
+    // }))
 }
