@@ -17,7 +17,6 @@ block main
         table.highlight.centered
           thead
             tr
-              th providerId
               th username
               th email
               th administrator
@@ -26,9 +25,8 @@ block main
           tbody
             each user in users
               tr
-                td #{user.providerId}
                 td #{user.username}
-                td #{user.email}
+                td #{user.local.email}
                 td #{user.administrator}
                 td #{user.creationDate.date}
                 td: a.waves-effect.waves-light.btn.margin-small.grey.darken-3(href="/user/" + user._id + "/edit") Edit

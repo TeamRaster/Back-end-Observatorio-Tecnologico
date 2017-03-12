@@ -50,7 +50,7 @@ block main
           h4 Stats
         .input-field.col.s12
           label(for="publications") Publicacion ID:
-          input(type="text", class="validate", name="history[dataUser].publications", id="publications" value= user.history.publications || '' data-length="10")
+          input(type="text", class="validate", name="history[dataUser].publications", id="publications" value= user.history.publications || '' data-length="10" disabled)
         .input-field.col.s12
           label(for="type") Calificacion:
-          input(type="text", class="validate", name="history[dataUser].type", id="type" value= user.history.type || '' data-length="100")
+          input(type="text", class="validate", name="history[dataUser].type", id="type" value= user.history.type || '' data-length="100" disabled)

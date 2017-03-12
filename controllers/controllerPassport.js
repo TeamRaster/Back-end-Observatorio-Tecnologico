@@ -6,6 +6,7 @@ const LocalStrategy = require('passport-local').Strategy
     , TwitterStrategy = require('passport-twitter').Strategy
     , configAuth = require('../config/configAuth')
     , passport = require('passport')
+    , moment = require('moment')  // Modulo para el tiempo
 
 module.exports = (app) => {
     let User = app.models.modelUsers
@@ -44,7 +45,7 @@ module.exports = (app) => {
                         console.log(`\n[controllerPassport.local-signin]: (1)=> Existe un error en local-signin ${err}`)
                         return done(err)
                     }
-                    if (!user) {
+                    if (!user || !user.password) {
                         console.log('\n[controllerPassport.local-signin]: (2)=> No existe registros de este usuario')
                         return done(null, false, req.flash('err', 'Usuario no encontrado en la base de datos'))
                     } else {
@@ -128,49 +129,65 @@ module.exports = (app) => {
     passport.use(new FacebookStrategy(FBStrategy,
     (req, accessToken, refreshToken, profile, done) => {
         process.nextTick(() => {
-            console.log(`\n[controllerPassport.Facebook]: Perfil que llega: ${JSON.stringify(profile)}`)
+            console.log(`\n[controllerPassport.Facebook]: Perfil que llega: \n${JSON.stringify(profile)}`)
             if (!req.user) {  // Verifica si el usuario no esta logeado de manera local
                 User.findOne({ 'facebook.id' : profile.id}, (err, user) => {
                     if (err)
                         return done(err)  // Si hay error retorna el error
                     if (user) {  // Si hay registro de un usuario
                         if (!user.facebook.token) {  // Pero no hay token (El usuario fue eliminado)
-                            user.facebook.token = accessToken
-                            user.facebook.name  = profile._json.name
-                            user.facebook.email = (profile._json.emails) ? profile._json.emails[0].value.toLowerCase() : ''
-                            user.photo = (profile._json.url) ? profile._json.url : ''  // Si existe una foto del perfil
+                            user.facebook.id     = profile.id
+                            user.facebook.token  = accessToken
+                            user.username        = profile.displayName
+                            user.photo           = (profile.photos[0].value) ? profile.photos[0].value : ''  // Si existe una foto del perfil
+                            user.updateDate.hour = moment().format('LT')  // Ingresa el formato de la hora
+                            user.updateDate.date = moment().format('L')  // Ingresa el formato de la fecha
+
+                            if (!user.provider)
+                                user.provider = 'facebook'
+
                             user.save(err => {
                                 if (err)
                                     return done(err)
+                                req.flash('success', 'Se ha restaurado tu cuenta vinculada con Facebook')
                                 return done(null, user)
                             })
                         }
                         return done(null, user) // Si ya existe, no se puede registrar dos veces
                     } else {  // Si no hay usuario se crea uno nuevo
                         let newUser = new User()
-                        // Guardamos los datos necesarios para la parte de facebook
-                        newUser.facebook.id    = profile.id
-                        newUser.facebook.token = accessToken
-                        newUser.facebook.name  = profile._json.name
-                        newUser.facebook.email = (profile._json.emails) ? profile._json.emails[0].value.toLowerCase() : ''
-                        newUser.photo = (profile._json.url) ? profile._json.url : ''  // Si existe una foto del perfil
+                        newUser.facebook.id       = profile.id
+                        newUser.facebook.token    = accessToken
+                        newUser.username          = profile.displayName
+                        newUser.photo             = (profile.photos[0].value) ? profile.photos[0].value : ''
+                        newUser.provider          = 'facebook'
+                        newUser.creationDate.hour = moment().format('LT')
+                        newUser.creationDate.date = moment().format('L')
+
                         newUser.save(err => {
                             if (err)
                                 return done(err)
-                            return done(null,newUser)
+                            req.flash('success', 'Te has registrado por la opcion de Facebook')
+                            return done(null, newUser)
                         })
                     }
                 })
-            } else {  // Si hay usuario con sesion iniciada, se vincula con la cuenta de facebook
+            } else {  // Si hay usuario con sesion iniciada(cuenta local), se vincula con la cuenta de facebook
                 let user = req.user
-                user.facebook.id    = profile.id
-                user.facebook.token = accessToken
-                user.facebook.name  = profile._json.name
-                user.facebook.email = (profile._json.emails) ? profile._json.emails[0].value.toLowerCase() : ''
-                user.photo = (profile._json.url) ? profile._json.url : ''  // Si existe una foto del perfil
+                user.facebook.id     = profile.id
+                user.facebook.token  = accessToken
+                user.updateDate.hour = moment().format('LT')
+                user.updateDate.date = moment().format('L')
+
+                if (!user.username)  // Si no hay un nombre de usuario
+                    user.username = profile.displayName
+                else if (user.photo === '')
+                    user.photo = (profile.photos[0].value) ? profile.photos[0].value : ''
+
                 user.save(err => {
                     if (err)
                         return done(err)
+                    req.flash('success', 'Tu cuenta ha sido vinculada con tu perfil de Facebook')
                     return done(null,user)
                 })
             }
@@ -190,40 +207,58 @@ module.exports = (app) => {
                         return done(err)
                     if (user) {  // Si hay registro de un usuario
                         if (!user.twitter.token) {  // Pero no hay token, posiblemente se borro
-                            user.twitter.token       = token
-                            user.twitter.username    = profile.username
-                            user.twitter.displayName = profile.displayName
+                            user.twitter.id      = profile.id  // Id del usuario de twitter
+                            user.twitter.token   = token  // Clave secreta generada para la autenticacion
+                            user.username        = profile.displayName  // Usa el nombre que tiene la cuenta
+                            user.photo           = (profile.photos[0].value) ? profile.photos[0].value : ''
+                            user.updateDate.hour = moment().format('LT')  // Ingresa el formato de la hora
+                            user.updateDate.date = moment().format('L')  // Ingresa el formato de la fecha
+
+                            if (!user.provider)  // Si no hay registro del metodo de registro
+                                user.provider = 'twitter'  // Metodo de registro
 
                             user.save(err => {
                                 if (err)
                                     return done(err)
+                                req.flash('success', ' Se ha restaurado tu cuenta vinculada con Twitter')
                                 return done(null, user)
                             })
                         }
                         return done(null, user)  // Si hay token, ya esta registrado
                     } else {  // Si no existe, crea un nuevo registro
                         let newUser = new User()
-                        newUser.twitter.id          = profile.id
-                        newUser.twitter.token       = token
-                        newUser.twitter.username    = profile.username
-                        newUser.twitter.displayName = profile.displayName
+                        newUser.twitter.id        = profile.id
+                        newUser.twitter.token     = token
+                        newUser.username          = profile.displayName
+                        newUser.photo             = (profile.photos[0].value) ? profile.photos[0].value : ''
+                        newUser.provider          = 'twitter'
+                        newUser.creationDate.hour = moment().format('LT')  // Ingresa el formato de la hora
+                        newUser.creationDate.date = moment().format('L')  // Ingresa el formato de la fecha
 
                         newUser.save((err) => {
-                            if (err) throw err
+                            if (err)
+                                return done(err)
+                            req.flash('success', 'Te has registrado por la opcion de Twitter')
                             return done(null, newUser)
                         })
                     }
                 })
             } else {  // Si hay sesion local iniciada, vinculamos con twitter
                 let user = req.user
-                user.twitter.id          = profile.id
-                user.twitter.token       = token
-                user.twitter.username    = profile.username
-                user.twitter.displayName = profile.displayName
+                user.twitter.id      = profile.id
+                user.twitter.token   = token
+                user.updateDate.hour = moment().format('LT')  // Ingresa el formato de la hora
+                user.updateDate.date = moment().format('L')  // Ingresa el formato de la fecha
+
+                if (!user.username)  // Si no hay un nombre de usuario
+                    user.username = profile.displayName
+                else if (user.photo === '')  // Si aun no cuenta con foto
+                    user.photo = (profile.photos[0].value) ? profile.photos[0].value : ''  // Usa foto de la cuenta
 
                 user.save(err => {
                     if (err)
                         return done(err)
+                    req.flash('success', 'Tu cuenta ha sido vinculada con tu perfil de Twitter')
                     return done(null, user)
                 })
             }
@@ -243,73 +278,57 @@ module.exports = (app) => {
                         return done(err)  // Si hay errores, retorna el error
                     if (user) {  // Si hay registros pero no estan completos, por ejemplo, tiene el token pero si el id
                         if (!user.linkedin.token) {  // Se completan los datos faltantes
-                            user.linkedin.token = token
-                            user.username       = profile.displayName
-                            user.local.email    = (profile.emails) ? profile.emails[0].value.toLowerCase() : ''
+                            user.linkedin.id     = profile.id  // Id que retorna el api
+                            user.linkedin.token  = token  // Clave secreta generada para la autenticacion
+                            user.username        = profile.displayName  // Usa el nombre que tiene la cuenta
+                            user.updateDate.hour = moment().format('LT')  // Ingresa el formato de la hora
+                            user.updateDate.date = moment().format('L')  // Ingresa el formato de la fecha
+
+                            if (!user.provider)  // Si no hay registro del metodo de registro
+                                user.provider = 'linkedin'  // Metodo de registro
+
                             user.save(err => {
                                 if (err)
                                     return done(err)
+                                req.flash('success', 'Se ha restaurado tu cuenta vinculada con Linkedin')
                                 return done(null, user)
                             })
                         }
                         return done(null, user)
                     } else {  // Creacion de un nuevo usuario desde 0
                         let newUser = new User()
-                        newUser.linkedin.id    = profile.id
-                        newUser.linkedin.token = token
-                        newUser.username       = profile.displayName
-                        newUser.local.email    = (profile.emails) ? profile.emails[0].value.toLowerCase() : ''
+                        newUser.linkedin.id       = profile.id
+                        newUser.linkedin.token    = token
+                        newUser.username          = profile.displayName
+                        newUser.provider          = 'linkedin'
+                        newUser.creationDate.hour = moment().format('LT')  // Ingresa el formato de la hora
+                        newUser.creationDate.date = moment().format('L')  // Ingresa el formato de la fecha
+
                         newUser.save(err => {
                             if (err)
                                 return done(err)
-                            // req.flash('info', 'Es necesario comletar tu perfil')
-                            // req.flash('success', 'Te has registrado por la opcion de linkedin')
+                            req.flash('success', 'Te has registrado por la opcion de Linkedin')
                             return done(null, newUser)
                         })
                     }
                 })
             } else {  // si ya hay sesion iniciada, vinculamos
                 let user = req.user
-                user.linkedin.id    = profile.id
-                user.linkedin.token = token
-                user.username       = profile.displayName
-                user.local.email    = (profile.emails) ? profile.emails[0].value.toLowerCase() : ''
+                user.linkedin.id     = profile.id
+                user.linkedin.token  = token
+                user.updateDate.hour = moment().format('LT')  // Ingresa el formato de la hora
+                user.updateDate.date = moment().format('L')  // Ingresa el formato de la fecha
+
+                if(!user.username)  // Si no existe un nombre de usuario
+                    user.username = profile.displayName  // Usa el nombre de usuario de la cuenta
 
                 user.save(err => {
                     if (err)
                         return done(err)
+                    req.flash('success', 'Tu cuenta ha sido vinculada con tu perfil de Linkedin')
                     return done(null, user)
                 })
             }
         })
     }))
-
-    // passport.use(new LinkedinStrategy({
-    //     consumerKey       : '783fppjbf6tat1',
-    //     consumerSecret    : '1VLNma3f31aOZPHm',
-    //     callbackURL 	  : 'http://localhost:3000/auth/linkedin/callback',
-    //     profileFields     : ['id', 'first-name', 'last-name', 'email-address', 'headline'],
-    //     passReqToCallback : true
-    //
-    // }, (token, tokenSecret, profile, done) => {
-    //     process.nextTick(() => {
-    //         console.log(profile)
-    //         User.findOne({ providerId : profile.id }, (err, user) => {
-    //             if (err) return done(err)
-    //             if (user) return done(null, user)
-    //             else {
-    //                 let username = profile._json.firstName + ' ' + profile._json.lastName
-    //                 let newUser = new User()
-    //                 newUser.providerId  = profile.id
-    //                 newUser.username    = username
-    //                 newUser.provider    = 'Linkedin'
-    //
-    //                 newUser.save((err) => {
-    //                     if (err) throw err
-    //                     return done(null, newUser)
-    //                 })
-    //             }
-    //         })
-    //     })
-    // }))
 }

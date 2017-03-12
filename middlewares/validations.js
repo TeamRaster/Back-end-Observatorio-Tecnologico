@@ -6,12 +6,12 @@ module.exports = (app) => {
     let User = app.models.modelUsers  // Manda a llamar el modelo de Usuarios
 
     this.ifUserExists = (req, res, next) => {
-        if (res.locals.user && res.locals.user.email === req.body.email) {
+        if (res.locals.user && res.locals.user.local.email === req.body.email) {
             console.log('El usuario no ha modificado o usara el mismo correo')
             next()
         } else {
             console.log('El usuario intento cambiar de correo, pero ya estaba ocupado')
-            User.findOne({email: req.body.email}, (err, storedUser) => {
+            User.findOne({'local.email': req.body.email}, (err, storedUser) => {
                 if (storedUser != null && storedUser.email === req.body.email) {
                     console.log('storedUser.path ' + storedUser.path)
                     console.log('storedUser.photo ' + storedUser.photo)

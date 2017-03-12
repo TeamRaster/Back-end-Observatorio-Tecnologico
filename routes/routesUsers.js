@@ -31,8 +31,14 @@ module.exports = (app) => {
     app.get('/user/:id/edit', [auth.isLogged, user.getViewUserEdit])  // Formulario para editar un usuario
     app.get('/user/contact', [auth.isLogged, user.getViewUsercontact])  // Formulario para completar Informacion de contacto
 
-    app.get('/user/profile', (req, res) => {  // URL paraa ver el perfil del usuario
-        res.render('./viewsUserPlus/users/view', {user: req.session.user})  // Usa el usuario que esta logeado actualmente
+    app.get('/users/profile', (req, res) => {  // URL paraa ver el perfil del usuario
+        res.render('./viewsUserPlus/users/view', {
+            storedUser: req.user,
+            err     : req.flash('err'),  // Si hay mensajes de error, los almacena
+            warning : req.flash('warning'),  // Si hay mensajes de Precaucion
+            info    : req.flash('info'),  // Si hay mensajes informativos, los almacena
+            success : req.flash('success')  // Si hay mensajes afirmativos, los almacena
+        })  // Usa el usuario que esta logeado actualmente
     })
 
     app.get('/accounts/logout', (req, res) => {  // URL para eliminar y cerrar la sesion
@@ -48,9 +54,10 @@ module.exports = (app) => {
 // =====================================================================================================================
     app.get('/accounts/signin', (req, res) => {  // Formualrio para iniciar sesion
         res.render('signin', {
-            err: req.flash('err'),  // Si hay mensajes de error, los almacena
-            info: req.flash('info'),  // Si hay mensajes informativos, los almacena
-            success: req.flash('success')  // Si hay mensajes afirmativos, los almacena
+            err     : req.flash('err'),  // Si hay mensajes de error, los almacena
+            warning : req.flash('warning'),  // Si hay mensajes de Precaucion
+            info    : req.flash('info'),  // Si hay mensajes informativos, los almacena
+            success : req.flash('success')  // Si hay mensajes afirmativos, los almacena
         })
     })
 
@@ -63,9 +70,10 @@ module.exports = (app) => {
 // Local ***************************************************************************************************************
     app.get('/accounts/signup', (req, res) => {  // Formulario para registro de usurio
         res.render('signup', {
-            err: req.flash('err'),  // Si hay mensajes de error, los almacena
-            info: req.flash('info'),  // Si hay mensajes informativos, los almacena
-            success: req.flash('success')  // Si hay mensajes afirmativos, los almacena
+            err     : req.flash('err'),  // Si hay mensajes de error, los almacena
+            warning : req.flash('warning'),  // Si hay mensajes de Precaucion
+            info    : req.flash('info'),  // Si hay mensajes informativos, los almacena
+            success : req.flash('success')  // Si hay mensajes afirmativos, los almacena
         })
     })
 
@@ -125,7 +133,7 @@ module.exports = (app) => {
 
     app.get('/connect/facebook/callback',
         passport.authorize('facebook', {  // Solicita la autorizacion
-            successRedirect : '/user/profile',  // Redirecciona si el proceso es exitoso
+            successRedirect : '/users/profile',  // Redirecciona si el proceso es exitoso
             failureRedirect : '/'  // Redirecciona si el proceso falla
         }))
 
@@ -136,7 +144,7 @@ module.exports = (app) => {
 
     app.get('/connect/twitter/callback',
         passport.authorize('twitter', {  // Solicita la autorizacion
-            successRedirect : '/user/profile',  // Redirecciona si el proceso es exitoso
+            successRedirect : '/users/profile',  // Redirecciona si el proceso es exitoso
             failureRedirect : '/'  // Redirecciona si el proceso falla
         }))
 
@@ -147,7 +155,7 @@ module.exports = (app) => {
 
     app.get('/connect/linkedin/callback',
         passport.authorize('linkedin', {  // Solicita la autorizacion
-            successRedirect : '/user/profile',  // Redirecciona si el proceso es exitoso
+            successRedirect : '/users/profile',  // Redirecciona si el proceso es exitoso
             failureRedirect : '/'  // Redirecciona si el proceso falla
         }))
 

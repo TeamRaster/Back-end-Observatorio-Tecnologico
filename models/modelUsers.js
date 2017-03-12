@@ -26,34 +26,33 @@ module.exports = (app) => {
         },
         photo: {
             type          : String,
-            default       : 'Imagen no disponible'
+            default       : ''
         },
         path              : String,
-        provider: {
-            type          : String,
-            default       : 'Local'
+        administrator: {
+            type          : Boolean,
+            default       : false
         },
-        administrator     : Boolean,
+        verified          : Boolean,
         creationDate: {
             hour: {
                 type      : String,
-                default   : '00:00'
             },
             date: {
                 type      : String,
-                default   : '00/00/0000'
             },
         },
         updateDate: {
             hour: {
                 type      : String,
-                default   : '00:00'
+                default   : ''
             },
             date: {
                 type      : String,
-                default   : '00/00/0000'
+                default   : ''
             },
         },
+        provider          : String,
 
         history           : [StatsSchema],
 
@@ -89,7 +88,6 @@ module.exports = (app) => {
                 type      : String,
                 lowercase : true,
                 trim      : true,
-                unique    : true
             },
             password: {
                 type      : String,

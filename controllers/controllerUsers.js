@@ -44,6 +44,7 @@ module.exports = (app) => {
         // La busqueda del usuario es por un middleware en la ruta
         res.render('./viewsUserPlus/users/view', {
             err     : req.flash('err'),
+            warning : req.flash('warning'),
             info    : req.flash('info'),
             success : req.flash('success')
         })
@@ -56,6 +57,7 @@ module.exports = (app) => {
                 res.render('./viewsAdministrator/users/index', {
                     users   : storedUsers,
                     err     : req.flash('err'),
+                    warning : req.flash('warning'),
                     info    : req.flash('info'),
                     success : req.flash('success')
                 })
@@ -69,15 +71,15 @@ module.exports = (app) => {
 
     this.updateUser = (req, res) => {  // Funcion para actualizar un usuario
         res.locals.storedUser.username  = req.body.username
-        res.locals.storedUser.email     = req.body.email
+        res.locals.storedUser.local.email     = req.body.email
         if(req.body.password != "") {
-            res.locals.storedUser.password  = req.body.password  // Actualizacion solo si escribio una nueva contraseña
+            res.locals.storedUser.local.password  = req.body.password  // Actualizacion solo si escribio una nueva contraseña
         } else if (req.file != "" && req.file != undefined) {  // Actualizacion de foto de perfil solo si coloca una nueva
             console.log(`\n[ControllerUser.updateUser]: req.file: ${req.file}`)
             fs.unlink(req.file.path)  // Elimina el archivo anterior
             res.locals.storedUser.photo = req.file.filename
         }
-        // Actuliza la informacion de contacto para hacer ofertas y demandas
+        // Actualiza la informacion de contacto para hacer ofertas y demandas
         res.locals.storedUser.contactInformation.phone     = req.body.phone
         res.locals.storedUser.contactInformation.address   = req.body.address
         res.locals.storedUser.contactInformation.facebook  = req.body.facebook
@@ -174,25 +176,28 @@ module.exports = (app) => {
 // Formularios para hacer las imagenes =================================================================================
     this.getViewUserNew = (req, res) => {  // Pagina para agregar un nuevo usuario
         return res.render('viewsAdministrator/users/new', {
-            err: req.flash('err'),
-            info: req.flash('info'),
-            success: req.flash('success')
+            err     : req.flash('err'),
+            warning : req.flash('warning'),
+            info    : req.flash('info'),
+            success : req.flash('success')
         })
     }
 
     this.getViewUserEdit = (req, res) => {  // Pagina para editar un usuario
         res.render('viewsUserPlus/users/update', {
-            err: req.flash('err'),
-            info: req.flash('info'),
-            success: req.flash('success')
+            err     : req.flash('err'),
+            warning : req.flash('warning'),
+            info    : req.flash('info'),
+            success : req.flash('success')
         })
     }
 
     this.getViewUsercontact = (req, res) => {  // Pagina para editar un usuario
         res.render('viewsUserPlus/users/newContact', {
-            err: req.flash('err'),
-            info: req.flash('info'),
-            success: req.flash('success')
+            err     : req.flash('err'),
+            warning : req.flash('warning'),
+            info    : req.flash('info'),
+            success : req.flash('success')
         })
     }
 

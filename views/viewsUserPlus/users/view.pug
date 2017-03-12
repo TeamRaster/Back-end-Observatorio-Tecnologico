@@ -8,8 +8,15 @@ block main
     .col-xs-5
       h3 Users
   .row.center-xs
+    .col-xs-2
+      a(href="/auth/facebook" class="btn blue darken-4") Facebook
+    .col-xs-2
+      a(href="/auth/twitter" class="btn blue") Twitter
+    .col-xs-2
+      a(href="/auth/linkedin" class="btn light-blue darken-3") Linkedin
+  .row.center-xs
     .col-xs-10.start-xs
-      if(ustoredUserser)
+      if(storedUser)
         h5
           span: b Correo:
           span= " " + storedUser.email

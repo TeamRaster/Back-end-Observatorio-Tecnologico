@@ -329,3 +329,40 @@ footer a.tz:after{
 @media (max-width: 1024px) {
     footer{ display:none;}
 }
+
+/* Mensajes de alerta */
+.alert {
+    padding: 15px;
+    border-radius: 5px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    background-color: #f2f2f2;
+}
+
+.err {
+    background-color: #F2DEDE;
+    color: #B84442;
+    border: 1px solid rgba(184, 68, 66, 0.3);
+}
+
+.info {
+    background-color: #D9EDF7;
+    color: #31708F;
+    border: 1px solid rgba(49, 112, 143, 0.3);
+}
+
+.warning {
+    background-color: #FCF8E3;
+    color: #8A6D3B;
+    border: 1px solid rgba(138, 109, 59, 0.3);
+}
+
+.success {
+    background-color: #DFF0D8;
+    color: #3C763D;
+    border: 1px solid rgba(60, 118, 61, 0.3);
+}
+
+.alert .type {
+    font-weight: bold;
+}

@@ -1,8 +1,18 @@
 .row.center-xs
-  .col-xs-8
-    if (err)
-      .message.err: span= err
-    if(info)
-      .message.info:  span= info
-    if (success)
-      .message.success: span= success
+  .col-xs-10.start-xs
+    if (err != "")
+      .alert.err
+        span.type Error!
+        span.message= ' ' + err
+    if (warning != "")
+      .alert.warning
+        span.type Precuacion!
+        span.message= ' ' + warning
+    if (info != "")
+      .alert.info
+        span.type Aviso!
+        span.message= ' ' + info
+    if (success != "")
+      .alert.success
+        span.type Bien hecho!
+        span.message= ' ' + success
