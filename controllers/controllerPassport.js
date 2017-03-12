@@ -45,7 +45,7 @@ module.exports = (app) => {
                         console.log(`\n[controllerPassport.local-signin]: (1)=> Existe un error en local-signin ${err}`)
                         return done(err)
                     }
-                    if (!user || !user.password) {
+                    if (!user || !user.local.password) {
                         console.log('\n[controllerPassport.local-signin]: (2)=> No existe registros de este usuario')
                         return done(null, false, req.flash('err', 'Usuario no encontrado en la base de datos'))
                     } else {
@@ -55,7 +55,7 @@ module.exports = (app) => {
                             return done(null, false, req.flash('err', 'Ups. El usuario y/o contraseña con coinciden'))
                         } else {  // Si la contraseña coincide
                             console.log('\n[controllerPassport.local-signin]: (3)(1)=> Listo, Estas autenticado')
-                            return done(null, user, req.flash('info', 'Bienvenido'))
+                            return done(null, user, req.flash('success', 'Bienvenido de nuevo'))
                         }
                     }
                 })
@@ -75,7 +75,7 @@ module.exports = (app) => {
             console.log(`[controllerPassport.local-signup]: Contraseña recibida ${password}`)
             process.nextTick(() => {
                 if (!req.user) {  // Mientras el usuario no este logeado
-                    User.findOne({ email :  email }, function(err, user) {
+                    User.findOne({ 'local.email' :  email }, function(err, user) {
                         if (err)  // si exixte algun error
                             return done(err)
                         if (user) {  // Si ya existe un usuario registrado
@@ -85,6 +85,7 @@ module.exports = (app) => {
                             console.log(`\n[controllerPassport.local-signup]: Contraseña encriptada ${user.hashPassword(password)}\n`)
                             user.local.email       = email
                             user.local.password    = user.hashPassword(password)
+                            user.provider          = 'local'
                             user.creationDate.hour = moment().format('LT')
                             user.creationDate.date = moment().format('L')
 
@@ -103,19 +104,23 @@ module.exports = (app) => {
                         }
 
                     })
-                } else if ( !req.user.email ) {  // Si esta logeado pero no con una cuenta local
-                    User.findOne({ email : email}, function(err, user) {
+                // Cuando se intenta enlazar con una cuenta local
+                } else if ( !req.user.local.email ) {  // Si esta logeado pero no con una cuenta local
+                    User.findOne({ 'local.email' : email}, function(err, user) {
                         if (err)
                             return done(err)
                         if (user) {
                             return done(null, false, req.flash('err', 'Ups, parece que este correo ya esta ocupado'))
                         } else {
                             let user = req.user
-                            user.email    = email
-                            user.password = user.hashPassword(password)
+                            user.local.email    = email
+                            user.local.password = user.hashPassword(password)
+                            user.updateDate.hour = moment().format('LT')
+                            user.updateDate.date = moment().format('L')
                             user.save(err => {
                                 if (err)
                                     return done(err)
+                                req.flash('success', 'Tu cuenta ha sido vinculada con tu cuenta local')
                                 return done(null,user)
                             })
                         }
@@ -177,26 +182,34 @@ module.exports = (app) => {
                     }
                 })
             } else {  // Si hay usuario con sesion iniciada(cuenta local), se vincula con la cuenta de facebook
-                let user = req.user
-                user.facebook.id     = profile.id
-                user.facebook.token  = accessToken
-                user.updateDate.hour = moment().format('LT')
-                user.updateDate.date = moment().format('L')
-
-                if (!user.username) {  // Si no hay un nombre de usuario
-                    console.log('\n\n[ControllerPassport.Facebook]: !user.username')
-                    user.username = profile.name.givenName + ' ' + profile.name.familyName
-                }
-                if (user.photo === '') {
-                    console.log(`\n\n\n\nprofile.photos[0].value: ${profile.photos[0].value}`)
-                    user.photo = (profile.photos[0].value) ? profile.photos[0].value : ''
-                }
-
-                user.save(err => {
+                User.findOne({ 'facebook.id' : profile.id }, (err, storedUser) => {
                     if (err)
-                        return done(err)
-                    req.flash('success', 'Tu cuenta ha sido vinculada con tu perfil de Facebook')
-                    return done(null,user)
+                        return done(err)  // Si existe un error lo retorna
+                    else if (storedUser) {
+                        req.flash('err', 'Ya existe una cuenta vinculada con este perfil')
+                        return done(null, req.user)
+                    } else {
+                        req.user.facebook.id     = profile.id
+                        req.user.facebook.token  = accessToken
+                        req.user.updateDate.hour = moment().format('LT')
+                        req.user.updateDate.date = moment().format('L')
+
+                        if (!req.user.username) {  // Si no hay un nombre de usuario
+                            console.log('\n\n[ControllerPassport.Facebook]: !user.username')
+                            req.user.username = profile.name.givenName + ' ' + profile.name.familyName
+                        }
+                        if (req.user.photo === '') {
+                            console.log(`\n\n\n\nprofile.photos[0].value: ${profile.photos[0].value}`)
+                            req.user.photo = (profile.photos[0].value) ? profile.photos[0].value : ''
+                        }
+
+                        req.user.save(err => {
+                            if (err)
+                                return done(err)
+                            req.flash('success', 'Tu cuenta ha sido vinculada con tu perfil de Facebook')
+                            return done(null, req.user)
+                        })
+                    }
                 })
             }
         })
@@ -252,22 +265,30 @@ module.exports = (app) => {
                     }
                 })
             } else {  // Si hay sesion local iniciada, vinculamos con twitter
-                let user = req.user
-                user.twitter.id      = profile.id
-                user.twitter.token   = token
-                user.updateDate.hour = moment().format('LT')  // Ingresa el formato de la hora
-                user.updateDate.date = moment().format('L')  // Ingresa el formato de la fecha
-
-                if (!user.username)  // Si no hay un nombre de usuario
-                    user.username = profile.displayName
-                else if (user.photo === '')  // Si aun no cuenta con foto
-                    user.photo = (profile.photos[0].value) ? profile.photos[0].value : ''  // Usa foto de la cuenta
-
-                user.save(err => {
+                User.findOne({ 'twitter.id' : profile.id }, (err, storedUser) => {
                     if (err)
-                        return done(err)
-                    req.flash('success', 'Tu cuenta ha sido vinculada con tu perfil de Twitter')
-                    return done(null, user)
+                        return done(err)  // Si existe un error lo retorna
+                    else if (storedUser) {
+                        req.flash('err', 'Ya existe una cuenta vinculada con este perfil')
+                        return done(null, req.user)
+                    } else {
+                        req.user.twitter.id      = profile.id
+                        req.user.twitter.token   = token
+                        req.user.updateDate.hour = moment().format('LT')  // Ingresa el formato de la hora
+                        req.user.updateDate.date = moment().format('L')  // Ingresa el formato de la fecha
+
+                        if (!req.user.username)  // Si no hay un nombre de usuario
+                            req.user.username = profile.displayName
+                        else if (req.user.photo === '')  // Si aun no cuenta con foto
+                            req.user.photo = (profile.photos[0].value) ? profile.photos[0].value : ''  // Usa foto de la cuenta
+
+                        req.user.save(err => {
+                            if (err)
+                                return done(err)
+                            req.flash('success', 'Tu cuenta ha sido vinculada con tu perfil de Twitter')
+                            return done(null, req.user)
+                        })
+                    }
                 })
             }
         })
@@ -321,20 +342,28 @@ module.exports = (app) => {
                     }
                 })
             } else {  // si ya hay sesion iniciada, vinculamos
-                let user = req.user
-                user.linkedin.id     = profile.id
-                user.linkedin.token  = token
-                user.updateDate.hour = moment().format('LT')  // Ingresa el formato de la hora
-                user.updateDate.date = moment().format('L')  // Ingresa el formato de la fecha
-
-                if(!user.username)  // Si no existe un nombre de usuario
-                    user.username = profile.displayName  // Usa el nombre de usuario de la cuenta
-
-                user.save(err => {
+                User.findOne({ 'linkedin.id': profile.id}, (err, storedUser) => {
                     if (err)
                         return done(err)
-                    req.flash('success', 'Tu cuenta ha sido vinculada con tu perfil de Linkedin')
-                    return done(null, user)
+                    else if (storedUser) {
+                        req.flash('err', 'Ya existe una cuenta vinculada con este perfil')
+                        return done(null, req.user)
+                    } else {
+                        req.user.linkedin.id     = profile.id
+                        req.user.linkedin.token  = token
+                        req.user.updateDate.hour = moment().format('LT')  // Ingresa el formato de la hora
+                        req.user.updateDate.date = moment().format('L')  // Ingresa el formato de la fecha
+
+                        if(!req.user.username)  // Si no existe un nombre de usuario
+                            req.user.username = profile.displayName  // Usa el nombre de usuario de la cuenta
+
+                        req.user.save(err => {
+                            if (err)
+                                return done(err)
+                            req.flash('success', 'Tu cuenta ha sido vinculada con tu perfil de Linkedin')
+                            return done(null, req.user)
+                        })
+                    }
                 })
             }
         })

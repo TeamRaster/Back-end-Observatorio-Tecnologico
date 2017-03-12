@@ -104,25 +104,24 @@ module.exports = (app) => {
             if (!err) {
                 // Si encuentra la imagen, la borra, y asi evita un error si no existe o esta dañada
                 fs.stat('public/images/imagesUsers/' + storedUser.photo, (err, stats) => {
-                    if (err) {
-                        console.log(`\n[ControllerUsers.deleteUser]: Ups. parece que hubo un error ${err}`)
-                        req.flash('info', 'No fue posible eliminar el archivo fotografia')
-                        return
-                    } else if(stats.isFile()) {
+                    if(!err && stats.isFile()) {
                         console.log(`\n[ControllerUsers.deleteUser]: stats => ${JSON.stringify(stats)}`)
                         fs.unlink("public/images/imagesUsers/" + storedUser.photo)  // Elimina los datos creados con el usuario
+                    } else {
+                        console.log(`\n[ControllerUsers.deleteUser]: Ups. parece que hubo un error ${err}`)
+                        return
                     }
                 })
             } else {
                 req.flash('err', '[Servidor]: Ups! parece que hubo un error, codigo: DU.CU')  // Guarda un mensaje de error
                 return
             }
-
-            if (!res.locals.user.administrator) {  // Si el usuario logeado actualmente no es administrador, cierra sesion
-                res.redirect('/accounts/logout')
-            } else {
-                res.redirect(redirect)
-            }
+            res.redirect('/')
+            // if (!req.user.administrator) {  // Si el usuario logeado actualmente no es administrador, cierra sesion
+            //     res.redirect('/accounts/logout')
+            // } else {
+            //     res.redirect(redirect)
+            // }
         })
     }
 

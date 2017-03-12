@@ -9,11 +9,12 @@ block main
       h3 Users
   .row.center-xs
     .col-xs-5
-      if (!storedUser.facebook.id && !storedUser.twitter.id && !storedUser.linkedin.id)
+      if (storedUser.facebook.id && storedUser.twitter.id && storedUser.linkedin.id)
+        .alert.success
+          span.type Bien hecho!
+          span.message  Felicidades, tu cuenta ha sido vinculada con las demas redes sociales
+      else
         h5 Vincular cuenta local con Redes Sociales
-      .alert.success
-        span.type Bien hecho!
-        span.message  Felicidades, tu cuenta ha sido vinculada con las demas redes sociales
   .row.center-xs
       if(!storedUser.facebook.id)
         .col-xs-2
