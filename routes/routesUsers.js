@@ -33,11 +33,12 @@ module.exports = (app) => {
 
     app.get('/users/profile', (req, res) => {  // URL paraa ver el perfil del usuario
         res.render('./viewsUserPlus/users/view', {
-            storedUser: req.user,
-            err     : req.flash('err'),  // Si hay mensajes de error, los almacena
-            warning : req.flash('warning'),  // Si hay mensajes de Precaucion
-            info    : req.flash('info'),  // Si hay mensajes informativos, los almacena
-            success : req.flash('success')  // Si hay mensajes afirmativos, los almacena
+            storedUser : req.user,
+            user       : req.user,
+            err        : req.flash('err'),  // Si hay mensajes de error, los almacena
+            warning    : req.flash('warning'),  // Si hay mensajes de Precaucion
+            info       : req.flash('info'),  // Si hay mensajes informativos, los almacena
+            success    : req.flash('success')  // Si hay mensajes afirmativos, los almacena
         })  // Usa el usuario que esta logeado actualmente
     })
 

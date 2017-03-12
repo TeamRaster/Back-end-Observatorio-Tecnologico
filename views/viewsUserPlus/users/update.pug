@@ -16,7 +16,7 @@ block main
           input(type="text", class="validate", name="username", id="username" value= user.username data-length="50" autofocus)
         .input-field.col.s12
           label(for="email") Correo:
-          input(type="text", class="validate", name="email", id="email" value= user.email data-length="50")
+          input(type="text", class="validate", name="email", id="email" value= user.local.email data-length="50")
         .input-field.col.s12
           label(for="password") Contraseña:
           input(type="password", class="validate", name="password", id="password" placeholder="8-16 caracteres" data-length="16")

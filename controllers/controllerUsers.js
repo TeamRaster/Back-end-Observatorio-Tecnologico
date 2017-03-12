@@ -176,6 +176,7 @@ module.exports = (app) => {
 // Formularios para hacer las imagenes =================================================================================
     this.getViewUserNew = (req, res) => {  // Pagina para agregar un nuevo usuario
         return res.render('viewsAdministrator/users/new', {
+            user    : req.user,
             err     : req.flash('err'),
             warning : req.flash('warning'),
             info    : req.flash('info'),
@@ -185,6 +186,7 @@ module.exports = (app) => {
 
     this.getViewUserEdit = (req, res) => {  // Pagina para editar un usuario
         res.render('viewsUserPlus/users/update', {
+            user    : req.user,
             err     : req.flash('err'),
             warning : req.flash('warning'),
             info    : req.flash('info'),
@@ -194,6 +196,7 @@ module.exports = (app) => {
 
     this.getViewUsercontact = (req, res) => {  // Pagina para editar un usuario
         res.render('viewsUserPlus/users/newContact', {
+            user    : req.user,
             err     : req.flash('err'),
             warning : req.flash('warning'),
             info    : req.flash('info'),

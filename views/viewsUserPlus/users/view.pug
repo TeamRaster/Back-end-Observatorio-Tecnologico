@@ -8,27 +8,34 @@ block main
     .col-xs-5
       h3 Users
   .row.center-xs
-    .col-xs-2
-      a(href="/auth/facebook" class="btn blue darken-4") Facebook
-    .col-xs-2
-      a(href="/auth/twitter" class="btn blue") Twitter
-    .col-xs-2
-      a(href="/auth/linkedin" class="btn light-blue darken-3") Linkedin
+    .col-xs-5
+      if (!storedUser.facebook.id && !storedUser.twitter.id && !storedUser.linkedin.id)
+        h5 Vincular cuenta local con Redes Sociales
+      .alert.success
+        span.type Bien hecho!
+        span.message  Felicidades, tu cuenta ha sido vinculada con las demas redes sociales
+  .row.center-xs
+      if(!storedUser.facebook.id)
+        .col-xs-2
+          a(href="/auth/facebook" class="btn blue darken-4") Facebook
+      if(!storedUser.twitter.id)
+        .col-xs-2
+          a(href="/auth/twitter" class="btn blue") Twitter
+      if(!storedUser.linkedin.id)
+        .col-xs-2
+          a(href="/auth/linkedin" class="btn light-blue darken-3") Linkedin
   .row.center-xs
     .col-xs-10.start-xs
       if(storedUser)
         h5
           span: b Correo:
-          span= " " + storedUser.email
+          span= " " + storedUser.local.email
         h5
           span: b Nombre:
-          span= " " + storedUser.username
+          span= " " + (storedUser.username) ? storedUser.username : ''
         h5
           span: b Proveedor:
-          span= " " + storedUser.provider
-        h5
-          span: b ProveedorID:
-          span= " " + storedUser.providerId
+          span= " " + (storedUser.provider) ? storedUser.provider : ''
         h5
           span: b Adminisitrador:
           span= " " + storedUser.administrator
@@ -47,9 +54,23 @@ block main
         h5
           span: b Foto de Perfil
         br
-        if(storedUser.photo)
+        if(storedUser.photo && !storedUser.facebook.id && !stored.twitter.id)
           img(src="/images/imagesUsers/" + storedUser.photo width="300")
+        else if (storedUser.photo)
+          img(src="" + storedUser.photo)
         else
           p Imagen no disponible
+        h3 Facebook
+        h5
+          span: b Id Facebook:
+          span= " " + (storedUser.facebook.id) ? storedUser.facebook.id : ''
+        h3 Twitter
+        h5
+          span: b Id Twitter:
+          span= " " + (storedUser.twitter.id) ? storedUser.twitter.id : ''
+        h3 Linkedin
+        h5
+          span: b Id Linkedin:
+          span= " " + (storedUser.linkedin.id) ? storedUser.linkedin.id : ''
       else
         p No existe el usuario

@@ -19,7 +19,7 @@ module.exports = (app) => {
     passport.deserializeUser(function(id, done) {
         console.log('\n[controllerPassport.index.deserializeUser]: Entrando al metodo deserializeUser')
         User.findById(id, function(err, user) {
-            console.log(`[controllerPassport.index.deserializeUser]: Usuario que se va a deserializar\n${user}`)
+            // console.log(`[controllerPassport.index.deserializeUser]: Usuario que se va a deserializar\n${user}`)
             done(err, user)
         })
     })
@@ -79,20 +79,24 @@ module.exports = (app) => {
                         if (err)  // si exixte algun error
                             return done(err)
                         if (user) {  // Si ya existe un usuario registrado
-                            return done(null, false, req.flash('err', 'Ups, parece que este correo ya esta ocupado'))
+                            return done(null, false, req.flash('err', 'Ups!!, parece que este correo ya esta ocupado'))
                         } else {  // si no hay un usuario, crea uno nuevo
                             let user = new User()
                             console.log(`\n[controllerPassport.local-signup]: Contraseña encriptada ${user.hashPassword(password)}\n`)
-                            user.local.email     = email
-                            user.local.password  = user.hashPassword(password)
+                            user.local.email       = email
+                            user.local.password    = user.hashPassword(password)
+                            user.creationDate.hour = moment().format('LT')
+                            user.creationDate.date = moment().format('L')
+
                             user.save( err => {  // Guardar el nuevo usuario creado
                                 if (!err) {
                                     console.log('\n[ControllerPassport.local-signup]: Usuario guardado con exito usando local Singup')
-                                    req.flash('info', '[Servidor]: Los datos se han guardado con exito')
+                                    req.flash('success', 'Los datos se han guardado con exito')
+                                    req.flash('info', 'Debes completar tu registro')
                                     return done(null, user)
                                 } else {
                                     console.log(`\n[ControllerPassport.local-signup]: Ups! parece que hubo un error => ${err}`)
-                                    req.flash('err', '[Servidor]: Ups! parece que hubo un error')  // Mensaje de error
+                                    req.flash('err', 'Ups! parece que hubo un error')  // Mensaje de error
                                     return done(err)
                                 }
                             })
@@ -179,10 +183,14 @@ module.exports = (app) => {
                 user.updateDate.hour = moment().format('LT')
                 user.updateDate.date = moment().format('L')
 
-                if (!user.username)  // Si no hay un nombre de usuario
-                    user.username = profile.displayName
-                else if (user.photo === '')
+                if (!user.username) {  // Si no hay un nombre de usuario
+                    console.log('\n\n[ControllerPassport.Facebook]: !user.username')
+                    user.username = profile.name.givenName + ' ' + profile.name.familyName
+                }
+                if (user.photo === '') {
+                    console.log(`\n\n\n\nprofile.photos[0].value: ${profile.photos[0].value}`)
                     user.photo = (profile.photos[0].value) ? profile.photos[0].value : ''
+                }
 
                 user.save(err => {
                     if (err)
