@@ -44,8 +44,11 @@ $("#send").click(function() {
     socket.emit('send', {room: room, message: message})
     console.log("(client) se publico en el grupo " + room);
 })
+<<<<<<< HEAD
 */
 
+=======
+>>>>>>> 0d4875a0c0497a13cc216d609a10851479fa2b08
 // 'use strict'
 //
 // var socket = io() // libreria socket para conectar con servidor socket

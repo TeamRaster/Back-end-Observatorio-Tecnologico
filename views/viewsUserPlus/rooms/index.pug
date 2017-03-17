@@ -5,13 +5,29 @@ block title
 
 block main
   .row.center-xs
-    h3 Sala de chats del grupo: #{group_id}
+    h3 Sala de chats del grupo: #{grupo}
   .row.center-xs
-    p Iniciaste sesion con #{user.username}
-    input(type="hidden", class="username", name="username", id="username" value="" + user.username)
+    p Usuario: Invitado
+    input(type="hidden", class="username", name="username", id="username" value='Invitado')
   .row.center-xs.container_messages.border
     .col-xs-10
-      ul#comment-section
+      ul#comment-section.comment-section
+        li.message.comment.author-comment(style="display: none;")
+          .info
+            a(hfer="#" class="user")
+            span.time
+          a(hfer="#" class="avatar")
+            img(src="/images/imagesUsers/user1.jpg" width="35" alt="Profile Avatar" title="Anie Silverston")
+          p.message_chat
+        li.information.comment.user-comment(style="display: none;")
+          .info
+            a(hfer="#" class="user")
+            span.time
+          a(hfer="#" class="avatar")
+            img(src="/images/imagesUsers/user1.jpg" width="35" alt="Profile Avatar" title="Anie Silverston")
+          p.message_chat
   .row.center-xs
     .col-xs-8
-      input(type="text", id="text_message" placeholder="Mensaje")
+      #messageForm
+        form
+          input(type="text", id="text_message" placeholder="Mensaje")

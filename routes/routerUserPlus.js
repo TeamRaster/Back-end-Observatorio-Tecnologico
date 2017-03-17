@@ -3,15 +3,15 @@
 
 const express = require('express')
 const router = express.Router()
+module.exports = (app) => {
 
-/*<<<<<<< HEAD
-const viewsController = require('../controllers/viewsController')
-const newsCrudController = require('../controllers/newsCrudController')
-const groupsCrudController = require('../controllers/groupsCrudController')
-const demandCrudController = require('../controllers/demandCrudController')
-const offerCrudController = require('../controllers/offerCrudController')
-const usersCrudController = require('../controllers/usersCrudController')
-=======*/
+const viewsController = app.controllers.viewsController
+const newsCrudController = app.controllers.newsCrudController
+const groupsCrudController = app.controllers.groupsCrudController
+const demandCrudController = app.controllers.demandCrudController
+const offerCrudController = app.controllers.offerCrudController
+const usersCrudController = app.controllers.usersCrudController
+
 const controllers = require('.././controllers')
 const authMiddleware = require('../middlewares/authMiddleware')
 
@@ -147,4 +147,4 @@ router.route('/users') // Crud a users de manera grupal
 
 
 // Exportacion de las rutas ============================================================================================
-module.exports = router;
+//module.exports = router;

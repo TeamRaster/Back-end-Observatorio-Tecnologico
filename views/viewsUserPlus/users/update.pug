@@ -7,15 +7,16 @@ block main
   .row.center-xs
     .col-xs-8
       h3 Actualizando usuario #{user.id}
+  include ../../layout/errorMessage
   .row.center-xs
     .col-xs-5
-      form(method="POST" action="/app/users/" + user.id + "?_method=PUT" enctype="multipart/form-data")
+      form(method="POST" action="/user/" + user.id + "?_method=PUT" enctype="multipart/form-data")
         .input-field.col.s12
           label(for="username") Nombre de Usuario:
-          input(type="text", class="validate", name="username", id="username" value="" + user.username data-length="50" autofocus)
+          input(type="text", class="validate", name="username", id="username" value= user.username data-length="50" autofocus)
         .input-field.col.s12
           label(for="email") Correo:
-          input(type="text", class="validate", name="email", id="email" value="" + user.email data-length="50")
+          input(type="text", class="validate", name="email", id="email" value= user.local.email data-length="50")
         .input-field.col.s12
           label(for="password") Contraseña:
           input(type="password", class="validate", name="password", id="password" placeholder="8-16 caracteres" data-length="16")
@@ -25,9 +26,31 @@ block main
               span File
               input(type="file", name="photo", id="photo")
             .file-path-wrapper
-              input(type="text", class="file-path validate" value="" + user.photo)
+              input(type="text", class="file-path validate" value= user.photo)
+        .input-field.col.s12
+            h4 Datos de contacto
+        .input-field.col.s12
+          label(for="phone") Telefono:
+          input(type="text", class="validate", name="phone", id="phone" value= user.contactInformation.phone || '' data-length="10")
+        .input-field.col.s12
+          label(for="address") Direccion:
+          input(type="text", class="validate", name="address", id="address" value= user.contactInformation.address || '' data-length="100")
+        .input-field.col.s12
+          label(for="facebook") Link de Facebook:
+          input(type="text", class="validate", name="facebook", id="facebook" placeholder="https://www.perfil.com" value= user.contactInformation.facebook data-length="100")
+        .input-field.col.s12
+          label(for="twitter") Link de Twitter:
+          input(type="text", class="validate", name="twitter", id="twitter" placeholder="https://www.perfil.com" value= user.contactInformation.twitter data-length="100")
+        .input-field.col.s12
+          label(for="linkedin") Link de Linkedin:
+          input(type="text", class="validate", name="linkedin", id="linkedin" placeholder="https://www.perfil.com" value= user.contactInformation.linkedin data-length="100")
         div
           input(type="submit", class="btn", name="btn", id="btn", value="Actualizar")
-
-
-
+        .input-field.col.s12
+          h4 Stats
+        .input-field.col.s12
+          label(for="publications") Publicacion ID:
+          input(type="text", class="validate", name="history[dataUser].publications", id="publications" value= user.history.publications || '' data-length="10" disabled)
+        .input-field.col.s12
+          label(for="type") Calificacion:
+          input(type="text", class="validate", name="history[dataUser].type", id="type" value= user.history.type || '' data-length="100" disabled)

@@ -1,0 +1,30 @@
+extends ../../layout/layoutIndex
+
+block title
+  title Contact Information
+
+block main
+  .row.center-xs
+    .col-xs-8
+      h3 Completa tu registro de contacto
+  include ../../layout/errorMessage
+  .row.center-xs
+    .col-xs-5
+      form(method="POST" action="/user/" + user.id + "/contact")
+        .input-field.col.s12
+          label(for="phone") Telefono:
+          input(type="text", class="validate", name="phone", id="phone" value= user.contactInformation.phone || '' data-length="10")
+        .input-field.col.s12
+          label(for="address") Direccion:
+          input(type="text", class="validate", name="address", id="address" value= user.contactInformation.address || '' data-length="100")
+        .input-field.col.s12
+          label(for="facebook") Link de Facebook:
+          input(type="text", class="validate", name="facebook", id="facebook" placeholder="https://www.perfil.com" value= user.contactInformation.facebook data-length="100")
+        .input-field.col.s12
+          label(for="twitter") Link de Twitter:
+          input(type="text", class="validate", name="twitter", id="twitter" placeholder="https://www.perfil.com" value= user.contactInformation.twitter data-length="100")
+        .input-field.col.s12
+          label(for="linkedin") Link de Linkedin:
+          input(type="text", class="validate", name="linkedin", id="linkedin" placeholder="https://www.perfil.com" value= user.contactInformation.linkedin data-length="100")
+        div
+          input(type="submit", class="btn", name="btn", id="btn", value="Completar Registro")

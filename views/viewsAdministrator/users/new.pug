@@ -6,10 +6,11 @@ block title
 block main
   .row.center-xs
     .col-xs-5
-      h3 Usuarios normales como administradores
+      h3 Solo Administradores
+  include ../../layout/errorMessage
   .row.center-xs
     .col-xs-5
-      form(method="POST" action="/app/users" enctype="multipart/form-data")
+      form(method="POST" action="/users" enctype="multipart/form-data")
         .input-field.col.s12
           label(for="username") Nombre de Usuario:
           input(type="text", class="validate", name="username", id="username" data-length="50" autofocus required)
@@ -35,4 +36,4 @@ block main
             .file-path-wrapper
               input(type="text" class="file-path validate")
         div
-          input(type="submit", class="btn", name="btn", id="btn", value="Crear nuevo usuario")
+          input(type="submit", class="btn", name="btn", id="btn grey darken-3", value="Crear nuevo usuario")

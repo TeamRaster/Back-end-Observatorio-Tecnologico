@@ -7,25 +7,25 @@ block main
   .row.center-xs
     .col-xs-8
       h3 Inicio de Sesion
+  include ./layout/errorMessage
   .row.center-xs
     .col-xs-2
-      a(href="/auth/facebook" class="btn") Facebook
+      a(href="/auth/facebook" class="btn blue darken-4") Facebook
     .col-xs-2
-      a(href="/auth/twitter" class="btn") Twitter
+      a(href="/auth/twitter" class="btn blue") Twitter
     .col-xs-2
-      a(href="/auth/linkedin" class="btn") Linkedin
-  .row.center-xs
-    .col-xs-5
-      h5= error
+      a(href="/auth/linkedin" class="btn light-blue darken-3") Linkedin
   .row.center-xs
     .col-xs-5
-      form(method="POST" action="/auth/local")
+      form(method="POST" action="/accounts/signin")
         .input-field.col.s12
-          label(for="username") Correo Electronico:
-          input(type="email", class="validate", name="username", id="username" autofocus)
+          label(for="email") Correo Electronico:
+          input(type="email", class="validate", name="email", id="email" autofocus)
         .input-field.col.s12
           label(for="password") Contraseña:
           input(type="password", class="validate", name="password", id="password")
         div
-          input(type="submit", class="btn", name="btn", id="btn", value="Sign in")
+          input(type="submit", class="btn grey darken-3", name="btn", id="btn", value="Sign in")
+        div.top-space
+          a(href="/accounts/signup" class="waves-effect waves-teal btn-flat") Aun no tengo cuenta
 

@@ -9,10 +9,40 @@ block main
       h3 oferta
   .row.center-xs
     .col-xs-10
-      h5 Empresa: #{offer.business}
-      h5 Descripcion: #{offer.description}
-      h5 Categoria: #{offer.category}
+      h5 Empresa: #{offer.business} || Descripcion: #{offer.description} ||Categoria: #{offer.category} || Creado por : #{offer.postedBy.username} || Fecha de Creacion: #{offer.creationOffer}
       h5 Foto
-      img(src="/images/imagesOffers/" + offer.image)
+      img(src="/images/imagesOffers/" + offer.image width=900)
 
+  //- Comentarios
+  .row.center-xs
+    .col-xs-10.borde
+      h3 Comentarios
+  .row.center-xs
+    .col-xs-10
+      //form(action="" method="POST" enctype="multipart/form-data" id="comment_form")
+      form#comment_form
+        input(type="text", class="comment", name="comment", placeholder="Dejanos tu opinion" id="comment_text")
+  .row.end-xs
+    .col-xs-1
+      p Comentarios: #{offer.stats.comments}
+    .col-xs-1
+      button(id="like" class="btn-flat margin-small") Like
+      p= offer.stats.likes
+    .col-xs-1
+      button(id="dislike" class="btn-flat margin-small") Dislike
+      p= offer.stats.dislikes
+  .row
+    .col-xs-10#comment_section
+      //.row.margin-small#container
+      if (offer.comments)
+        each i in offer.comments
+          .row.margin-small#container
+            p
+              span: b= i.postedBy.username + ": "
+              span= i.comment
+              span: em= i.date.split(',')[1]
+            button(id="like" class="btn-flat margin-small") Like
+            button(id="dislike" class="btn-flat margin-small") Dislike
+            button(id="answer" class="btn-flat margin-small") Answer
+            //- /app/offers/" + offer._id + "/comments
 

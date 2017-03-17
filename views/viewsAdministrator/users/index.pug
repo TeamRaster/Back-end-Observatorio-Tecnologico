@@ -7,16 +7,16 @@ block main
   .row.center-xs
     .col-xs-8
       h3 Administracion de usuarios
+  include ../../layout/errorMessage
   .row.center-xs
-    a.waves-effect.waves-light.btn(href="/") Regresar al Inicio
-    a.waves-effect.waves-light.btn.margin-small(href="/app/administrator/users/new") new
+    a.waves-effect.waves-light.btn.margin-small.grey.darken-3(href="/") Regresar al Inicio
+    a.waves-effect.waves-light.btn.margin-small.grey.darken-3(href="/users/new") new
   .row.center-xs
     .col-xs-10
       if (users != "")
         table.highlight.centered
           thead
             tr
-              th providerId
               th username
               th email
               th administrator
@@ -25,15 +25,14 @@ block main
           tbody
             each user in users
               tr
-                td #{user.providerId}
                 td #{user.username}
-                td #{user.email}
+                td #{user.local.email}
                 td #{user.administrator}
-                td #{user.creationUser}
-                td: a.waves-effect.waves-light.btn.margin-small(href="/app/users/" + user._id + "/edit") Edit
-                td: a.waves-effect.waves-light.btn.margin-small(href="/app/users/" + user._id) View
+                td #{user.creationDate.date}
+                td: a.waves-effect.waves-light.btn.margin-small.grey.darken-3(href="/user/" + user._id + "/edit") Edit
+                td: a.waves-effect.waves-light.btn.margin-small.grey.darken-3(href="/user/" + user._id) View
                 td
-                  form(method="POST" action="/app/users/" + user._id + "?_method=DELETE" enctype="multipart/form-data")
-                    input.btn.margin-small(type="submit", value="Delete")
+                  form(method="POST" action="/user/" + user._id + "?_method=DELETE" enctype="multipart/form-data")
+                    input.btn.margin-small.grey.darken-3(type="submit", value="Delete")
       else
         h3 No hay Usuarios en la base de datos
