@@ -52,19 +52,7 @@ public/bower_components
 # Personal #
 ############
 configAuth.js
-
-#Imagenes #
-#########
-<<<<<<< HEAD
-public/images/imagesOffers
-public/images/
-
-
-#libreria handlebars apra templates y renderizado S.io#
-public/js/handlebars-v4.0.5.js
-=======
-
-#libreria handlebars apra templates y renderizado S.io#
-public/js/handlebars-v4.0.5.js
-public/images/
->>>>>>> abf96eeed7fc8d943dce9bfacf3ae13c8752225d
+ignore
+public/images/imagesOffers/
+public/images/imagesSources/
+public/images/imagesUsers/
