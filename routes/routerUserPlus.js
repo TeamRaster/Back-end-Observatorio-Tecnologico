@@ -4,17 +4,16 @@
 const express = require('express')
 const router = express.Router()
 
-<<<<<<< HEAD
+/*<<<<<<< HEAD
 const viewsController = require('../controllers/viewsController')
 const newsCrudController = require('../controllers/newsCrudController')
 const groupsCrudController = require('../controllers/groupsCrudController')
 const demandCrudController = require('../controllers/demandCrudController')
 const offerCrudController = require('../controllers/offerCrudController')
 const usersCrudController = require('../controllers/usersCrudController')
-=======
+=======*/
 const controllers = require('.././controllers')
 const authMiddleware = require('../middlewares/authMiddleware')
->>>>>>> abf96eeed7fc8d943dce9bfacf3ae13c8752225d
 
 // Esta es la nueva validacion para proteger rutas =====================================================================
 router.all('/', authMiddleware.isLogged)
@@ -27,21 +26,23 @@ router.get('/room/:id', controllers.conversationController.setMembers)  // Unirs
 router.get('/room/:id/chat', controllers.conversationController.getChat)  //
 
 
-<<<<<<< HEAD
 // Rutas NOTICIAS Formularios
-router.get('/news/new', viewsController.getViewDemandNew)
-router.get('/noticias/:id/edit', viewsController.getViewNewEdit)
+router.get('/news/new', controllers.viewsController.getViewDemandNew)
+router.get('/noticias/:id/edit', controllers.viewsController.getViewNewEdit)
 
 // Rutas GRUPOS Formularios
-router.get('/groups/new', viewsController.getViewGroupNew)
-router.get('/groups/:id/edit', viewsController.getViewNewEdit)
+router.get('/groups/new', controllers.viewsController.getViewGroupNew)
+router.get('/groups/:id/edit', controllers.viewsController.getViewGroupEdit)
+
+// Rutas FILES Formularios
+router.get('/files/new', controllers.viewsController.getViewFileNew)
+router.get('/files/:id/edit', controllers.viewsController.getViewFileEdit)
 
 // Sala de chats
-router.get('/room', viewsController.getViewRoom)
-=======
+router.get('/room', controllers.viewsController.getViewRoom)
+
 // Vistas ==============================================================================================================
 router.get('/', controllers.viewsController.getViewIndexP)
->>>>>>> abf96eeed7fc8d943dce9bfacf3ae13c8752225d
 
 
 // CRUD Ofertas ========================================================================================================
@@ -83,21 +84,57 @@ router.route('/demands') // Crud a demandas de manera grupal
     .post(controllers.demandCrudController.setDemand)
 
 
-<<<<<<< HEAD
-// CRUD Grupos =======================================================
-/*router.route('/groups/:id') // Crud a demandas de manera individual
-    .get(demandCrudController.getDemand)
-    .put(demandCrudController.updateDemand)
-    .delete(demandCrudController.deleteDemand)
-*/
-router.route('/groups') // Crud a demandas de manera grupal
-    .get(groupsCrudController.getGroups)
-    .post(groupsCrudController.setGroup)
 
-=======
+// CRUD Grupos =======================================================
+router.route('/groups/:id') // Crud a grupos de manera individual
+    .get(controllers.groupsCrudController.getGroup)
+    .put(controllers.groupsCrudController.updateGroup)
+    .delete(controllers.groupsCrudController.deleteGroup)
+
+router.route('/groups') // Crud a grupos de manera global :v
+    .get(controllers.groupsCrudController.getGroups)
+    .post(controllers.groupsCrudController.setGroup)
+
+    // miembros y solicitudes de Grupos
+router.route('/groups/member/:groupId/:userId') // Crud a MIEMBROS de grupos  * SOLO ADMINS
+    //.get(controllers.groupsCrudController.getGroup)
+    .put(controllers.groupsCrudController.addMemberToGroup)
+    .delete(controllers.groupsCrudController.isAdmin, controllers.groupsCrudController.deleteMemberFromGroup)
+
+router.route('/groups/admin/:groupId/:userId') // Crud a *SOLO ADMINS de grupos
+    //.get(controllers.groupsCrudController.getGroup)
+    .put(controllers.groupsCrudController.addAdminToGroup)
+    .delete(controllers.groupsCrudController.deleteAdminFromGroup)
+
+router.route('/groups/user/myGroups') // obtener  grupos del ususario // ISSUE FIXME /groups/myGroups/ ->estaba tomando myGroups como :id XD
+    .get(controllers.groupsCrudController.getMyGroups)
+
+router.route('/groups/memberRequest/:groupId')
+    .post(controllers.groupsCrudController.sendRequest)
+
+
+// CRUD NOTIFICACIONES POR GRUPO  =======================================================
+router.route('/groups/notif') // Crud a grupos de manera individual
+    .post(controllers.groupsCrudController.notiToGroup)
+    /*.get(controllers.groupsCrudController.getGroup)
+    .put(controllers.groupsCrudController.updateGroup)
+    .delete(controllers.groupsCrudController.deleteGroup)*/
+
+
+// CRUD FILES  =======================================================
+router.route('/files/:id') // Crud a archivos de manera individual
+    .get(controllers.filesCrudController.getFile)
+    .put(controllers.filesCrudController.updateFile)
+    .delete(controllers.filesCrudController.deleteFile)
+
+router.route('/files') // Crud a archivos de manera grupal
+    .get(controllers.filesCrudController.getFiles)
+    .post(controllers.filesCrudController.setFolder)
+
+
+
 // CRUD Usuarios =======================================================================================================
 router.get('/users/:id/edit', controllers.viewsController.getViewUserEdit)
->>>>>>> abf96eeed7fc8d943dce9bfacf3ae13c8752225d
 
 router.route('/users/:id') // Crud a users de manera individual
     .get(controllers.usersCrudController.getUser)

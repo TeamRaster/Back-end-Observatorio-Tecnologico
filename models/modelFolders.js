@@ -7,7 +7,7 @@ const FoldersSchema = new Schema({
     name        : String,
     creationDate  : {
         type      : Date,
-        require   : Date.now
+        default   : Date.now
     },
     creator: {
         type      : Schema.Types.ObjectId,

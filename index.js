@@ -14,7 +14,7 @@ const RedisStore = require('connect-redis')(session)  // Permiten manejar una ca
 const server = require('http').Server(app)
 const logger = require('morgan')
 
-const realtimeSocket = require('./realtimeSocket')
+const realtimeGroups = require('./realtimeGroups')
 const routerUser = require('./routes/routerUser')
 const routerUserPlus = require('./routes/routerUserPlus')
 const routerAdministrator = require('./routes/routerAdministrator')
@@ -42,7 +42,7 @@ const sessionMiddleware = session({  // Configuracion de las sesiones
     saveUninitialized: false
 })
 
-realtimeSocket(server, sessionMiddleware)
+realtimeGroups(server, sessionMiddleware)
 
 app.use(sessionMiddleware)
 

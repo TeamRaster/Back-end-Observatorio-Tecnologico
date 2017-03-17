@@ -5,20 +5,24 @@ module.exports = function(server, sessionMiddleware) {
     //console.log('server '+ server)
     //console.log('midd '+ Object.keys(sessionMiddleware.session))
 
-    const io = socket = require("socket.io")(server) // server-> instancia de http  (no express)
     const redis = require('redis')
+
+    const io = require("socket.io")(server) // server-> instancia de http  (no express)
     const client = redis.createClient()
 
+    //client.subscribe('images') // suscripcion al del canal (viene de  ./newsCrudController )
     client.subscribe('images') // suscripcion al del canal (viene de  ./newsCrudController )
 
     io.use(function(socket, next){
     //    io.sockets.in('groupOne').emit('message', {message: 'se emitio un mesaje al grupo ' + 'ONE' })
         // console.log('middleware ')
         sessionMiddleware(socket.request, socket.request.res, next) // Socket configurada para compartir sesion con expresss
-
-        // small adapter
     })
 
+
+
+
+/*
     io.sockets.on('connection', function(socket){ // evento socket conectada (cliente conectada)
 
         console.log('## [realtimeSocket.js ] Conexion  USERID Socket I  O ' + Object.keys(socket.request.session) );
@@ -41,7 +45,6 @@ module.exports = function(server, sessionMiddleware) {
 
 
 
-
     client.on('message', function (channel, message) { // cada vez que lleue un mensaje al canal
             if (channel == 'images') {
                 io.emit('new notices', message) // envia a TODOS los canales debe coincidir 'new notices' en client.js
@@ -55,10 +58,16 @@ module.exports = function(server, sessionMiddleware) {
            socket.on('event', function(){
 
            })
-       })
+       })*/
+       ////// ------------- Obtener  grupos/canales/rooms/suscripciones  del User--//
+
+
 
     /******************Multiples canales ( GRUPOS  O chat privado ...)****************///////
-    /*io.sockets.on('connection', function(socket){
+    io.sockets.on('connection', function(socket){
+
+        console.log('## [realtimeSocket.js ] Conexion  SOCKET Group ' + Object.keys(socket.request.session) );
+
         socket.on('subscribe', function(room){
             console.log("--------------------- Ha entrado al canal  room :", room )
             socket.join(room)
@@ -71,10 +80,52 @@ module.exports = function(server, sessionMiddleware) {
 
         socket.on('send', function(data){
             console.log("Enviando un mensajeee ", data);
+            //io.sockets.in(data.room).emit('message', data); FIXME
             io.sockets.emit('message')
         })
 
-    })*/
+    })
+
+
+////////////////////  PArte cliente
+    client.on('message', function (channel, message) { // cada vez que lleue un mensaje al canal
+        if (channel == 'images') {
+            io.emit('new notices', message) // envia a TODOS los canales debe coincidir 'new notices' en client.js
+        }
+
+        console.log("Se publico algo en el canal :: " + channel)
+        console.log("Se publico algo  message " + message)  //mensaje que llegó
+    })
+
+   io.on('connection', function (socket) {
+       console.log("sockett CONEXION**************** ")
+       socket.on('event', function(){
+
+       })
+   })
+
+   ////
+  /*var socket = io.connect();
+  socket.on('message', function (data) {
+   console.log(data);
+  });
+
+  socket.emit('subscribe', 'roomOne');
+  socket.emit('subscribe', 'roomTwo');
+
+  $('#send').click(function() {
+   var room = $('#room').val(),
+    message = $('#message').val();
+
+   socket.emit('send', { room: room, message: message });
+  });*/
+
+
+
+
+
+
+
 /***************Termina socket para grupos ****************************/
 
 

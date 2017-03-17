@@ -4,11 +4,11 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const FilesSchema = new Schema({
-    ext           : String,
     name          : String,
-    creationFile  : {
+    ext           : String,
+    creationDate  : {
         type      : Date,
-        require   : Date.now
+        default   : Date.now
     },
     author: {
         type      : Schema.Types.ObjectId,

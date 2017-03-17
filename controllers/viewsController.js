@@ -1,14 +1,7 @@
 'use strict'
 
-<<<<<<< HEAD
-const Offer = require('../models/modelOffer')
-const Demand = require('../models/modelDemand')
 const New = require('../models/modelNews')
-const User = require('../models/modelUsers')
-const Source = require('../models/modelSource')
-=======
 const models = require('../models')
->>>>>>> abf96eeed7fc8d943dce9bfacf3ae13c8752225d
 
 module.exports = {
 
@@ -31,7 +24,7 @@ module.exports = {
     getViewIndexP:  (req, res) => {
         res.send('Pagina del usuario con inicio de sesion')
     },
-
+//
     // Formulario para nuevas ofertas, y para editar
     getViewOfferNew: (req, res) => {
         return res.render('viewsUserPlus/offers/new')
@@ -80,9 +73,10 @@ module.exports = {
 
     getViewNewEdit: (req, res) => {
         New.findById(req.params.id,  (err, StoredNew) => {
+            console.log('.----------------------id  ' +req.params.id);
             if(err) {
                 console.log('=========================================================')
-                console.log('[viewsController/getViewDemandEdit]: Error al hacer la busqueda')
+                console.log('[viewsController/getViewNewEdit]: Error al hacer la busqueda')
                 console.log('=========================================================')
                 res.redirect('/app/demands')
             }
@@ -106,6 +100,21 @@ module.exports = {
             }
 
             res.render('viewsUserPlus/news/update', {noti: StoredNew})
+        })
+    },
+
+    // Formulario para nuevos FILES, y para editar
+    getViewFileNew: (req, res) => {
+        res.render('viewsUserPlus/files/new')
+    },
+
+    getViewFileEdit: (req, res) => {
+        File.findById(req.params.id,  (err, StoredFile) => {
+            if(err) {
+                console.log('GETFILE Error al hacer la busqueda')
+                res.redirect('/app/files')
+            }
+            res.render('viewsUserPlus/files/update', {file: StoredFile})
         })
     },
 
@@ -155,7 +164,6 @@ module.exports = {
     },
 
 
-<<<<<<< HEAD
     // Formulario para administrar archivos, y para editar por id
     getViewFileAdmin: (req, res) => {
         res.send('Tu puedes ver los archivos publicados')
@@ -180,25 +188,5 @@ module.exports = {
         res.send('Tu puedes ver todos los comentarios por cada noticia')
     },
 
-=======
-    // // Formulario para administrar archivos, y para editar por id
-    // getViewFileAdmin: (req, res) => {
-    //     res.send('Tu puedes ver los archivos publicados')
-    // },
-    //
-    // getViewFileEditAdmin: (req, res) => {
-    //     res.send('Tu puedes eliminar archivos, aunque esten dentro de un grupo')
-    // },
-    //
-    //
-    // // Formulario para administrar commentarios, y para editar por id
-    // getViewCommentId: (req, res) => {
-    //     res.send('Tu puedes ver todos los comentarios por cada noticia')
-    // },
-    //
-    // getViewStatsId: (req, res) => {
-    //     res.send('Tu puedes ver todos los stats(likes, dislikes) por cada noticia')
-    // },
->>>>>>> abf96eeed7fc8d943dce9bfacf3ae13c8752225d
 
 }

@@ -1,16 +1,81 @@
 extends ../../layout/layoutIndex
 
 block title
-  title group
+  title Grupo
 
 block main
   .row.center-xs
-    .col-xs-5
-      h3 Grupo
-  .row.center-xs
     .col-xs-10
-      h5 Empresa: #{group.business}
-      h5 Descripcion: #{group.description}
-      h5 Categoria: #{group.category}
-      h5 Foto
-      img(src="/images/imagesOffers/" + group.image)
+      if (group != "")
+        h1 Grupo #{group.title}
+        table.highlight
+          thead
+            tr
+              th title
+              th description
+              th id
+              th creationDate
+              th Miembros Actuales
+              th Solicitudes
+          tbody
+            tr
+              td #{group.title}
+              td #{group.description}
+              td(id='groupId') #{group._id}
+              td #{group.creationDate}
+              td
+                each member in group.members
+                  div #{member.user +" "+ member.isAdmin }
+                    if member.isAdmin == true
+                      form(method="POST" action="/admin/groups/admin/" + group._id + "/" + member.user + "?_method=DELETE" enctype="multipart/form-data")
+                        input.btn.margin-small(id="send" type="submit", value="NO ser Admin ")
+                    else
+                      form(method="POST" action="/admin/groups/admin/" + group._id + "/" + member.user + "?_method=PUT" enctype="multipart/form-data")
+                        input.btn.margin-small(id="send" type="submit", value="Ser Admin ")
+
+                    form(method="POST" action="/admin/groups/member/" + group._id + "/" + member.user + "?_method=DELETE" enctype="multipart/form-data")
+                      input.btn.margin-small(id="send" type="submit", value="Eliminar ")
+                    //-td #{member.email}
+                //-each group.members in group
+                  td {}
+              td
+                each request in group.requests
+                  li  USER-: #{request.sendBy} #{request._id}
+                    form(method="POST" action="/admin/groups/member/" + group._id + "/"+ request.sendBy +"?_method=PUT" enctype="multipart/form-data")
+                      input.btn.margin-small(id="send" type="submit", value="Aceptar ")
+
+                  //-#{request.comment}
+
+      else
+        h2 Error al cargar el grupo
+        form(method="" action="" enctype="")
+      form(method="POST" action="/admin/groups/notif?_method=POST" enctype="multipart/form-data" id="notiForm" name="notiForm")
+        .input-field.col.s12
+          textarea.materialize-textarea(type="text" rows= "5" id="groupMessage" data-length="100" name="groupMessage" autofocus)
+          label(class="mdl-textfield__label" for="sample5" name="descriptio2n") Contenido mensaje/comentario/notificacion
+          input.btn.margin-small(id="sendMessage" type="button", value="Enviar mensajeee")
+
+      h1 Agregar miembros
+
+      if (users != "")
+        table.highlight
+          thead
+            tr
+              th providerId
+              th username
+              th email
+              th administrator
+              th ID
+          tbody
+            each user in users
+              tr
+                td #{user.providerId}
+                td #{user.username}
+                td #{user.email}
+                td #{user.administrator}
+                td #{user._id}
+                td
+                  form(method="POST" action="/admin/groups/member/" + group._id + "/" + user._id + "?_method=PUT" enctype="multipart/form-data")
+                    input.btn.margin-small(type="submit", value="Agregar")
+      else
+        h2 No hay usuarios en la base de datos

@@ -1,4 +1,4 @@
-'use strict'
+/*'use strict'
 
 const socket = io.connect('http://localhost:3000', {'forceNew': true})
 const username = document.getElementById('username').value
@@ -61,4 +61,4 @@ function addMessages(e) {
     text_.value = ""
     socket.emit('addNewMessage', message)
     return false
-}
+}*/

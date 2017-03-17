@@ -48,13 +48,13 @@ module.exports = {
             //client.publish('images', newsStored.toString())
             //client.publish('images', (res.locals.toString()))
             console.log('Cliente news ctrlr-----------')
-            console.log('images', Object.keys(res.locals) )
+            console.log( Object.keys(res.locals) )
             //console.log('images', Object.keys(res) )
             //console.log('images', Object.keys(res.req.fields) )
             //console.log('images', Object.keys(res.req.res) )
             //console.log('images', Object.keys(res.locals[0]) )
             var claves = {dwl: "dwe", w: "efwef"};
-            console.log('images', newsStored)
+            //console.log('images', newsStored)
 
             console.log('images', typeof res.locals )
 
@@ -65,10 +65,12 @@ module.exports = {
             }
 
             //client.publish('images' , newsStored.toString())
+            //client.publish('new notices' , newsStored.toString())
+            //client.publish('new notices', JSON.stringify(pubJSON))
             client.publish('images', JSON.stringify(pubJSON))
 
-            //client.publish('images', JSON.stringify(newsStored))
-            console.log('./viewsUserPlus/news/newsAll',  typeof newsStored)
+            client.publish('images', JSON.stringify(newsStored))
+            console.log('..../viewsUserPlus/news/newsAll',  typeof newsStored)
 
             res.render('./viewsUserPlus/news/newsAll', {news: newsStored})
 
@@ -76,8 +78,8 @@ module.exports = {
             // return res.status(200).send({message: "pagina del admin    "});
         })
 
-
     },
+
     getNoticiaById: function(req, res) {
         News.findById(req.params.id, function (err, newStored) {
 

@@ -1,4 +1,4 @@
-'use strict' /// Solicitudes al gupo
+'use strict' /// Solicitudes al grupo
 
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
@@ -9,10 +9,10 @@ const RequestsSchema = new Schema({
         type      : Date,
         require   : Date.now
     },
-    user: {
+    user: [{
         type      : Schema.Types.ObjectId,
         ref       : "User"
-    },
+    }],
     group: {
         type      : Schema.Types.ObjectId,
         ref       : "Group"

@@ -4,3 +4,5 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
+module.exports.setGroup	C:\ProyectoOb\controllers\groupsCrudController.js	/^    setGroup: (req, res) => {$/;"	property	line:17
+let.members.user	C:\ProyectoOb\controllers\groupsCrudController.js	/^                                    'members.user': userId,$/;"	property	line:339

@@ -1,18 +1,18 @@
 extends ../../layout/layoutIndex
 
 block title
-  title Nuevas Grupos
+  title Nuevos Archivos
 
 block main
   .row.center-xs
     .col-xs-5
-      h3  Crear Grupo
+      h3  Crear Archivo
   .row.center-xs
     .col-xs-5
-      form(method="POST" action="/admin/groups" enctype="multipart/form-data")
+      form(method="POST" action="/admin/files" enctype="multipart/form-data")
         .input-field.col.s12
           label(for="title") Título:
-          input(type="text", class="validate", name="title", id="business")
+          input(type="text", class="validate", name="name", id="name")
         .input-field.col.s12
           textarea.materialize-textarea(type="text" rows= "5" id="sample5" data-length="100" name="description")
           label(class="mdl-textfield__label" for="sample5" name="descriptio2n") Contenido texto
