@@ -52,12 +52,10 @@ public/bower_components
 
 # Personal #
 ############
-configAuth.js
-
-#Imagenes #
-#########
-public/images/imagesOffers
-public/images/
-
-#libreria handlebars para templates y renderizado S.io#
-public/js/handlebars-v4.0.5.js
+ignore
+public/images/imagesOffers/
+public/images/imagesSources/
+public/images/imagesFolders/
+public/images/imagesFiles/
+public/images/imagesUsers/
+.tags1

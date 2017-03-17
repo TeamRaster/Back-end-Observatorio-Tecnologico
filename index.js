@@ -2,6 +2,7 @@
 
 const config          = require('./config/config.js')  // variables de configuracion (dbs, puertos, keytokens),
     , realtimeSocket  = require('./realtimeSocket')
+    , realtimeGroups = require('./realtimeGroups')
 let maxAge_ = 60000 * 60 * 24 // 60Seg(1Minuto) * 60Min(1Hora) * 24H(1Dia)
 
 const express         = require('express')
@@ -19,18 +20,6 @@ const express         = require('express')
     , logger          = require('morgan')
     , consign         = require('consign')
     , passport        = require('passport')
-
-const realtimeGroups = require('./realtimeGroups')
-const routerUser = require('./routes/routesUsers')
-const routerUserPlus = require('./routes/routerUserPlus')
-const validateUsers = require('./middlewares/authMiddleware')
-
-// app.use(logger('dev'))
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json())
-app.use(cookieParser())
-app.use(express.static(path.join(__dirname, 'public')))  // Archivos estaticos, ideal para los estilos, js, etc
-app.set('view engine', 'pug')  // Motor de vistas
 
 mongoose.connect(config.db, (err, res) => {  // Conexion a la base de datos
     if (err) return console.log(`[./index.js]: No se detecta una conexion con la base de datos ::: ${err}`)
