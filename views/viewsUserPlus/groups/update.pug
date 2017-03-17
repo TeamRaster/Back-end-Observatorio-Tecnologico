@@ -1,0 +1,30 @@
+extends ../../layout/layoutIndex
+
+block title
+  title Editar Noticia
+
+block main
+  .row.center-xs
+    .col-xs-5
+      h4 Editar la Noticia #{noti._id}
+  .row.center-xs
+    .col-xs-5
+      form(method="POST" action="/admin/noticias/" + noti._id + "?_method=PUT" enctype="multipart/form-data")
+        .input-field.col.s12
+          label(for="business") Title:
+          input(type="text", class="validate", name="title", id="title" value="" + noti.title)
+        .input-field.col.s12
+          textarea.materialize-textarea(type="text" rows= "5" id="sample5" data-length="100" name="text") #{noti.text}
+          label(class="mdl-textfield__label" for="sample5" name="description") Descripcion
+        .input-field.col.s12
+          label(for="category") Categoria:
+          input(type="text", class="validate", name="category", id="category" value="" + noti.category)
+        .input-field.col.s12
+          .file-field.input-field
+            .btn
+              span File
+              input(type="file", name="image", id="image")
+            .file-path-wrapper
+              //input(type="text", class="file-path validate" value="" + offer.image)
+        div
+          input(type="submit", class="btn", name="btn", id="btn", value="Actualizar")

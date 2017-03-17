@@ -1,13 +1,11 @@
 var socket = io() // libreria socket para conectar con servidor socket
 
 socket.on('new notices', function(data){
+    console.log("client socket ");
     data = JSON.parse(data)
-    console.log(data);
-
+    console.log( " Cliente -------" + data);
 
     var container = document.querySelector('#noticiasCont')
-
-    console.log("siisi ");
 
     var source = document.querySelector('#newsTemplate').innerHTML; // id del script
     var templateScript = Handlebars.compile(source);  //templateScript handlebars compilando source
@@ -21,8 +19,36 @@ socket.on('new notices', function(data){
     container.innerHTML =   container.innerHTML + templateScript(data)
 
     //console.log(container + templateScript(data))
-
 })
+
+
+socket.on('message', function(data){
+    console.log(" ########### DATA de socket ",     data);
+})
+
+socket.emit('send', {message: "message"})
+
+/// Id del grupo
+
+
+socket.emit('new notices', 'groupTwo')
+socket.emit('images', 'groupTwo')
+/*socket.emit('suscribe', 'groupOne')
+
+
+$("#send").click(function() {
+    room = document.getElementById('groupId').innerHTML
+    message = "(client) se publico en el grupo " + room
+
+
+    socket.emit('send', {room: room, message: message})
+    console.log("(client) se publico en el grupo " + room);
+})
+<<<<<<< HEAD
+*/
+
+=======
+>>>>>>> 0d4875a0c0497a13cc216d609a10851479fa2b08
 // 'use strict'
 //
 // var socket = io() // libreria socket para conectar con servidor socket

@@ -1,0 +1,60 @@
+extends ../../layout/layoutIndex
+
+block title
+  title Archivo
+
+block main
+  .row.center-xs
+    .col-xs-10
+      if (file != "")
+        h1 Archivo #{file.name}
+        table.highlight
+          thead
+            tr
+              th title
+              th description
+              th id
+              th creationDate
+              th members
+          tbody
+            tr
+              //-td #{file.title}
+              td #{file.description}
+              td(id='fileId') #{file._id}
+              td #{file.creationDate}
+              td
+                each member in file.members
+                  td #{member._id}
+                  //-td #{member.loil}
+                //-each file.members in file
+                  td {}
+
+      else
+        h2 Error al cargar el grupo
+      form(method="POST" action="/admin/files/member/" + file._id + "?_method=POST" enctype="multipart/form-data")
+        input.btn.margin-small(id="send" type="submit", value="Enviar mensajeee")
+
+      h1 Agregar miembros
+
+      if (users != "")
+        table.highlight
+          thead
+            tr
+              th providerId
+              th username
+              th email
+              th administrator
+              th ID
+          tbody
+            each user in users
+              tr
+                td #{user.providerId}
+                td #{user.username}
+                td #{user.email}
+                td #{user.administrator}
+                td #{user._id}
+                td
+                  form(method="POST" action="/admin/files/member/" + file._id + "/" + user._id + "?_method=PUT" enctype="multipart/form-data")
+                    input.btn.margin-small(type="submit", value="Agregar")
+      else
+        h2 No hay usuarios en la base de datos

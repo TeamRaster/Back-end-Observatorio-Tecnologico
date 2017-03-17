@@ -48,11 +48,13 @@ public/bower_components
 .idea/*.*
 .idea/
 .idea
+.tags1
 
 # Personal #
 ############
-configAuth.js
 ignore
 public/images/imagesOffers/
 public/images/imagesSources/
 public/images/imagesUsers/
+.tags1
+

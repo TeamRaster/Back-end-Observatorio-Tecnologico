@@ -2,6 +2,7 @@
 
 const config          = require('./config/config.js')  // variables de configuracion (dbs, puertos, keytokens),
     , realtimeSocket  = require('./realtimeSocket')
+    , realtimeGroups = require('./realtimeGroups')
 let maxAge_ = 60000 * 60 * 24 // 60Seg(1Minuto) * 60Min(1Hora) * 24H(1Dia)
 
 const express         = require('express')
@@ -37,6 +38,8 @@ const sessionMiddleware = session({  // Configuracion de las sesiones
 })
 app.set('view engine', 'pug')  // Motor de vistas
 
+realtimeGroups(server, sessionMiddleware)
+
 // app.use(logger('dev'))
 app.use(express.static(path.join(__dirname, 'public')))  // Archivos estaticos, ideal para los estilos, js, etc
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -44,6 +47,7 @@ app.use(bodyParser.json())
 app.use(cookieParser())
 app.use(methodOverride("_method"))  // Ayuda a que un formulario pueda enviar por metodo put, delete
 realtimeSocket(io, sessionMiddleware)
+
 app.use(sessionMiddleware)
 app.use(flash())  // Muestra mensajes de error que se pueden llegar a generar
 

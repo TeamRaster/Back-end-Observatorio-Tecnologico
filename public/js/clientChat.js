@@ -1,6 +1,10 @@
+<<<<<<< HEAD
+/*'use strict'
+=======
 $(function () {
     function initSocketIO() {
         $('text_message').focus()
+>>>>>>> 0d4875a0c0497a13cc216d609a10851479fa2b08
 
         let host = window.location.host
         console.log(host)
@@ -156,6 +160,12 @@ $(function () {
             new_comment.val('')
         })
     }
+<<<<<<< HEAD
+    text_.value = ""
+    socket.emit('addNewMessage', message)
+    return false
+}*/
+=======
 
     commentInit()
 
@@ -185,3 +195,4 @@ $(function () {
 
 
 
+>>>>>>> 0d4875a0c0497a13cc216d609a10851479fa2b08

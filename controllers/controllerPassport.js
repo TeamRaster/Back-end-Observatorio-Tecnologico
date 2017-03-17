@@ -4,7 +4,7 @@ const LocalStrategy = require('passport-local').Strategy
     , FacebookStrategy = require('passport-facebook').Strategy
     , LinkedinStrategy = require('passport-linkedin').Strategy
     , TwitterStrategy = require('passport-twitter').Strategy
-    , configAuth = require('../config/configAuth')
+    , configAuth = require('../config/passport/configAuth')
     , passport = require('passport')
     , moment = require('moment')  // Modulo para el tiempo
 
