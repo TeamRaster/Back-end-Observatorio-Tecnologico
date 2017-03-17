@@ -7,8 +7,7 @@ html(lang="es")
         link(rel="stylesheet", href="http://fonts.googleapis.com/icon?family=Material+Icons")
         link(rel="stylesheet", href="/bower_components/flexboxgrid/dist/flexboxgrid.min.css")
         link(rel="stylesheet", href="/css/style.css")
-<<<<<<< HEAD
-  body
+  //--  body
     block main
     //script(src="https://code.jquery.com/jquery-2.1.1.min.js")
     script(src="/bower_components/jquery/dist/jquery.js")
@@ -18,42 +17,40 @@ html(lang="es")
     //-script(src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/locale/af.js")
     script(src="/js/clientChat.js")
     script(src="/js/clientGroups.js")
-//    script(src="/js/client.js")
-=======
-    body
-      ul(id="dropdown1" class="dropdown-content")
-        li: a(href="/sources") Sources
-        li(class="divider")
-        li: a(href="/offers") Offers
-        li(class="divider")
-        li: a(href="/demands") Demands
+    //  script(src="/js/client.js")
+  body
+    ul(id="dropdown1" class="dropdown-content")
+      li: a(href="/sources") Sources
+      li(class="divider")
+      li: a(href="/offers") Offers
+      li(class="divider")
+      li: a(href="/demands") Demands
 
-      ul(id="dropdown2" class="dropdown-content")
-        li(class="divider")
-        li: a(href="/accounts/logout") Logout
-      nav.grey.darken-3
-        .nav-wrapper
-          a(href="/" class="brand-logo") Observatorio
-          ul(id="nav-mobile" class="right hide-on-med-and-down")
-            if(!user)
-              li: a(href="/accounts/signin") Signin
-              li: a(href="/accounts/signup") Signup
-            else if(user)
-              li: a(href="/users/profile") My Profile
-              li: a(href="/room/new") Beta Chat
-              li: a(href="/users") Users
-              li: a(href="!#" class="dropdown-button" data-activates="dropdown1") Publications
-              li: a(href="!#" class="dropdown-button" data-activates="dropdown2") Sessions
-      block main
-      script(src="https://code.jquery.com/jquery-3.1.1.min.js")
-      script(src="/bower_components/materialize/dist/js/materialize.min.js")
-      script(src="/bower_components/moment/min/moment.min.js")
-      script(src="/socket.io/socket.io.js")
-      //script(src="/js/handlebars-v4.0.5.js")
-      script(src="/js/clientChat.js")
-      script(src="/js/client.js")
-      script.
-        $( document ).ready(function(){
-          $(".dropdown-button").dropdown()
+    ul(id="dropdown2" class="dropdown-content")
+      li(class="divider")
+      li: a(href="/accounts/logout") Logout
+    nav.grey.darken-3
+      .nav-wrapper
+        a(href="/" class="brand-logo") Observatorio
+        ul(id="nav-mobile" class="right hide-on-med-and-down")
+          if(!user)
+            li: a(href="/accounts/signin") Signin
+            li: a(href="/accounts/signup") Signup
+          else if(user)
+            li: a(href="/users/profile") My Profile
+            li: a(href="/room/new") Beta Chat
+            li: a(href="/users") Users
+            li: a(href="!#" class="dropdown-button" data-activates="dropdown1") Publications
+            li: a(href="!#" class="dropdown-button" data-activates="dropdown2") Sessions
+    block main
+    script(src="https://code.jquery.com/jquery-3.1.1.min.js")
+    script(src="/bower_components/materialize/dist/js/materialize.min.js")
+    script(src="/bower_components/moment/min/moment.min.js")
+    script(src="/socket.io/socket.io.js")
+    //script(src="/js/handlebars-v4.0.5.js")
+    script(src="/js/clientChat.js")
+    script(src="/js/client.js")
+    script.
+      $( document ).ready(function(){
+        $(".dropdown-button").dropdown()
         })
->>>>>>> 0d4875a0c0497a13cc216d609a10851479fa2b08

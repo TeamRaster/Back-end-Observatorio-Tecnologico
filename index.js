@@ -25,7 +25,7 @@ mongoose.connect(config.db, (err, res) => {  // Conexion a la base de datos
     if (err) return console.log(`[./index.js]: No se detecta una conexion con la base de datos ::: ${err}`)
 })
 
-if (app.get('env') === 'development') { //  TODO quitar en producción (Hace bonito el codigo fiente :v)
+if (app.get('env') === 'development') { //  TODO quitar en producción (Hace bonito el codigo fuente :v)
     app.locals.pretty = true
 }
 
@@ -56,7 +56,7 @@ consign({ verbose: false })
     .then('middlewares')
     .then('controllers')
     .then('routes')
-    .into(app)
+.into(app)
 
 require('./controllers/controllerPassport')(app)  // Configuracion Passport y pasamos como parametro el servidor
 
