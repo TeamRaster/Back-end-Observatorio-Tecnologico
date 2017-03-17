@@ -7,17 +7,7 @@ html(lang="es")
         link(rel="stylesheet", href="http://fonts.googleapis.com/icon?family=Material+Icons")
         link(rel="stylesheet", href="/bower_components/flexboxgrid/dist/flexboxgrid.min.css")
         link(rel="stylesheet", href="/css/style.css")
-  //--  body
-    block main
-    //script(src="https://code.jquery.com/jquery-2.1.1.min.js")
-    script(src="/bower_components/jquery/dist/jquery.js")
-    script(src="/bower_components/materialize/dist/js/materialize.min.js")
-    script(src="/socket.io/socket.io.js")
-    script(src="/js/handlebars-v4.0.5.js")
-    //-script(src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/locale/af.js")
-    script(src="/js/clientChat.js")
-    script(src="/js/clientGroups.js")
-    //  script(src="/js/client.js")
+
   body
     ul(id="dropdown1" class="dropdown-content")
       li: a(href="/sources") Sources
@@ -49,6 +39,7 @@ html(lang="es")
     script(src="/socket.io/socket.io.js")
     //script(src="/js/handlebars-v4.0.5.js")
     script(src="/js/clientChat.js")
+    script(src="/js/clientGroups.js")
     script(src="/js/client.js")
     script.
       $( document ).ready(function(){

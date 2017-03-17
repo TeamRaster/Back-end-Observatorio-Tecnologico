@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*'use strict'
 =======
 $(function () {
@@ -165,9 +164,8 @@ $(function () {
     socket.emit('addNewMessage', message)
     return false
 }*/
-=======
 
-    commentInit()
+//    commentInit()
 
     // like()
 
@@ -187,12 +185,4 @@ $(function () {
     //     console.log("error")
     // })
 
-})
-
-
-
-
-
-
-
->>>>>>> 0d4875a0c0497a13cc216d609a10851479fa2b08
+//})

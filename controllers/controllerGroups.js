@@ -1,7 +1,7 @@
 'use strict'
 
 //const Group = require('../models/modelGroups')
-const User = require('../models/modelUsers')
+
 
 const fs = require('fs')
 
@@ -15,6 +15,7 @@ const conn = io.connect(serverUrl);
 module.exports = (app) => {
 
     const Group = app.models.modelGroups
+    const User = app.models.modelUsers
 
     this.setGroup = (req, res) => {
         ///let ext_ = req.files.image.name.split(".").pop()
