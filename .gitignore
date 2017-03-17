@@ -53,9 +53,5 @@ public/bower_components
 # Personal #
 ############
 ignore
-public/images/imagesOffers/
-public/images/imagesSources/
-public/images/imagesFolders/
-public/images/imagesFiles/
-public/images/imagesUsers/
+public/images/*
 .tags1

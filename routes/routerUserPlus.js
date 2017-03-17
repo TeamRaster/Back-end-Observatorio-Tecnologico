@@ -8,13 +8,11 @@ module.exports = (app) => {
 const viewsController = app.controllers.viewsController
 const newsCrudController = app.controllers.newsCrudController
 const groupsCrudController = app.controllers.groupsCrudController
-const demandCrudController = app.controllers.demandCrudController
-const offerCrudController = app.controllers.offerCrudController
 const usersCrudController = app.controllers.usersCrudController
 const conversationController = app.controllers.conversationController
-const filesCrudController = app.controllers.filesCrudController
+const controllerFiles = app.controllers.controllerFiles
 
-const authMiddleware = require('../middlewares/authMiddleware')
+const authMiddleware = app.middlewares.auth //require('../middlewares/auth')
 
 // Esta es la nueva validacion para proteger rutas =====================================================================
 router.all('/', authMiddleware.isLogged)
@@ -89,13 +87,13 @@ router.route('/demands') // Crud a demandas de manera grupal
 
 // CRUD FILES  =======================================================
 router.route('/files/:id') // Crud a archivos de manera individual
-    .get(filesCrudController.getFile)
-    .put(filesCrudController.updateFile)
-    .delete(filesCrudController.deleteFile)
+    .get(controllerFiles.getFile)
+    .put(controllerFiles.updateFile)
+    .delete(controllerFiles.deleteFile)
 
 router.route('/files') // Crud a archivos de manera grupal
-    .get(filesCrudController.getFiles)
-    .post(filesCrudController.setFolder)
+    .get(controllerFiles.getFiles)
+    .post(controllerFiles.setFolder)
 
 
 
