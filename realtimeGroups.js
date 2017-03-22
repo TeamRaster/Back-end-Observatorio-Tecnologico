@@ -66,7 +66,7 @@ module.exports = function(server, sessionMiddleware) {
     /******************Multiples canales ( GRUPOS  O chat privado ...)****************///////
     io.sockets.on('connection', function(socket){
 
-        console.log('## [realtimeSocket.js ] Conexion  SOCKET Group ' + Object.keys(socket.request.session) );
+        // console.log('## [realtimeSocket.js ] Conexion  SOCKET Group ' + Object.keys(socket.request.session) );
 
         socket.on('subscribe', function(room){
             console.log("--------------------- Ha entrado al canal  room :", room )
@@ -79,7 +79,7 @@ module.exports = function(server, sessionMiddleware) {
         })
 
         socket.on('send', function(data){
-            console.log("Enviando un mensajeee ", data);
+            // console.log("Enviando un mensajeee ", data);
             //io.sockets.in(data.room).emit('message', data); FIXME
             io.sockets.emit('message')
         })
@@ -98,7 +98,7 @@ module.exports = function(server, sessionMiddleware) {
     })
 
    io.on('connection', function (socket) {
-       console.log("sockett CONEXION**************** ")
+    //    console.log("sockett CONEXION**************** ")
        socket.on('event', function(){
 
        })
