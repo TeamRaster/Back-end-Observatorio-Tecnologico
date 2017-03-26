@@ -10,6 +10,11 @@ module.exports = (app) => {
 
     /************** VISTAS *****************///
 
+    router.route('/files') // Crud a archivos de manera grupal
+        .get(controllerFiles.getFiles)
+        .post(controllerFiles.setFolder)
+
+
     // Rutas FILES Formularios
     app.get('/files/new', viewsController.getViewFileNew)
     app.get('/files/:id/edit', viewsController.getViewFileEdit)
@@ -23,9 +28,6 @@ module.exports = (app) => {
         .put(controllerFiles.updateFile)
         .delete(controllerFiles.deleteFile)
 
-    router.route('/files') // Crud a archivos de manera grupal
-        .get(controllerFiles.getFiles)
-        .post(controllerFiles.setFolder)
 
 
     return this

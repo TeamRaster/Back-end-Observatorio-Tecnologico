@@ -30,12 +30,12 @@ block main
                 td #{folder.folder}
                 td
                   //-each file in filder.files
-                    li  FILES-: #{file.name} #{file._id} #{file.ext}  #{file.creationDate} a(href="/admin/files/file/" + file._id)
+                    li  FILES-: #{file.name} #{file._id} #{file.ext}  #{file.creationDate} a(href="/files/file/" + file._id)
 
-                td: a.waves-effect.waves-light.btn.margin-small(href="/app/files/" + folder._id + "/edit") Edit
-                td: a.waves-effect.waves-light.btn.margin-small(href="/admin/files/" + folder._id) Ver y editar integrantes
+                td: a.waves-effect.waves-light.btn.margin-small(href="/files/" + folder._id + "/edit") Edit
+                td: a.waves-effect.waves-light.btn.margin-small(href="/files/" + folder._id) Ver y editar integrantes
                 td
-                  form(method="POST" action="/app/files/" + folder._id + "?_method=DELETE" enctype="multipart/form-data")
+                  form(method="POST" action="/files/" + folder._id + "?_method=DELETE" enctype="multipart/form-data")
                     input.btn.margin-small(type="submit", value="Delete")
       else
         h3 No hay Archivos en la base de datos

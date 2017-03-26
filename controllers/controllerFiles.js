@@ -1,14 +1,15 @@
 'use strict'
 
-const File = require('../models/modelFiles')
-const Folder = require('../models/modelFolders')
-const User = require('../models/modelUsers')
 const fs = require('fs')
+const moment = require('moment')
 
-module.exports = {
+module.exports = (app) => {
+    const File = app.models.modelFiles
+    const Folder = app.models.modelFolders
+    const User = app.models.modelUsers
 
     /******************Folders ******************////
-    setFolder: (req, res) => {
+    this.setFolder = (req, res) => {
         let user = req.user
         let userId = '';
 
@@ -33,24 +34,26 @@ module.exports = {
             if (err) {
                 console.log(`Error folder no almacenado ${err}`)
 
-                res.redirect('/app/files')
+                res.redirect('/files')
             }
             fs.rename(req.files.image.path, "public/images/imagesFolders/" + newFolder._id + "." + ext_)
             console.log('[Successful]: Folder guardada con exito')
-            res.redirect('/app/files')
+            res.redirect('/files')
         })
-    },
+    }
 
 
     /******************Files ******************////
 
-    setFile: (req, res) => {
+    this.setFile = (req, res) => {
         let ext_ = req.files.image.name.split(".").pop()
         let newFile = new File({
             business      : req.body.business,
             ext           : ext_,
             description   : req.body.description,
             category      : req.body.category,
+            photo          : req.file.filename,
+            path           : req.file.destination,
             // contact       : 'id_contact', // todo usar id de cada equema para relacionarlo
             // creator       : 'id_creator'
         })
@@ -59,16 +62,16 @@ module.exports = {
             if (err) {
                 console.log(`Error file no almacenada ${err}`)
 
-                res.redirect('/admin/files')
+                res.redirect('/files')
             }
-            fs.rename(req.files.image.path, "public/files/" + newFile._id + "." + ext_)
+            //fs.rename(req.files.image.path, "public/files/" + newFile._id + "." + ext_)
             console.log('[Successful]: Archivo guardado con exito')
-            res.redirect('/admin/files')
+            res.redirect('/files')
         })
-    },
+    }
 
 
-    getFiles: (req, res) => {
+    this.getFiles = (req, res) => {
         Folder.find({}, (err, storedFolders) => {
             User.populate(storedFolders, {path: "creator"}, (err, storedFolders) => {
                 if(err) {
@@ -81,50 +84,50 @@ module.exports = {
 
             if(err) {
                 console.log(`Error al buscar todo file ${err}`)
-                res.redirect('/app/files')
+                res.redirect('/files')
             }
 
         })
-    },
+    }
 
 
-    getFile: (req, res) => {
+    this.getFile = (req, res) => {
         File.findById(req.params.id, (err, storedFile) => {
             if(err) {
                 console.log(`Error al buscar file ${err}`)
-                res.redirect('/app/files')
+                res.redirect('/files')
             }
             res.render('./viewsUserPlus/files/view', {file: storedFile})
         })
-    },
+    }
 
     // TODO archivos por grupo / user
-    getFilesByUser: (req, res) => {
+    this.getFilesByUser = (req, res) => {
         File.findById(req.params.id, (err, storedFile) => {
             if(err) {
                 console.log(`Error al buscar file ${err}`)
-                res.redirect('/app/files')
+                res.redirect('/files')
             }
             res.render('./viewsUserPlus/files/view', {file: storedFile})
         })
-    },
+    }
 
-    getFilesByGroup: (req, res) => {
+    this.getFilesByGroup = (req, res) => {
         File.findById(req.params.id, (err, storedFile) => {
             if(err) {
                 console.log(`Error al buscar file ${err}`)
-                res.redirect('/app/files')
+                res.redirect('/files')
             }
             res.render('./viewsUserPlus/files/view', {file: storedFile})
         })
-    },
+    }
 
 
-    updateFile: (req, res) => {
+    this.updateFile = (req, res) => {
         File.findById(req.params.id, (err, storedFile) => {
             if(err) {
                 console.log(`pdate]: Error al buscar la oferta ${err}`)
-                res.redirect('/app/files')
+                res.redirect('/files')
             }
             storedFile.business    = req.body.business
             storedFile.description = req.body.description
@@ -139,23 +142,24 @@ module.exports = {
             storedFile.save(err => {
                 if (err) {
                     console.log(`Error al actualizar los datos  file ${err}`)
-                    res.redirect('/app/files')
+                    res.redirect('/files')
                 }
-                res.redirect('/app/files')
+                res.redirect('/files')
             })
         })
-    },
+    }
 
 
-    deleteFile: (req, res) => {
+    this.deleteFile = (req, res) => {
         File.findOneAndRemove({_id: req.params.id}, (err, storedFile) => {
             if (err) {
                 console.log(`Error al eliminar los datos ${err}`)
-                res.redirect('/app/files')
+                res.redirect('/files')
             }
             fs.unlink("public/files/" + storedFile.image)
-            res.redirect('/app/files')
+            res.redirect('/files')
         })
-    },
+    }
 
+    return this
 }

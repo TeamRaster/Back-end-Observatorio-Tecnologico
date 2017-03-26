@@ -31,7 +31,7 @@ block main
 
       else
         h2 Error al cargar el grupo
-      form(method="POST" action="/admin/files/member/" + file._id + "?_method=POST" enctype="multipart/form-data")
+      form(method="POST" action="/files/member/" + file._id + "?_method=POST" enctype="multipart/form-data")
         input.btn.margin-small(id="send" type="submit", value="Enviar mensajeee")
 
       h1 Agregar miembros
@@ -54,7 +54,7 @@ block main
                 td #{user.administrator}
                 td #{user._id}
                 td
-                  form(method="POST" action="/admin/files/member/" + file._id + "/" + user._id + "?_method=PUT" enctype="multipart/form-data")
+                  form(method="POST" action="/files/member/" + file._id + "/" + user._id + "?_method=PUT" enctype="multipart/form-data")
                     input.btn.margin-small(type="submit", value="Agregar")
       else
         h2 No hay usuarios en la base de datos
