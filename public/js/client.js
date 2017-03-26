@@ -14,7 +14,6 @@ socket.on('new notices', function(data){
     //console.log(" template no compilado " + templateScript);
     console.log(" compilado str " + templateScript(data));
 
-
     console.log(container);
     container.innerHTML =   container.innerHTML + templateScript(data)
 

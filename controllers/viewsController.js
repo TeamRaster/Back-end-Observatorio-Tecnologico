@@ -32,7 +32,7 @@ module.exports = {
                 console.log('=========================================================')
                 console.log('[viewsController/getViewOfferEdit]: Error al hacer la busqueda')
                 console.log('=========================================================')
-                res.redirect('/app/offers')
+                res.redirect('/offers')
             }
 
             return res.render('viewsUserPlus/offers/update', {offer: StoredOffer})
@@ -55,7 +55,7 @@ module.exports = {
                 console.log('=========================================================')
                 console.log('[viewsController/getViewDemandEdit]: Error al hacer la busqueda')
                 console.log('=========================================================')
-                res.redirect('/app/demands')
+                res.redirect('/demands')
             }
 
             return res.render('viewsUserPlus/demands/update', {demand: StoredDemand})
@@ -63,24 +63,7 @@ module.exports = {
     },
 
 
-    // Formulario para nuevas Noticias, y para editar
-    getViewNewNew: (req, res) => {
-        res.render('viewsUserPlus/demands/new')
-    },
 
-    getViewNewEdit: (req, res) => {
-        New.findById(req.params.id,  (err, StoredNew) => {
-            console.log('.----------------------id  ' +req.params.id);
-            if(err) {
-                console.log('=========================================================')
-                console.log('[viewsController/getViewNewEdit]: Error al hacer la busqueda')
-                console.log('=========================================================')
-                res.redirect('/app/demands')
-            }
-
-            res.render('viewsUserPlus/news/update', {noti: StoredNew})
-        })
-    },
 
     // Formulario para nuevos Grupos, y para editar
     getViewGroupNew: (req, res) => {
@@ -91,9 +74,9 @@ module.exports = {
         New.findById(req.params.id,  (err, StoredNew) => {
             if(err) {
                 console.log('=========================================================')
-                console.log('[viewsController/getViewDemandEdit]: Error al hacer la busqueda')
+                console.log('[viewsController/getViewGroupEdit]: Error al hacer la busqueda')
                 console.log('=========================================================')
-                res.redirect('/app/demands')
+                res.redirect('/demands')
             }
 
             res.render('viewsUserPlus/news/update', {noti: StoredNew})
@@ -109,7 +92,7 @@ module.exports = {
         File.findById(req.params.id,  (err, StoredFile) => {
             if(err) {
                 console.log('GETFILE Error al hacer la busqueda')
-                res.redirect('/app/files')
+                res.redirect('/files')
             }
             res.render('viewsUserPlus/files/update', {file: StoredFile})
         })
@@ -126,7 +109,7 @@ module.exports = {
                 console.log('=========================================================')
                 console.log('[viewsController/getViewUserEdit]: Error al hacer la busqueda')
                 console.log('=========================================================')
-                res.redirect('/app/users')
+                res.redirect('/users')
             }
 
             return res.render('viewsUserPlus/users/update', {user: storedUser})
@@ -154,7 +137,7 @@ module.exports = {
                 console.log('=========================================================')
                 console.log('[viewsController/getVieSourceEdit]: Error al hacer la busqueda')
                 console.log('=========================================================')
-                res.redirect('/app/administrator/sources')
+                res.redirect('/administrator/sources')
             }
             return res.render('viewsAdministrator/sources/update', {source: storedSource})
         })
@@ -204,7 +187,7 @@ module.exports = {
 //     //             console.log('=========================================================')
 //     //             console.log('[viewsController/getViewDemandEdit]: Error al hacer la busqueda')
 //     //             console.log('=========================================================')
-//     //             res.redirect('/app/demands')
+//     //             res.redirect('/demands')
 //     //         }
 //     //
 //     //         res.render('viewsUserPlus/news/update', {noti: StoredNew})
@@ -222,7 +205,7 @@ module.exports = {
 //     //             console.log('=========================================================')
 //     //             console.log('[viewsController/getViewDemandEdit]: Error al hacer la busqueda')
 //     //             console.log('=========================================================')
-//     //             res.redirect('/app/demands')
+//     //             res.redirect('/demands')
 //     //         }
 //     //
 //     //         res.render('viewsUserPlus/news/update', {noti: StoredNew})

@@ -38,7 +38,6 @@ const sessionMiddleware = session({  // Configuracion de las sesiones
 })
 app.set('view engine', 'pug')  // Motor de vistas
 
-realtimeGroups(server, sessionMiddleware)
 
 // app.use(logger('dev'))
 app.use(express.static(path.join(__dirname, 'public')))  // Archivos estaticos, ideal para los estilos, js, etc
@@ -46,7 +45,8 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 app.use(cookieParser())
 app.use(methodOverride("_method"))  // Ayuda a que un formulario pueda enviar por metodo put, delete
-realtimeSocket(io, sessionMiddleware)
+realtimeGroups(io, sessionMiddleware)
+//realtimeSocket(io, sessionMiddleware)
 
 app.use(sessionMiddleware)
 app.use(flash())  // Muestra mensajes de error que se pueden llegar a generar

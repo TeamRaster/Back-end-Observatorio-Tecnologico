@@ -29,11 +29,11 @@ block main
                 td #{noti.text}
                 td #{noti.creator}
                 td #{noti.comments}
-                td #{noti.likes} //noticias/:id/edit
-                td: a.waves-effect.waves-light.btn.margin-small(href="/admin/noticias/" + noti._id + "/edit") Edit
-                td: a.waves-effect.waves-light.btn.margin-small(href="/app/offers/" + noti._id) View
+                td #{noti.likes} //news/:id/edit
+                td: a.waves-effect.waves-light.btn.margin-small(href="/news/" + noti._id + "/edit") Edit
+                td: a.waves-effect.waves-light.btn.margin-small(href="/news/" + noti._id) View
                 td
-                  form(method="POST" action="/admin/noticias/" + noti._id + "?_method=DELETE" enctype="multipart/form-data")
+                  form(method="POST" action="/news/" + noti._id + "?_method=DELETE" enctype="multipart/form-data")
                     input.btn.margin-small(type="submit", value="Delete")
                 td
                   input(id="coment" type="text", name="", value="")

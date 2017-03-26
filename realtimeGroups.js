@@ -1,17 +1,17 @@
 'use strict'
-// Lógica de sockets IO
+// Lógica de socketIO   SERVER
 
-module.exports = function(server, sessionMiddleware) {
+module.exports = function(io, sessionMiddleware) {
+
     //console.log('server '+ server)
     //console.log('midd '+ Object.keys(sessionMiddleware.session))
 
     const redis = require('redis')
-
-    const io = require("socket.io")(server) // server-> instancia de http  (no express)
+    //const io = require("socket.io")(server) // server-> instancia de http  (no express)
     const client = redis.createClient()
 
-    //client.subscribe('images') // suscripcion al del canal (viene de  ./newsCrudController )
-    client.subscribe('images') // suscripcion al del canal (viene de  ./newsCrudController )
+
+    client.subscribe('groupRedis') // suscripcion al nombre del canal (viene de  ./newsCrudController )
 
     io.use(function(socket, next){
     //    io.sockets.in('groupOne').emit('message', {message: 'se emitio un mesaje al grupo ' + 'ONE' })
@@ -20,12 +20,10 @@ module.exports = function(server, sessionMiddleware) {
     })
 
 
-
-
 /*
     io.sockets.on('connection', function(socket){ // evento socket conectada (cliente conectada)
 
-        console.log('## [realtimeSocket.js ] Conexion  USERID Socket I  O ' + Object.keys(socket.request.session) );
+        console.log('## [realtimeGroups.js ] Conexion  USERID Socket I  O ' + Object.keys(socket.request.session) );
 
         if (socket.request.session['passport'] != undefined) {
             console.log('TIPO  //' + typeof socket.request.session['passport']['user'] );
@@ -66,7 +64,7 @@ module.exports = function(server, sessionMiddleware) {
     /******************Multiples canales ( GRUPOS  O chat privado ...)****************///////
     io.sockets.on('connection', function(socket){
 
-        console.log('## [realtimeSocket.js ] Conexion  SOCKET Group ' + Object.keys(socket.request.session) );
+        console.log('## [realtimeGroups.js ] Conexion  SOCKET Group ' + Object.keys(socket.request.session) );
 
         socket.on('subscribe', function(room){
             console.log("--------------------- Ha entrado al canal  room :", room )
@@ -87,10 +85,24 @@ module.exports = function(server, sessionMiddleware) {
     })
 
 
-////////////////////  PArte cliente
-    client.on('message', function (channel, message) { // cada vez que lleue un mensaje al canal
+    client.on('message', function (channel, message) { // cada vez que lleue un mensaje al canal groupRedis al cliente de redis  (channel)
+            if (channel == 'groupRedis') { // canal grupo redis DB
+                io.emit('groupSocketIO', message) // envia a TODOS los canales debe coincidir 'groupSocketIO' en client.js
+            }
+            console.log("Se publico algo en el canal :: " + channel)
+            console.log("Se publico algo  message " + message)  //mensaje que llegó
+        })
+
+
+
+////////////////////  PArte cliente TODO
+/*    client.on('message', function (channel, message) { // cada vez que lleue un mensaje al canal
         if (channel == 'images') {
             io.emit('new notices', message) // envia a TODOS los canales debe coincidir 'new notices' en client.js
+        }
+
+        if (channel == '58d1a19621b3e007f4230909') { // channel emite desde CTRL
+            io.emit('58d1a19621b3e007f4230909', message) // envia a TODOS los canales debe coincidir 'new notices' en client.js
         }
 
         console.log("Se publico algo en el canal :: " + channel)
@@ -102,7 +114,7 @@ module.exports = function(server, sessionMiddleware) {
        socket.on('event', function(){
 
        })
-   })
+   })*/
 
    ////
   /*var socket = io.connect();
@@ -123,12 +135,7 @@ module.exports = function(server, sessionMiddleware) {
 
 
 
-
-
-
 /***************Termina socket para grupos ****************************/
-
-
 
 
 

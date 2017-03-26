@@ -12,10 +12,10 @@ const usersCrudController = app.controllers.usersCrudController
 const conversationController = app.controllers.conversationController
 const controllerFiles = app.controllers.controllerFiles
 
-const authMiddleware = app.middlewares.auth //require('../middlewares/auth')
+const auth = app.middlewares.auth //require('../middlewares/auth')
 
 // Esta es la nueva validacion para proteger rutas =====================================================================
-router.all('/', authMiddleware.isLogged)
+router.all('/', auth.isLogged)
 
 // Rutas para realizar pruebas =========================================================================================
 router.get('/room', viewsController.getViewRoomIndex)  // Index
@@ -25,13 +25,10 @@ router.get('/room', viewsController.getViewRoomIndex)  // Index
 //router.get('/room/:id/chat', conversationController.getChat)  //
 
 
-// Rutas NOTICIAS Formularios
-router.get('/news/new', viewsController.getViewDemandNew)
-router.get('/noticias/:id/edit', viewsController.getViewNewEdit)
 
 // Rutas GRUPOS Formularios
-router.get('/groups/new', viewsController.getViewGroupNew)
-router.get('/groups/:id/edit', viewsController.getViewGroupEdit)
+/*router.get('/groups/new', viewsController.getViewGroupNew)
+router.get('/groups/:id/edit', viewsController.getViewGroupEdit)*/
 
 // Rutas FILES Formularios
 router.get('/files/new', viewsController.getViewFileNew)

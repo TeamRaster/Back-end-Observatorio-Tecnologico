@@ -7,9 +7,8 @@ module.exports = (app) => {
 
 
     /************** VISTAS *****************///
-
-    app.get('/group/new', viewsController.getViewGroupNew)  // Formulario para crear un nuevo grupo
-    app.get('/group/:id/edit', viewsController.getViewNewEdit)  // Formulario para editar un nuevo grupo
+    app.get('/groups/new', viewsController.getViewGroupNew)  // Formulario para crear un nuevo grupo
+    app.get('/groups/:id/edit', viewsController.getViewGroupEdit)  // Formulario para editar un nuevo grupo
 
     /*****************************************/
 
@@ -17,13 +16,11 @@ module.exports = (app) => {
         .get(controllerGroups.getGroups)
         .post(controllerGroups.setGroup)
 
-
     // CRUD Grupos =======================================================
     app.route('/groups/:id') // Crud a grupos de manera individual
         .get(controllerGroups.getGroup)
         .put(controllerGroups.updateGroup)
         .delete(controllerGroups.deleteGroup)
-
 
         // miembros y solicitudes de Grupos
     app.route('/groups/member/:groupId/:userId') // Crud a MIEMBROS de grupos  * SOLO ADMINS
@@ -42,7 +39,7 @@ module.exports = (app) => {
 
 
     // CRUD NOTIFICACIONES POR GRUPO  =======================================================
-    app.route('/groups/notif') // Crud a grupos de manera individual
+    app.route('/groups/notif/:groupId') // Crud a grupos de manera individual
         .post(controllerGroups.notiToGroup)
         /*.get(controllerGroups.getGroup)
         .put(controllerGroups.updateGroup)

@@ -33,14 +33,16 @@ html(lang="es")
             li: a(href="!#" class="dropdown-button" data-activates="dropdown1") Publications
             li: a(href="!#" class="dropdown-button" data-activates="dropdown2") Sessions
     block main
-    script(src="https://code.jquery.com/jquery-3.1.1.min.js")
+    //script(src="https://code.jquery.com/jquery-3.1.1.min.js")
+    script(src="/bower_components/jquery/dist/jquery.min.js")
     script(src="/bower_components/materialize/dist/js/materialize.min.js")
     script(src="/bower_components/moment/min/moment.min.js")
     script(src="/socket.io/socket.io.js")
-    //script(src="/js/handlebars-v4.0.5.js")
-    script(src="/js/clientChat.js")
+
+    script(src="/bower_components/handlebars-v4.0.5.js")
+    //script(src="/js/clientChat.js")
     script(src="/js/clientGroups.js")
-    script(src="/js/client.js")
+    //script(src="/js/client.js")
     script.
       $( document ).ready(function(){
         $(".dropdown-button").dropdown()

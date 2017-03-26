@@ -3,42 +3,70 @@
 const redis = require('redis')
 const client = redis.createClient()
 
-const News = require('../models/modelNews')
 
-module.exports = {
+module.exports = (app) => {
 
-// CRUD Noticia =======================================================
-    viewSetNewNoticia: function (req, res) {
+    //const News = require('../models/modelNews')///app.models.modelNews
+    const News = app.models.modelNews
+    console.log(News);
+
+    // Vistas-------------------
+
+    /*this.viewSetNewNew = (req, res) => {
             res.render('./viewsUserPlus/news/news');
-        },
+        }*/
 
-    setNewNoticia: function (req, res) {
+    // Formulario para nuevas Noticias, y para editar
+    this.getViewNewNew = (req, res) => {
+        res.render('viewsUserPlus/news/news')
+    }
 
-            console.log(req.fields)
+    this.getViewNewEdit = (req, res) => {
+        News.findById(req.params.id,  (err, StoredNew) => {
+            console.log('.----------------------id  ' +req.params.id);
+            if(err) {
+
+                console.log('=========================================================')
+                console.log('[viewsController/getViewNewEdit]: Error al hacer la busqueda')
+                console.log('=========================================================')
+                res.redirect('/news')
+            }
+
+            res.render('viewsUserPlus/news/update', {noti: StoredNew})
+        })
+    }
+
+
+
+    // CRUD New =======================================================
+    this.setNewNew =  (req, res) => {
+
+            console.log(req.body)
 
             let notice = new News({
-                title: req.fields.title,
-                image: req.fields.image,
-                extension: req.fields.extension,
-                text: req.fields.text,
-                category: req.fields.category,
+                title: req.body.title,
+                image: req.body.image,
+                extension: req.body.extension,
+                text: req.body.text,
+                category: req.body.category,
             })
 
             notice.save().then((noti) => {
-                console.log('[Successful]: Noticia guardada')
+                console.log('[Successful]: New guardada')
                 return res.status(200).send({"notice": noti})
 
             }, (error) => {
-                console.log(`[Error Save]: Noticia no almacenada ${error}`)
+                console.log(`[Error Save]: New no almacenada ${error}`)
                 return res.status(500).send({"notice": error})
             })
+    }
 
-    },
+    this.getAllNews = (req, res) => {
+        console.log('getAllNews  ---------------------')
 
-    getAllNoticias: function(req, res) {
         News.find({}, function (err, newsStored) {
             if(err) {
-                console.log('Hubo un error al buscar todas las Noticias[newsCrudController]')
+                console.log('Hubo un error al buscar todas las News[newsCrudController]')
                 res.status(500).send({"error": err})
 
             }
@@ -49,10 +77,7 @@ module.exports = {
             //client.publish('images', (res.locals.toString()))
             console.log('Cliente news ctrlr-----------')
             console.log( Object.keys(res.locals) )
-            //console.log('images', Object.keys(res) )
-            //console.log('images', Object.keys(res.req.fields) )
-            //console.log('images', Object.keys(res.req.res) )
-            //console.log('images', Object.keys(res.locals[0]) )
+
             var claves = {dwl: "dwe", w: "efwef"};
             //console.log('images', newsStored)
 
@@ -78,9 +103,9 @@ module.exports = {
             // return res.status(200).send({message: "pagina del admin    "});
         })
 
-    },
+    }
 
-    getNoticiaById: function(req, res) {
+    this.getNewById = (req, res) => {
         News.findById(req.params.id, function (err, newStored) {
 
             if(err) {
@@ -93,12 +118,12 @@ module.exports = {
             res.send(newStored)
         })
 
-    },
+    }
 
-    updateNoticiaById: function(req, res) {
+    this.updateNewById = (req, res) => {
         console.log(".................   updatessss");
         var newId = req.params.id;
-        var update = req.fields;
+        var update = req.body;
         //lo que recibe la funcion callback la data ;)
         News.findByIdAndUpdate(newId, update, (err, newsUpdated) => {
           if (err) {
@@ -107,11 +132,11 @@ module.exports = {
 
             return res.status(200).send({news: newsUpdated});
 
-        });
+        })
 
+    }
 
-    },
-    removeNoticiaById: function(req, res) {
+    this.removeNewById = (req, res) => {
         News.findOneAndRemove({_id: req.params.id}, function (err) {
             if (err) {
                 console.log('Error al borrar la oferta')
@@ -119,7 +144,8 @@ module.exports = {
             }
             res.send('Se borro exitosamente')
         })
-    },
+    }
 
 
+    return this
 }

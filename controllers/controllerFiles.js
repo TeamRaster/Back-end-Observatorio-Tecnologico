@@ -9,7 +9,7 @@ module.exports = {
 
     /******************Folders ******************////
     setFolder: (req, res) => {
-        let user = req.session.passport.user
+        let user = req.user
         let userId = '';
 
         if (user != undefined){
@@ -23,7 +23,7 @@ module.exports = {
 
         let ext_ = req.files.image.name.split(".").pop()
         let newFolder = new Folder({
-            name      : req.fields.name,
+            name      : req.body.name,
             creator : userId,
             //group   : groupId
 
@@ -47,10 +47,10 @@ module.exports = {
     setFile: (req, res) => {
         let ext_ = req.files.image.name.split(".").pop()
         let newFile = new File({
-            business      : req.fields.business,
+            business      : req.body.business,
             ext           : ext_,
-            description   : req.fields.description,
-            category      : req.fields.category,
+            description   : req.body.description,
+            category      : req.body.category,
             // contact       : 'id_contact', // todo usar id de cada equema para relacionarlo
             // creator       : 'id_creator'
         })
@@ -126,9 +126,9 @@ module.exports = {
                 console.log(`pdate]: Error al buscar la oferta ${err}`)
                 res.redirect('/app/files')
             }
-            storedFile.business    = req.fields.business
-            storedFile.description = req.fields.description
-            storedFile.category    = req.fields.category
+            storedFile.business    = req.body.business
+            storedFile.description = req.body.description
+            storedFile.category    = req.body.category
 
             if (req.files.image.name != "") {
                 let ext_ = req.files.image.name.split(".").pop()

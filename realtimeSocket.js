@@ -34,7 +34,7 @@ module.exports = function(io, sessionMiddleware) {
 
     io.sockets.on('connection', function(socket){ // evento socket conectada (cliente conectada)
 
-        console.log('## [realtimeSocket.js ] Conexion  USERID Socket I  O ' + Object.keys(socket.request.session) );
+        console.log('## [realtimeSocket.js ] Conexion  USERID Socket IO ' + Object.keys(socket.request.session) );
 
         if (socket.request.session['passport'] != undefined) {
             console.log('TIPO  //' + typeof socket.request.session['passport']['user'] );
@@ -43,7 +43,7 @@ module.exports = function(io, sessionMiddleware) {
             console.log( "Objetossssss ---------------------------");
             for (var k in target){
                 if (typeof target[k] !== 'function') {
-                    console.log("Key is " + k + ", value is" + target[k]);
+                    //console.log("Key is " + k + ", value is" + target[k]);
                 }
             }
         }
@@ -51,7 +51,6 @@ module.exports = function(io, sessionMiddleware) {
         //socket.request.session
         //console.log("sockett ", socket.request.session);
     })
-
 
 
 
@@ -147,7 +146,6 @@ module.exports = function(io, sessionMiddleware) {
 
     io.on('connection', function (socket) {
         console.log("sockett CONEXION**************** ")
-=======
 
     let messages = {
         msg  : 'Bienvenido a la sala de conversacion de este grupo',
@@ -222,7 +220,6 @@ module.exports = function(io, sessionMiddleware) {
 
 /*    io.on('connection', function (socket) {
         console.log("sockett ")
->>>>>>> 0d4875a0c0497a13cc216d609a10851479fa2b08
         socket.on('event', function(){
 
         })

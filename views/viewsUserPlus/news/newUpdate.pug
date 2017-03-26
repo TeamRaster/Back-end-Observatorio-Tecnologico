@@ -10,7 +10,7 @@ block main
   .row.center-xs
     .col-xs-5
 
-      form(method="POST" action="/admin/noti/" + id + "?_method=PUT" enctype="multipart/form-data")
+      form(method="POST" action="/news/" + id + "?_method=PUT" enctype="multipart/form-data")
         .input-field.col.s12
           label(for="title") Título:
           input(type="text", class="validate", name="title", id="business")
