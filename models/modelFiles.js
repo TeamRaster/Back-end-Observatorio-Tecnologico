@@ -8,9 +8,9 @@ module.exports = (app) => {
     const FilesSchema = new Schema({
         ext: String,
         name: String,
-        creationFile: {
+        creationDate: {
             type: Date,
-            require: Date.now
+            default: Date.now
         },
         author: {
             type: Schema.Types.ObjectId,

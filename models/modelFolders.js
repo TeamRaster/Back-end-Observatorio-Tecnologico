@@ -6,9 +6,9 @@ const Schema = mongoose.Schema
 module.exports = (app) => {
     const FoldersSchema = new Schema({
         name: String,
-        creationDate: {
+        creationDate:{
             type: Date,
-            require: Date.now
+            default: Date.now
         },
         creator: {
             type: Schema.Types.ObjectId,
@@ -17,7 +17,12 @@ module.exports = (app) => {
         group: {
             type: Schema.Types.ObjectId,
             ref: "Group"
-        }
+        },
+        photo: {
+            type          : String,
+            default       : ''
+        },
+        path              : String,
     })
 
     return mongoose.model('Folder', FoldersSchema)

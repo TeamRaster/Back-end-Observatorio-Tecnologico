@@ -18,8 +18,8 @@ module.exports = (app) => {
 
     this.setGroup = (req, res) => {
         ///let ext_ = req.files.image.name.split(".").pop()
-        let newGroup = new Group({
 
+        let newGroup = new Group({
             title      : req.body.title,
             description   : req.body.description,
             //creator      : 'id_creator',
@@ -57,6 +57,10 @@ module.exports = (app) => {
 
     this.getGroup = (req, res) => {
         //console.log('claves ######<## ', Object.keys(req.user.id));
+        client.get('framework27', function(err, reply) {
+            console.log("REDIS ",   reply);
+        });
+
         console.log('claves ######<## ', (req.user.id), 'feff' );
 
         //let groupId
@@ -111,6 +115,7 @@ module.exports = (app) => {
 
                 //client.subscribe(storedGroup['_id'].toString())  //// // TODO     NO vaaqui
 
+                //client.publish('subscribe', 'groupSocketIO')
 
                 client.publish('groupRedis', JSON.stringify(message))
                 //client.publish('groupSocketIO', JSON.stringify(message))
@@ -119,7 +124,6 @@ module.exports = (app) => {
                     messageTo: "-------- Entrar A AAAA  "
                 }
 
-                client.publish('subscribe', 'groupSocketIO')
                 client.emit('subscribe', 'groupSocketIO')
                     // client.publish('message', JSON.stringify(message))
                     // client.publish(storedGroup['_id'].toString(), JSON.stringify(message) ) //  descomen
@@ -146,10 +150,9 @@ module.exports = (app) => {
         console.log('****************mensaje del input', message);
 
         console.log("ID GRUPO   ", groupId);
-        //client.subscribe('58d1a19621b3e007f4230909')  //// // TODO     NO vaaqui boorra
 
         client.publish('notiToGroup', JSON.stringify(message) )
-        client.publish('58d1a19621b3e007f4230909', JSON.stringify(message) )
+        client.publish('58d1a19621b3e007f4230909_Redis', JSON.stringify(message) )
 
         res.status(200).send({ groupId: groupId})
 

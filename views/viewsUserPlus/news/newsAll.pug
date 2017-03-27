@@ -33,7 +33,7 @@ block main
                 td: a.waves-effect.waves-light.btn.margin-small(href="/news/" + noti._id + "/edit") Edit
                 td: a.waves-effect.waves-light.btn.margin-small(href="/news/" + noti._id) View
                 td
-                  form(method="POST" action="/news/" + noti._id + "?_method=DELETE" enctype="multipart/form-data")
+                  form(method="POST" action="/news/" + noti._id + "?_method=DELETE" )
                     input.btn.margin-small(type="submit", value="Delete")
                 td
                   input(id="coment" type="text", name="", value="")

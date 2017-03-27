@@ -29,7 +29,7 @@ block main
             tr #{noti.comments}
             tr #{noti.likes}
             tr
-              form(method="POST" action="/news/" + noti._id + "?_method=DELETE" enctype="multipart/form-data")
+              form(method="POST" action="/news/" + noti._id + "?_method=DELETE" )
                 input.btn.margin-small(id="comment" type="textarea", value="Escriba un comentario... ")
                 input.btn.margin-small(type="submit", value="Enviar")
 

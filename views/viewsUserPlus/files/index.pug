@@ -12,7 +12,7 @@ block main
         table.highlight.centered
           thead
             tr
-              th ext
+              th ID
               th name
               th creationDate
               th author
@@ -23,17 +23,18 @@ block main
               tr
 
                 td #{folder._id}
-                td #{folder.ext}
+                //td #{folder.ext}
                 td #{folder.name}
                 //-td #{moment(folder.creationDate).format('MM/DD/YYYY')}
-                td #{folder.creator === undefined ? 'no de f ' : folder.creator.email  }
+                td #{folder.creationDate === undefined ? 'no de f ' : folder.creationDate }
+                td #{folder.creator === undefined ? 'no de f ' : folder.creator._id  }
                 td #{folder.folder}
                 td
                   //-each file in filder.files
                     li  FILES-: #{file.name} #{file._id} #{file.ext}  #{file.creationDate} a(href="/files/file/" + file._id)
 
                 td: a.waves-effect.waves-light.btn.margin-small(href="/files/" + folder._id + "/edit") Edit
-                td: a.waves-effect.waves-light.btn.margin-small(href="/files/" + folder._id) Ver y editar integrantes
+                td: a.waves-effect.waves-light.btn.margin-small(href="/files/" + folder._id) Ver y editar archivos
                 td
                   form(method="POST" action="/files/" + folder._id + "?_method=DELETE" enctype="multipart/form-data")
                     input.btn.margin-small(type="submit", value="Delete")

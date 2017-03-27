@@ -1,4 +1,4 @@
-//var socket = io //.connect('http://localhost') // libreria socket para conectar con servidor socket
+    //var socket = io //.connect('http://localhost') // libreria socket para conectar con servidor socket
 
 let serverUri = 'http://localhost:3000/'
 //var socket = io.connect();
@@ -18,17 +18,30 @@ var socket = io();
 })
 */
 
-socket.on('groupSocketIO', function(data){ // canal por cada grupo !
+/*socket.on('groupSocketIO', function(data){ // canal por cada grupo !
     console.log("client socket ");
     data = JSON.parse(data)
     console.log( " Cliente -------" + data);
 
+})*/
+
+
+
+socket.on('58d1a19621b3e007f4230909', function(data){ // canal por cada grupo !
+    console.log("client socket  58d1a19621b3e007f4230909");
+    data = JSON.parse(data)
+    console.log( " Cliente ------- 58d1a19621b3e007f4230909" + data);
+
 })
 
+socket.emit('subscribe', "GRUPO generico   groups[i].toString()")
+
+socket.emit('sendDataGroup', {mesage: "Mensaje para el grupo  EXCLUSIVOOO "})
 
 socket.on('message', function(data){
     console.log(" ########### DATA de socket ",     data);
 })
+
 
  /*socket.emit('subscribe', 'roomOne');
  socket.emit('subscribe', 'roomTwo');*/
@@ -43,6 +56,60 @@ var message = 'Mensaje desde el cliente de l grupp   58d1a19621b3e007f4230909'
 
 
 socket.emit('groupSocketIO', 'groupTwo')
+
+var BASE_URL = "http://localhost:3000"
+
+
+
+$('#sendMessage').click(function() {
+
+    console.log("Ajaxxxxxxxxxxxxxxxxxxxxxxx ");
+    socket.emit('58d1a19621b3e007f4230909', {message: "Mensaje sólo para 58d1a19621b3e007f4230909 GRUPO "})
+
+    $.ajax({'url': BASE_URL + '/groups/notif/' + '58d1a19621b3e007f4230909', // FIXME
+        'type' : 'POST',
+        //'json': true,
+        'headers' : {'Content-Type' : 'application/json'},
+        // 'headers' : {'Content-Type': 'application/json; charset=utf-8',
+        //              'enctype': 'multipart/form-data',
+        //              'Connection':'keep-alive'},
+        'data' : JSON.stringify({'groupMessage': $("#groupMessage").val()}) ,  //JSON.stringify(requestObject), // datos a enviar
+        //processData: false,
+        //contentType: false,
+        //'processData' : false,
+        'success' : function(data){
+            //data = JSON.parse(data)
+            console.log(" Sucess data <rq /groups/notif/ +,",  room.toString(), "  ", data );
+        },
+        //'dataType' : 'json', // text  ->  JSON.parse(data)   retorno //Content-Type:"application/json; charset=utf-8"
+        'error': function(jqXHR, textStatus, errorThrown ){
+            //console.log(Object.keys(jqXHR));
+
+            console.log("EtextStatus-> ", textStatus, " error =" ,errorThrown," jqXHR",jqXHR);
+            //comcast.cvs.apps.alerts.test.showErrorDialog( '<div style="color:red;font-weight:bold;">' +
+            // 'Failed to save the settop box. See server logs for problem.</div>' );
+
+            },
+    });
+    return false // disable reload
+
+}) //button send notif
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
  /*socket.emit('send', { room: room, message: message });
  socket.emit('message', { room: room, message: message });
@@ -66,22 +133,13 @@ socket.on('message', function(data){
 })
 
 
-*/
 
 
 
-/**/
 
 
  // TEST
 
-//
-//
-//
-//
-//
-//
-// var BASE_URL = "http://localhost:3000"
 //
 // var groups = []
 //
@@ -171,40 +229,7 @@ socket.on('message', function(data){
 //     //         return false;
 //     //     });
 //
-//     $('#sendMessage').click(function() {
-//
-//         console.log("Ajaxxxxxxxxxxxxxxxxxxxxxxx ");
-//         socket.emit('58d1a19621b3e007f4230909', {message: "Mensaje sólo para 58d1a19621b3e007f4230909 GRUPO "})
-//
-//         $.ajax({'url': BASE_URL + '/groups/notif/' + '58d1a19621b3e007f4230909', // FIXME
-//             'type' : 'POST',
-//             //'json': true,
-//             'headers' : {'Content-Type' : 'application/json', 'enctype': 'multipart/form-data'},
-//             // 'headers' : {'Content-Type': 'application/json; charset=utf-8',
-//             //              'enctype': 'multipart/form-data',
-//             //              'Connection':'keep-alive'},
-//             'data' : JSON.stringify({'groupMessage': $("#groupMessage").val()}) ,  //JSON.stringify(requestObject), // datos a enviar
-//             //processData: false,
-//             //contentType: false,
-//             //'processData' : false,
-//             'success' : function(data){
-//                 //data = JSON.parse(data)
-//                 console.log(" data <rq /groups/notif/ +,",  room.toString(), "  ", data );
-//             },
-//             //'dataType' : 'json', // text  ->  JSON.parse(data)   retorno //Content-Type:"application/json; charset=utf-8"
-//             'error': function(jqXHR, textStatus, errorThrown ){
-//                 //console.log(Object.keys(jqXHR));
-//
-//                 console.log("EtextStatus-> ", textStatus, " error =" ,errorThrown," jqXHR",jqXHR);
-//                 //console.log("claves error =", Object.keys(errorThrown));
-//                 //console.log("claves jqXHR =", Object.keys(jqXHR));
-//                 //comcast.cvs.apps.alerts.test.showErrorDialog( '<div style="color:red;font-weight:bold;">' +
-//                 // 'Failed to save the settop box. See server logs for problem.</div>' );
-//                 },
-//         });
-//         return false // disable reload
-//
-//     }) //button send actio
+
 // })
 //
 //

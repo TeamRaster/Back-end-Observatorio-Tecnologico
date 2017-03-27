@@ -1,6 +1,8 @@
 'use strict'
 const express = require('express')
-const router = express.Router()
+
+const redis = require('redis')
+let client = redis.createClient()
 
 module.exports = (app) => {
     const controllerFiles = app.controllers.controllerFiles  // Llamada del controlador para los Grupos
@@ -8,11 +10,21 @@ module.exports = (app) => {
     const auth = require('../middlewares/auth')  // Llamada del middleware para la validacion de las rutas
 
 
+    app.get('/files/redis/get', (req, res) => {
+
+        client.smembers('tags', function(err, reply) {
+            console.log(reply);
+            res.status(200).send({message: 'done set', reply})
+        });
+
+    })  // TESTS REDIS
+
+
     /************** VISTAS *****************///
 
-    router.route('/files') // Crud a archivos de manera grupal
+    app.route('/files') // Crud a archivos de manera grupal
         .get(controllerFiles.getFiles)
-        .post(controllerFiles.setFolder)
+        .post(controllerFiles.setFolder) // setFile
 
 
     // Rutas FILES Formularios
@@ -21,14 +33,11 @@ module.exports = (app) => {
 
     /*****************************************/
 
-
     // CRUD FILES  =======================================================
-    router.route('/files/:id') // Crud a archivos de manera individual
+    app.route('/files/:id') // Crud a archivos de manera individual
         .get(controllerFiles.getFile)
         .put(controllerFiles.updateFile)
-        .delete(controllerFiles.deleteFile)
-
-
+        .delete(controllerFiles.deleteFolder)
 
     return this
 }

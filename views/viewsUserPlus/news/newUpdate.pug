@@ -10,7 +10,7 @@ block main
   .row.center-xs
     .col-xs-5
 
-      form(method="POST" action="/news/" + id + "?_method=PUT" enctype="multipart/form-data")
+      form(method="POST" action="/news/" + id + "?_method=PUT")
         .input-field.col.s12
           label(for="title") Título:
           input(type="text", class="validate", name="title", id="business")
@@ -30,4 +30,4 @@ block main
         div
           input(type="submit", class="btn", name="btn", id="btn", value="Publicar")
 
-      form(method="POST" action="/app/no/" + id + "?_method=PUT" enctype="multipart/form-data")
+      form(method="POST" action="/app/no/" + id + "?_method=PUT" )

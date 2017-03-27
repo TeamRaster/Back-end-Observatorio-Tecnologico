@@ -30,9 +30,9 @@ block main
                 td: a.waves-effect.waves-light.btn.margin-small(href="/groups/" + group._id + "/edit") Edit
                 td: a.waves-effect.waves-light.btn.margin-small(href="/groups/" + group._id) Ver y editar integrantes
                 td
-                  form(method="POST" action="/groups/" + group._id + "?_method=DELETE" enctype="multipart/form-data")
+                  form(method="POST" action="/groups/" + group._id + "?_method=DELETE")
                     input.btn.margin-small(type="submit", value="Delete")
-                  form(method="POST" action="/groups/memberRequest/" + group._id + "?_method=POST" enctype="multipart/form-data")
+                  form(method="POST" action="/groups/memberRequest/" + group._id + "?_method=POST")
                     input.btn.margin-small(type="submit", value="enviar solicitud")
       else
         h3 No hay grupos en la base de datos

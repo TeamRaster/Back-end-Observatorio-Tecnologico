@@ -1,9 +1,44 @@
 'use strict'
 
+const redis = require('redis')
+let client = redis.createClient()
+
 module.exports = (app) => {
     const controllerGroups = app.controllers.controllerGroups  // Llamada del controlador para los Grupos
     const viewsController= app.controllers.viewsController  // Llamada del controlador para los Grupos
     const auth = require('../middlewares/auth')  // Llamada del middleware para la validacion de las rutas
+
+    client.on('connect', function() {
+        console.log('connected REDIS ');
+    });
+
+    app.get('/groups/redis', (req, res) => {  // TESTS REDIS
+
+        res.render('./viewsUserPlus/tests/redis')
+
+    })
+
+
+    app.get('/groups/redis/set', (req, res) => {
+
+    // //client.del('tags', function(err, reply) { delete
+
+    client.sadd(['tags', 'angularjs', 'backbonejs', 'emberjs'], function(err, reply) {
+          console.log(reply);
+        res.status(200).send({message: 'done set', reply})
+    })
+
+    })
+
+
+    app.get('/groups/redis/get', (req, res) => {
+
+        client.smembers('tags', function(err, reply) {
+            console.log(reply);
+            res.status(200).send({message: 'done set', reply})
+        });
+
+    })  // TESTS REDIS
 
 
     /************** VISTAS *****************///

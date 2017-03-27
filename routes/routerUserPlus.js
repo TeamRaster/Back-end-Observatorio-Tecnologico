@@ -30,10 +30,6 @@ router.get('/room', viewsController.getViewRoomIndex)  // Index
 /*router.get('/groups/new', viewsController.getViewGroupNew)
 router.get('/groups/:id/edit', viewsController.getViewGroupEdit)*/
 
-// Rutas FILES Formularios
-router.get('/files/new', viewsController.getViewFileNew)
-router.get('/files/:id/edit', viewsController.getViewFileEdit)
-
 // Sala de chats
 router.get('/room', viewsController.getViewRoom)
 
@@ -78,20 +74,6 @@ router.route('/demands/:id') // Crud a demandas de manera individual
 router.route('/demands') // Crud a demandas de manera grupal
     // .get(demandCrudController.getDemands)
     // .post(demandCrudController.setDemand)
-
-
-
-
-// CRUD FILES  =======================================================
-router.route('/files/:id') // Crud a archivos de manera individual
-    .get(controllerFiles.getFile)
-    .put(controllerFiles.updateFile)
-    .delete(controllerFiles.deleteFile)
-
-router.route('/files') // Crud a archivos de manera grupal
-    .get(controllerFiles.getFiles)
-    .post(controllerFiles.setFolder)
-
 
 
 // CRUD Usuarios =======================================================================================================

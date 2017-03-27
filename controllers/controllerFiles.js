@@ -13,19 +13,22 @@ module.exports = (app) => {
         let user = req.user
         let userId = '';
 
+        console.log("FFFFFFFFFFFFffffileee ", Object.keys(req.body),"fin filee");
+
         if (user != undefined){
-            console.log(Object.keys(req.session) + "sess ")
+            console.log(Object.keys(req.session) + "   sess ")
             console.log(user['_id'])
             userId = user['_id']
         }
         else {
-            res.redirect('/accounts/signin')
+            // res.redirect('/accounts/signin')
         }
-
-        let ext_ = req.files.image.name.split(".").pop()
+        //let ext_ = req.files.image.name.split(".").pop()
         let newFolder = new Folder({
             name      : req.body.name,
             creator : userId,
+            /*photo          : req.file.filename,
+            path           : req.file.destination,*/
             //group   : groupId
 
         })
@@ -36,7 +39,7 @@ module.exports = (app) => {
 
                 res.redirect('/files')
             }
-            fs.rename(req.files.image.path, "public/images/imagesFolders/" + newFolder._id + "." + ext_)
+            //fs.rename(req.files.image.path, "public/images/imagesFolders/" + newFolder._id + "." + ext_)
             console.log('[Successful]: Folder guardada con exito')
             res.redirect('/files')
         })
@@ -46,10 +49,14 @@ module.exports = (app) => {
     /******************Files ******************////
 
     this.setFile = (req, res) => {
-        let ext_ = req.files.image.name.split(".").pop()
+
+        console.log("FFFFFFFFFFFFffffileee ", Object.keys(req.params),"fin filee22  1 ");
+        console.log("FFFFFFFFFFFFffffilee22  1 e ", Object.keys(req.body),"fin filee22  1 ");
+
+        //let ext_ = req.files.image.name.split(".").pop()
         let newFile = new File({
             business      : req.body.business,
-            ext           : ext_,
+            //ext           : ext_,
             description   : req.body.description,
             category      : req.body.category,
             photo          : req.file.filename,
@@ -72,14 +79,16 @@ module.exports = (app) => {
 
 
     this.getFiles = (req, res) => {
+
         Folder.find({}, (err, storedFolders) => {
             User.populate(storedFolders, {path: "creator"}, (err, storedFolders) => {
                 if(err) {
                     console.log(`getGroup   Error al buscar  Ueser group ${err}`)
                 }
-                //res.status(200).send(storedGroup);
-                console.log("/////// Group ----- " + storedFolders +" ------------");
+                ///console.log("/////// Group ----- " + storedFolders +" ------------");
+
                 res.render('./viewsUserPlus/files/index', {folders: storedFolders})
+
             });
 
             if(err) {
@@ -156,7 +165,18 @@ module.exports = (app) => {
                 console.log(`Error al eliminar los datos ${err}`)
                 res.redirect('/files')
             }
-            fs.unlink("public/files/" + storedFile.image)
+            //fs.unlink("public/files/" + storedFile.image)
+            res.redirect('/files')
+        })
+    }
+
+    this.deleteFolder = (req, res) => {
+        Folder.findOneAndRemove({_id: req.params.id}, (err, storedFolder) => {
+            if (err) {
+                console.log(`Error al eliminar los datos ${err}`)
+                res.redirect('/files')
+            }
+
             res.redirect('/files')
         })
     }
