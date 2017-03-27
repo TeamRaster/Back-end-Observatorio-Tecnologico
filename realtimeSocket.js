@@ -34,7 +34,7 @@ module.exports = function(io, sessionMiddleware) {
 
     io.sockets.on('connection', function(socket){ // evento socket conectada (cliente conectada)
 
-        console.log('## [realtimeSocket.js ] Conexion  USERID Socket IO ' + Object.keys(socket.request.session) );
+        // console.log('## [realtimeSocket.js ] Conexion  USERID Socket I  O ' + Object.keys(socket.request.session) );
 
         if (socket.request.session['passport'] != undefined) {
             console.log('TIPO  //' + typeof socket.request.session['passport']['user'] );
@@ -63,7 +63,7 @@ module.exports = function(io, sessionMiddleware) {
         })
 
        io.on('connection', function (socket) {
-           console.log("sockett CONEXION**************** ")
+        //    console.log("sockett CONEXION**************** ")
            socket.on('event', function(){
 
            })

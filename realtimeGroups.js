@@ -107,7 +107,7 @@ module.exports = function(io, sessionMiddleware) {
         })
 
         socket.on('send', function(data){
-            console.log("Enviando un mensajeee ", data);
+            // console.log("Enviando un mensajeee ", data);
             //io.sockets.in(data.room).emit('message', data); FIXME
             io.sockets.emit('message')
         })
@@ -131,6 +131,12 @@ module.exports = function(io, sessionMiddleware) {
 
     })
 
+/*<<<<<<< HEAD
+=======
+   io.on('connection', function (socket) {
+    //    console.log("sockett CONEXION**************** ")
+       socket.on('event', function(){
+>>>>>>> 79bbc2073df8eddd2d124d4f8deadb015442290e*/
 
     client.on('message', function (channel, message) { // cada vez que lleue un mensaje al canal groupRedis al cliente de redis  (channel)
             if (channel == 'groupRedis') { // canal grupo redis DB
