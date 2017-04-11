@@ -44,14 +44,14 @@ module.exports = (io, sessionMiddleware) => {
 
     var message = []
     var messages = []
-    this.storeMessage = (room, message) => { // Guardar mensajes en redis y emitir al room
+    var storeMessage = (room, message) => { // Guardar mensajes en redis y emitir al room
     	client.lpush(room, message, function (err, res) {
     		client.ltrim(room, 0, 9); // solo 10 mensajes por room  TODO aumentar
     	});
     	io.sockets.in(room).emit("displayMessage", message);
     }
 
-    this.emitMessages = (room, socket) => {
+    var emitMessages = (room, socket) => {
     	client.lrange(room, 0, -1, function(err, messages){
     		messages = messages.reverse();
     		messages.forEach(function( ) {
@@ -115,10 +115,10 @@ module.exports = (io, sessionMiddleware) => {
 
     	socket.join("room_one");
 
-    	this.emitMessages("room_one", socket);
+    	emitMessages("room_one", socket);
 
     	socket.on("chatMessage", function(data){
-    	  this.storeMssage(data[0], data[1]); // funcion gfrardar y emitir mensaje data[room, message ]
+    	  storeMssage(data[0], data[1]); // funcion gfrardar y emitir mensaje data[room, message ]
     	});
 
         // mostrar todos los mensajes
@@ -129,7 +129,7 @@ module.exports = (io, sessionMiddleware) => {
     			//socket.leave(rooms[0]); // Abandonar un room
     			socket.join(rooms[1]);
     			socket.emit("clear_room"); // eliminar mensajes grupo anterior (html cliente)
-    			this.emitMessages(rooms[1], socket);
+    			emitMessages(rooms[1], socket);
     		});
     	}
 
