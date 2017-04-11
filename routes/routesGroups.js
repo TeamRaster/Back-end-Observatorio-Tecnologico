@@ -13,7 +13,6 @@ module.exports = (app) => {
     });
 
     app.get('/groups/redis', (req, res) => {  // TESTS REDIS
-
         res.render('./viewsUserPlus/tests/redis')
 
     })
@@ -22,11 +21,10 @@ module.exports = (app) => {
     app.get('/groups/redis/set', (req, res) => {
 
     // //client.del('tags', function(err, reply) { delete
-
-    client.sadd(['tags', 'angularjs', 'backbonejs', 'emberjs'], function(err, reply) {
-          console.log(reply);
-        res.status(200).send({message: 'done set', reply})
-    })
+        client.sadd(['tags', 'angularjs', 'backbonejs', 'emberjs'], function(err, reply) {
+              console.log(reply);
+            res.status(200).send({message: 'done set', reply})
+        })
 
     })
 
@@ -56,6 +54,10 @@ module.exports = (app) => {
         .get(controllerGroups.getGroup)
         .put(controllerGroups.updateGroup)
         .delete(controllerGroups.deleteGroup)
+
+    // miembros y subscripciones a Grupos
+    app.route('/groups/subscribe/:groupId')
+        .post(controllerGroups.subsTo)
 
         // miembros y solicitudes de Grupos
     app.route('/groups/member/:groupId/:userId') // Crud a MIEMBROS de grupos  * SOLO ADMINS

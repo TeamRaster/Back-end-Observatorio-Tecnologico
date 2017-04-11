@@ -1,7 +1,7 @@
 'use strict'
-// Lógica de socketIO  y redis  SERVER
+// Lógica de socketIO   SERVER
 
-module.exports = (io, sessionMiddleware) => {
+module.exports = function(io, sessionMiddleware) {
 
     //console.log('midd '+ Object.keys(sessionMiddleware.session))
 
@@ -27,8 +27,8 @@ module.exports = (io, sessionMiddleware) => {
     });
 
 
-    //client.subscribe('groupRedis') // suscripcion al nombre del canal (viene de  ./controllerGroups )
-    //client.subscribe('subscriptions') // suscripcion al nombre del canal (viene de  ./controllerGroups )
+    client.subscribe('groupRedis') // suscripcion al nombre del canal (viene de  ./controllerGroups )
+    client.subscribe('subscriptions') // suscripcion al nombre del canal (viene de  ./controllerGroups )
     //client.subscribe('58d1a19621b3e007f4230909_Redis') // suscripcion al nombre del canal (viene de  ./controllerGroups )
 
     //client.subscribe('58d1a19621b3e007f4230909') // suscripcion al nombre del canal (viene de  ./controllerGroups )
@@ -40,28 +40,7 @@ module.exports = (io, sessionMiddleware) => {
     })
 
 
-    var rooms = ["room_one", "room_two", "room_three", "room_four", "room_five"];
-
-    var message = []
-    var messages = []
-    this.storeMessage = (room, message) => { // Guardar mensajes en redis y emitir al room
-    	client.lpush(room, message, function (err, res) {
-    		client.ltrim(room, 0, 9); // solo 10 mensajes por room  TODO aumentar
-    	});
-    	io.sockets.in(room).emit("displayMessage", message);
-    }
-
-    this.emitMessages = (room, socket) => {
-    	client.lrange(room, 0, -1, function(err, messages){
-    		messages = messages.reverse();
-    		messages.forEach(function( ) {
-    			socket.emit("displayMessage", message);
-    		});
-    	});
-    }
-
-
-
+    var rooms = ["room1", "room2"];
 
 /*
     io.sockets.on('connection', function(socket){ // evento socket conectada (cliente conectada)
@@ -109,36 +88,7 @@ module.exports = (io, sessionMiddleware) => {
         message: 'groupId' ,
     }
 
-
-    io.sockets.on("connection", function (socket) {
-    	var self = this;
-
-    	socket.join("room_one");
-
-    	this.emitMessages("room_one", socket);
-
-    	socket.on("chatMessage", function(data){
-    	  this.storeMssage(data[0], data[1]); // funcion gfrardar y emitir mensaje data[room, message ]
-    	});
-
-        // mostrar todos los mensajes
-    	for (var i = 0; i < rooms.length; i++) {
-    		var room = rooms[i];
-    		var join_event = "join_" + room;
-    		socket.on(join_event, function(rooms){
-    			//socket.leave(rooms[0]); // Abandonar un room
-    			socket.join(rooms[1]);
-    			socket.emit("clear_room"); // eliminar mensajes grupo anterior (html cliente)
-    			this.emitMessages(rooms[1], socket);
-    		});
-    	}
-
-    });
-
-
-
     /******************Multiples canales ( GRUPOS  O chat privado ...)****************///////
-/*
     io.sockets.on('connection', function(socket){
 
         // console.log('##  [ realtimeGroups.js ] Conexion  SOCKET Group 1' + Object.keys(socket.request.session) );
@@ -163,7 +113,6 @@ module.exports = (io, sessionMiddleware) => {
             //io.sockets.in(data.room).emit('message', data); FIXME
             io.sockets.emit('message')
         })
-        */
 
 /*        socket.on('sendDataGroup', function(data){
 
@@ -177,15 +126,15 @@ module.exports = (io, sessionMiddleware) => {
 */
 
 
-/*        socket.on('disconnect', function() {
+        socket.on('disconnect', function() {
         // this returns a list of all rooms this user is in
             //var rooms = io.sockets.manager.roomClients[socket.id];
-            // for(var room in rooms) {
-            //     socket.leave(room);
-            // }
+            /*for(var room in rooms) {
+                socket.leave(room);
+            }*/
         })
 
-    })*/
+    })
 
 /*<<<<<<< HEAD
 =======

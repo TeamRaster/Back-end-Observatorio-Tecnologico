@@ -8,7 +8,6 @@ const fs = require('fs')
 
 module.exports = (app) => {
 
-    //const News = require('../models/modelNews')///app.models.modelNews
     const News = app.models.modelNews
     console.log(News);
 

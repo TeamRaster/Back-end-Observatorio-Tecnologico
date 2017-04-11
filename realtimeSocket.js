@@ -1,21 +1,4 @@
 'use strict'
-            // <<<<<<< HEAD
-            // // Lógica de sockets IO
-            //
-            // module.exports = function(server, sessionMiddleware) {
-            //     //console.log('server '+ server)
-            //     //console.log('midd '+ Object.keys(sessionMiddleware.session))
-            //
-            //     const io = socket = require("socket.io")(server) // server-> instancia de http  (no express)
-            //     const redis = require('redis')
-            //     const client = redis.createClient()
-            //
-            //     client.subscribe('images') // suscripcion al del canal (viene de  ./newsCrudController )
-            //
-            //     io.use(function(socket, next){
-            //     //    io.sockets.in('groupOne').emit('message', {message: 'se emitio un mesaje al grupo ' + 'ONE' })
-            //         // console.log('middleware ')
-            // =======
 
 const redis = require('redis')
 var sub = redis.createClient()
@@ -58,19 +41,21 @@ module.exports = function(io, sessionMiddleware) {
             if (channel == 'images') {
                 io.emit('new notices', message) // envia a TODOS los canales debe coincidir 'new notices' en client.js
             }
+
+
             console.log("Se publico algo en el canal :: " + channel)
-            console.log("Se publico algo  message " + message)  //mensaje que llegó
+            console.log("Se publico message " + message)  //mensaje que llegó
         })
 
        io.on('connection', function (socket) {
-        //    console.log("sockett CONEXION**************** ")
+           //console.log("sockett CONEXION**************** ")
            socket.on('event', function(){
 
            })
        })
 
     /******************Multiples canales ( GRUPOS  O chat privado ...)****************///////
-    /*io.sockets.on('connection', function(socket){
+    /*io.sockets.o  n('connection', function(socket){
         socket.on('subscribe', function(room){
             console.log("--------------------- Ha entrado al canal  room :", room )
             socket.join(room)
